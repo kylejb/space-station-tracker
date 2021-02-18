@@ -9,7 +9,7 @@ const Earth = () => {
 
   useEffect(()=> {
     //! For illustrative/testing purposes (not for production)
-    setStationLocation([{ name: "ISS", coordinates: ["12.25958", "16.03003"] }]);
+    setStationLocation([{ coordinates: ["12.25958", "16.03003"] }]);
   }, [])
 
 
@@ -22,7 +22,7 @@ const Earth = () => {
         labelsData={stationLocation}
         labelLat={d => d.coordinates[1]}
         labelLng={d => d.coordinates[0]}
-        labelText={d => d.name}
+        labelText={d => "ISS"}
         labelSize={1000 * 4e-4}
         labelDotRadius={1400 * 4e-4}
         labelColor={() => 'rgba(255, 30, 0, 0.75)'}
