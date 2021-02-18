@@ -6,3 +6,9 @@ test('renders Globe Component', () => {
   const linkElement = screen.getByText(/Globe Component/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+test('renders ISS marker', () => {
+  render(<Globe />);
+  const linkElement = screen.getByText(/ISS/i);
+  expect(linkElement).toBeInTheDocument();
+});
