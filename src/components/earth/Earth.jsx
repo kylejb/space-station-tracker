@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 
 
-const Earth = () => {
+const Earth = ( props ) => {
   // react-globe expects stationObj to be iterable
   const [stationObj, setStationObj] = useState([]);
   const globeEl = useRef();
