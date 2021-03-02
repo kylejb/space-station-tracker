@@ -8,7 +8,6 @@ const Earth = ( props ) => {
   const globeEl = useRef();
 
 
-
   useEffect(()=> {
     // ISS Satellite ID is 25544 at this endpoint
     const findISS = async () => {
@@ -21,6 +20,16 @@ const Earth = ( props ) => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+
+  // Camera follows ISS on state change
+  useEffect(() => {
+    globeEl.current.pointOfView({
+      lat: stationObj[0].latitude,
+      lng: stationObj[0].longitude,
+      altitude: 2
+    });
+  }, [stationObj]);
 
 
   return (
