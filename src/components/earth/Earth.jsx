@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 
 
-const Earth = () => {
+const Earth = ( props ) => {
   // react-globe expects stationObj to be iterable
   const [stationObj, setStationObj] = useState([]);
   const globeEl = useRef();
-
 
 
   useEffect(()=> {
@@ -23,9 +22,19 @@ const Earth = () => {
   }, []);
 
 
+  // Camera follows ISS on state change
+  useEffect(() => {
+    globeEl.current.pointOfView({
+      lat: stationObj[0]?.latitude,
+      lng: stationObj[0]?.longitude,
+      altitude: 2
+    });
+  }, [stationObj]);
+
+
   return (
     <>
-      <h1>Globe Component</h1>
+      <h1>Earth Component</h1>
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
