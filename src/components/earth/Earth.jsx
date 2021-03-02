@@ -25,7 +25,7 @@ const Earth = () => {
 
   return (
     <>
-      <h1>Globe Component</h1>
+      <h1>Earth Component</h1>
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
