@@ -12,6 +12,7 @@ const Search = ({ fetchGeoDataFromZip }) => {
     <div>
       <h1>Search Component</h1>
       <input
+        name="searchZipCode"
         type="search"
         placeholder="Enter postcode"
         value={userInput}

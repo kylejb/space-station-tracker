@@ -25,8 +25,8 @@ const Earth = ( props ) => {
   // Camera follows ISS on state change
   useEffect(() => {
     globeEl.current.pointOfView({
-      lat: stationObj[0].latitude,
-      lng: stationObj[0].longitude,
+      lat: stationObj[0]?.latitude,
+      lng: stationObj[0]?.longitude,
       altitude: 2
     });
   }, [stationObj]);
