@@ -21,7 +21,8 @@ const App = () => {
 
     const response = await fetch(BASE_API_URL+ENDPOINT+PARAMS, options);
     let data = await response.json();
-    setSearchResult(data[0]);
+    // Globe's dependencies expects searchResults to be iterable
+    setSearchResult([data[0]]);
   };
 
 
