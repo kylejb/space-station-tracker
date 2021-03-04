@@ -1,4 +1,4 @@
-const PROXY_URL = `https://cors-anywhere.herokuapp.com/`;
+const PROXY_URL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
 const BASE_URI = `https://spotthestation.nasa.gov/`;
 const EP = `sightings/location_files/`;
 const BASE_URL = PROXY_URL+BASE_URI+EP;
