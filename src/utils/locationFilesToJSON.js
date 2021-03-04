@@ -20,31 +20,38 @@ const getLocation = () => null;
 
 const getRegionInLocation = () => null;
 
-// Fetch Data from External Resources ***
-const getSightingXML = async (country, region, city) => {
-  const url = BASE_URL + country + '_' + region + '_' + city + '.xml';
-
+// Helper function for all Fetch calls
+const getFetchBase = async (urlEndpoint, urlResource = 'html') => {
+  const url = BASE_URL + urlEndpoint + '.' + urlResource;
   const response = await fetch(url);
   let raw_data = await response.text();
+  return raw_data;
+}
 
-  // convert string to XML
-  let xml_doc = new DOMParser().parseFromString(raw_data, 'text/xml');
-  return xml_doc;
+// Fetch Data from External Resources ***
+const getSighting = async (nearestLocation) => {
+  // nearestLocation must be formatted properly
+  return getFetchBase(nearestLocation, 'xml');
 };
 
 const getGeoData = async (country) => {
-  const url = BASE_URL + country + '.html';
-
+  return getFetchBase(country, 'html');
 };
 //
 // End of Fetch Functions ***
 
 
 // Data Conversion Functions ***
-const responseTxtToHTML = (responseTxt) => {
+const fetchedDataToHTML = (responseTxt) => {
   const resContainer = document.createElement('div');
   // converts text to HTML
   return resContainer.innerHTML = responseTxt;
+};
+
+const fetchedDataToXML = (responseTxt) => {
+  // convert string to XML
+  const xml_doc = new DOMParser().parseFromString(responseTxt, 'text/xml');
+  return xml_doc;
 };
 
 const htmlToObj = (_html) => {
