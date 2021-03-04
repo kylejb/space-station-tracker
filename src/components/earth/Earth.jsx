@@ -47,7 +47,7 @@ const Earth = ( props ) => {
         pointAltitude={0.9}
         pointRadius={0.25}
         pointsMerge={true}
-        pointColor={() => 'rgba(255, 30, 0, 0.75)'}
+        pointColor={() => 'red'}
         pointResolution={12}
 
         labelsData={props.searchResult}
@@ -56,7 +56,7 @@ const Earth = ( props ) => {
         labelText={d => "Postcode"}
         labelSize={1000 * 4e-4}
         labelDotRadius={1400 * 4e-4}
-        labelColor={() => 'rgba(0, 225, 255, 0.75)'}
+        labelColor={() => 'teal'}
         labelResolution={2}
       />
     </>
