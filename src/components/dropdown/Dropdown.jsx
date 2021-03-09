@@ -1,11 +1,12 @@
 import { useState } from "react"
 import parse from 'html-react-parser'
+import XMLParser from 'react-xml-parser'
 
 const Dropdown = () => {
 
-    // const [countryListValue, setCountryListValue] = useState("")
     const [stateListValue, setStateListValue] = useState("")
     const [cityListValue, setCityListValue] = useState("")
+    const [sightingLocationData, setSightingLocationData] = useState("")
 
     const countryDropdownHelper = (e) => {
         fetchStateData(e.target.value)
@@ -54,10 +55,15 @@ const Dropdown = () => {
 
         fetch(proxyURL + baseURL + citySearchInfo + ".xml")
             .then(response => response.text())
-            .then(data => console.log(data))
-        
-    }
+            .then(data => {
+                const xml = new XMLParser().parseFromString(data)
+                setSightingLocationData(xml.getElementsByTagName('item'))
 
+               }
+            )
+        }
+
+        console.log()
 return(
 <>
     <br/><br/><br/>
@@ -235,6 +241,9 @@ return(
             {parse(cityListValue)}
         </datalist>
 
+    <p>
+        {sightingLocationData[0]?.children[2].value}
+    </p>
 
 </>
 )
