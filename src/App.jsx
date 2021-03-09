@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Earth from "components/earth";
 import Search from "components/search";
-
+import Dropdown from "components/dropdown/Dropdown"
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -24,12 +24,35 @@ const App = () => {
     setSearchResult(data[0]);
   };
 
+  const fetchNasaShowPages = async () => {
+    const BASE_API_URL = "https://spotthestation.nasa.gov/"
+    const ENDPOINT = "sightings/location_files/"
+    const PARAMS = "United_States.html"
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Student-Project-v0'
+      },
+      mode: "no-cors"
+      // Host: "spotthestation.nasa.gov",
+      // Referer: "https://spotthestation.nasa.gov/"
+    };
+
+    fetch(BASE_API_URL+ENDPOINT+PARAMS, options)
+    .then(response => console.log(response.json()))
+    
+    
+  }
 
   return (
     <div className="App">
       <h1>App Component</h1>
       <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
-      <Earth searchResult={searchResult} />
+      <button onClick={fetchNasaShowPages}>Fetch united states data</button>
+      {/* <Earth searchResult={searchResult} /> */}
+      <Dropdown/>
     </div>
   );
 };
