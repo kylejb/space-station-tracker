@@ -2,6 +2,7 @@ import { useState } from "react";
 import Earth from "components/earth";
 import Search from "components/search";
 import Dropdown from "components/dropdown/Dropdown"
+import Sightingtable from "components/sightingtable/Sightingtable"
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -52,7 +53,8 @@ const App = () => {
       <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
       <button onClick={fetchNasaShowPages}>Fetch united states data</button>
       {/* <Earth searchResult={searchResult} /> */}
-      <Dropdown/>
+      {/* <Dropdown/> */}
+      <Sightingtable searchResult={searchResult} />
     </div>
   );
 };
