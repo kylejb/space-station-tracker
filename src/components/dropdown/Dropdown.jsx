@@ -63,7 +63,6 @@ const Dropdown = () => {
             )
         }
 
-        console.log()
 return(
 <>
     <br/><br/><br/>

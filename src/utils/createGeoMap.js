@@ -6365,21 +6365,17 @@ for (const geoLoc of addressPoints) {
   const viewingSiteMetaData = {
     latitude: latitude,
     longitude: longitude,
-    locationName: geoLoc[5]
+    city: city
   }
 
   if (!(country in geoMap)) {
-    geoMap[country] = {[regionOrState]: {[city]: [viewingSiteMetaData] }};
+    geoMap[country] = {[regionOrState]: [viewingSiteMetaData] };
     counter++;
   } else if (!(regionOrState in geoMap[country])) {
-    geoMap[country][regionOrState] = {[city]: [viewingSiteMetaData] };
-    counter++;
-  } else if (!(city in geoMap[country][regionOrState])) {
-    geoMap[country][regionOrState][city] = [viewingSiteMetaData];
+    geoMap[country][regionOrState] = [viewingSiteMetaData] ;
     counter++;
   } else {
-    // otherwise, initialize empty city or country depending on when false
-    geoMap[country][regionOrState][city].push(viewingSiteMetaData);
+    geoMap[country][regionOrState].push(viewingSiteMetaData);
     counter++;
   }
 }
@@ -6393,19 +6389,19 @@ console.log("geoMap Obj::", addressPoints.length, counter);
 
 /* 
 {
-    "Country1": {
-        "State1": {
-            "Cities": [
+    "United_States": {
+        "Alabama": 
+            [
               {
-                longitude: 74,
                 latitude: 76,
-                name: "Teddy R"
+                longitude: 74,
+                city: "Abbeville",
               },
               {
-                longitude: 12,
-                latitude: 312,
-                name: "MSG"
-              },
+                latitude: 12,
+                longitude: 31,
+                city: "Alexander_City"
+              }
           ]
         }
     }
