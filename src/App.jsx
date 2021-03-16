@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Earth from "components/earth";
 import Search from "components/search";
 import Dropdown from "components/dropdown/Dropdown"
 import Sightingtable from "components/sightingtable/Sightingtable"
+import { useIpCoords } from 'use-ipcoords'
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
+  const { latitudeIp, longitudeIp } = useIpCoords();
 
   const fetchGeoDataFromZip = async (zip) => {
     const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
@@ -46,6 +48,7 @@ const App = () => {
     
     
   }
+  
 
   return (
     <div className="App">
