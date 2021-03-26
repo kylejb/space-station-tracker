@@ -69,7 +69,7 @@ return(
     <h3>Dropdowns</h3>
     
     <label>Country</label>
-    <input type="text" list="country" onChange={countryDropdownHelper} />
+    <input type="text" list="country" aria-label="country" onChange={countryDropdownHelper} />
     <datalist id="country">
         <option value="Afghanistan">Afghanistan</option>
         <option value="Albania">Albania</option>
@@ -228,14 +228,14 @@ return(
     <br/><br/>
 
     <label>State</label>
-    <input type="text" list="state" onChange={stateDropdownHelper}/>
+    <input type="text" list="state" aria-label="state" onChange={stateDropdownHelper}/>
         <datalist id="state">
             {parse(stateListValue)}
         </datalist>
     <br/><br/>
 
     <label>City</label>
-    <input type="text" list="city" onChange={(e) => cityFetchHelper(e)}/>
+    <input type="text" list="city" aria-label="city" onChange={(e) => cityFetchHelper(e)}/>
         <datalist id="city">
             {parse(cityListValue)}
         </datalist>
