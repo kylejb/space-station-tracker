@@ -6,10 +6,14 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "geolib": "^3.3.1",
+    "html-react-parser": "^1.2.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-globe.gl": "^2.14.6",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "react-xml-parser": "^1.1.8",
+    "use-ipcoords": "^1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",
