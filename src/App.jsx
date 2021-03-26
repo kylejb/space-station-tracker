@@ -56,7 +56,7 @@ const App = () => {
       <h1>App Component</h1>
       <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
       <button onClick={fetchNasaShowPages}>Fetch united states data</button>
-      {/* <Earth searchResult={searchResult} /> */}
+      <Earth searchResult={searchResult} />
       {/* <Dropdown/> */}
       <Sightingtable searchResult={searchResult} />
     </div>

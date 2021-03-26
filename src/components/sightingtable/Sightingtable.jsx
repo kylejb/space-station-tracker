@@ -7,10 +7,10 @@ let geoMap = require('geoMap.json')
 
 const Sightingtable = ( {searchResult} ) => {
     
-    const latitude = searchResult?.lat
-    const longitude = searchResult?.lon
-    const country = searchResult?.display_name.split(", ")[4].replace(" ","_")
-    const state = searchResult?.display_name.split(", ")[2].replace(" ","_")
+    const latitude = searchResult && searchResult[0]?.lat
+    const longitude = searchResult && searchResult[0]?.lon
+    const country = searchResult && searchResult[0]?.display_name?.split(", ")[4].replace(" ","_")
+    const state = searchResult && searchResult[0]?.display_name?.split(", ")[2].replace(" ","_")
     let cityList
     let cityName
     const [sightingChart, setSightingChart] = useState("")
@@ -76,16 +76,16 @@ const Sightingtable = ( {searchResult} ) => {
     return(
         <>
             <h2>Search results below</h2>
-            {   !searchResult 
+            {   searchResult === null 
                     ? 
                 <p>No results yet, please search above</p> 
                     : 
                 <>
-                    <h3>Latitude: {searchResult.lat}</h3>
-                    <h3>Longitude: {searchResult.lon}</h3>
-                    <h3>Country: {searchResult.display_name.split(", ")[4].replace(" ","_")}</h3>
-                    <h3>State: {searchResult.display_name.split(", ")[2].replace(" ","_")}</h3>
-                    <p>Full data from API: {searchResult.display_name}</p>
+                    <h3>Latitude: {latitude}</h3>
+                    <h3>Longitude: {longitude}</h3>
+                    <h3>Country: {country}</h3>
+                    <h3>State: {state}</h3>
+                    <p>Full data from API: {searchResult && searchResult[0]?.display_name}</p>
 
                     <br/>
                     <button onClick={fetchSightingData}>Go get the sighting chart data! </button>
@@ -112,7 +112,7 @@ const Sightingtable = ( {searchResult} ) => {
 export default Sightingtable
 
 /*
-Where you got stuck tryingt o convert stuff to state - forever re-rendering error:
+Where you got stuck trying to convert stuff to state - forever re-rendering error:
 
 const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
