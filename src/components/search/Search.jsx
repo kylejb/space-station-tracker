@@ -1,28 +1,11 @@
-import { useState } from 'react';
+import SearchBar from './search-bar.component';
+import SearchResults from './search-results.component';
 
-const Search = ({ fetchGeoDataFromZip }) => {
-  const [userInput, setUserInput] = useState("");
-
-  const searchValueHandler = (event) => {
-    setUserInput(event.target.value);
-  };
-
-
+const Search = () => {
   return (
-    <div>
-      <h1>Search Component</h1>
-      <input
-        name="searchZipCode"
-        type="search"
-        placeholder="Enter postcode"
-        value={userInput}
-        onChange={searchValueHandler}
-      />
-      <input
-        type="submit"
-        value="Search"
-        onClick={(e) => fetchGeoDataFromZip(userInput)}
-      />
+    <div className="search">
+      <SearchBar />
+      <SearchResults />
     </div>
   );
 };
