@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import Earth from "components/earth";
+import { useState } from "react";
+// import Earth from "components/earth";
 import Search from "components/search";
-import Dropdown from "components/dropdown/Dropdown"
+// import Dropdown from "components/dropdown/Dropdown"
 import Sightingtable from "components/sightingtable/Sightingtable"
 
 const App = () => {
@@ -56,6 +56,7 @@ const App = () => {
       <button onClick={fetchNasaShowPages}>Fetch united states data</button>
       {/* <Earth searchResult={searchResult} /> */}
       {/* <Dropdown/> */}
+      {/* {SightingTable should be conditionally rendered when necessary props are available} */}
       <Sightingtable searchResult={searchResult} />
     </div>
   );
