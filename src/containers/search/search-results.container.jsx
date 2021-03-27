@@ -1,23 +1,19 @@
 import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
-import SightingTable from 'components/sightingtable/SightingTable';
+import SearchResults from './components/search-results.component';
 
 let geoMap = require('geoMap.json');
 
 
-const SightingContainer = ({ searchResult }) => {
-
-
+const SearchResultsContainer = ({ searchResult }) => {
   const searchResultObject = searchResult && searchResult[0];
-
   const latitude = searchResultObject?.lat
   const longitude = searchResultObject?.lon
   const country = searchResultObject?.display_name.split(", ")[4].replace(" ","_")
   const state = searchResultObject?.display_name.split(", ")[2].replace(" ","_")
   let cityList;
   const [sightingChart, setSightingChart] = useState(null);
-
 
   const getCityArray = () => {
       if(country && state){
@@ -55,7 +51,7 @@ const SightingContainer = ({ searchResult }) => {
   }
 
   useEffect( () => {
-    if(country && state){
+    if (country && state) {
       const closestLatLon = findNearest(
         {latitude: latitude,longitude: longitude}, getCityArray()
       );
@@ -63,11 +59,11 @@ const SightingContainer = ({ searchResult }) => {
       const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
       fetchSightingData(cityName)
     }
-  }, [country, state, latitude, longitude])
+  }, [country, state, latitude, longitude]);
 
   return (
-    <SightingTable tableData={sightingChart}/>
+    <SearchResults tableData={sightingChart}/>
   );
 }
 
-export default SightingContainer;
+export default SearchResultsContainer;
