@@ -9,8 +9,7 @@ const SearchBar = ({ fetchGeoDataFromZip }) => {
 
 
   return (
-    <div>
-      <h1>Search Component</h1>
+    <div className='searchbar-input'>
       <input
         name="searchZipCode"
         type="search"
