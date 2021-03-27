@@ -3,7 +3,7 @@ import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
 import SearchResults from './components/search-results';
 
-let geoMap = require('geoMap.json');
+let geoMap = require('data/geoMap.json');
 
 
 const SearchResultsContainer = ({ searchResult }) => {
