@@ -1,4 +1,4 @@
-import SearchResultsContainer from './search-results.container';
+import SearchResultsContainer from './SearchResultsContainer';
 import Search from 'components/search';
 
 const SearchContainer = ({ fetchGeoDataFromZip, searchResult }) => {

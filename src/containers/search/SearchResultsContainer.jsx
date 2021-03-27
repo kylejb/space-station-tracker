@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
-import SearchResults from './components/search-results.component';
+import SearchResults from './components/search-results';
 
 let geoMap = require('geoMap.json');
 
