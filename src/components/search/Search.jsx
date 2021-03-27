@@ -1,9 +1,9 @@
 import SearchBar from './search-bar.component';
 
-const Search = () => {
+const Search = ({ fetchGeoDataFromZip }) => {
   return (
     <div className="search">
-      <SearchBar />
+      <SearchBar fetchGeoDataFromZip={fetchGeoDataFromZip} />
     </div>
   );
 };

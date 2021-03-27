@@ -27,7 +27,7 @@ const App = () => {
   return (
     <div className="app">
       <h1>App Component</h1>
-      <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
+      <Search fetchGeoDataFromZip={fetchGeoDataFromZip} searchResult={searchResult} />
       {/* <Earth searchResult={searchResult} /> */}
     </div>
   );

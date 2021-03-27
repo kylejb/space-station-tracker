@@ -1,11 +1,11 @@
 import SearchResultsContainer from './search-results.container';
 import Search from 'components/search';
 
-const SearchContainer = () => {
+const SearchContainer = ({ fetchGeoDataFromZip, searchResult }) => {
     return (
         <div className="search-container">
-            <Search />
-            <SearchResultsContainer />
+            <Search fetchGeoDataFromZip={fetchGeoDataFromZip} />
+            <SearchResultsContainer searchResult={searchResult} />
         </div>
     );
 }
