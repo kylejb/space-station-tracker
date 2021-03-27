@@ -2,7 +2,7 @@ import { useState } from "react";
 // import Earth from "components/earth";
 import Search from "components/search";
 // import Dropdown from "components/dropdown/Dropdown"
-import Sightingtable from "components/sightingtable/Sightingtable"
+import SightingTable from "components/sightingtable/SightingTable"
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -57,7 +57,7 @@ const App = () => {
       {/* <Earth searchResult={searchResult} /> */}
       {/* <Dropdown/> */}
       {/* {SightingTable should be conditionally rendered when necessary props are available} */}
-      <Sightingtable searchResult={searchResult} />
+      <SightingTable searchResult={searchResult} />
     </div>
   );
 };

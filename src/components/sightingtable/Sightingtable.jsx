@@ -4,7 +4,8 @@ import XMLParser from 'react-xml-parser';
 
 let geoMap = require('geoMap.json');
 
-const Sightingtable = ( {searchResult} ) => {
+const SightingTable = ( {searchResult} ) => {
+
 
     const latitude = searchResult?.lat
     const longitude = searchResult?.lon
@@ -55,7 +56,7 @@ const Sightingtable = ( {searchResult} ) => {
             const closestLatLon = findNearest(
               {latitude: latitude,longitude: longitude}, getCityArray()
             );
-            
+
             cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city
             console.log("Searching here:", cityName)
             fetchSightingData(cityName)
@@ -103,7 +104,7 @@ const Sightingtable = ( {searchResult} ) => {
 }
 
 
-export default Sightingtable
+export default SightingTable
 
 /*
 Where you got stuck trying to convert stuff to state - forever re-rendering error:
