@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react"
-import parse from 'html-react-parser'
-import XMLParser from 'react-xml-parser'
+import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
+import XMLParser from 'react-xml-parser';
 
-let geoMap = require('geoMap.json')
+let geoMap = require('geoMap.json');
 
 const Sightingtable = ( {searchResult} ) => {
-    
+
     const latitude = searchResult?.lat
     const longitude = searchResult?.lon
     const country = searchResult?.display_name.split(", ")[4].replace(" ","_")
     const state = searchResult?.display_name.split(", ")[2].replace(" ","_")
-    let cityList
-    let cityName
-    const [sightingChart, setSightingChart] = useState("")
+    let cityList;
+    let cityName;
+    const [sightingChart, setSightingChart] = useState(null);
 
 
     const getCityArray = () => {
@@ -21,53 +20,48 @@ const Sightingtable = ( {searchResult} ) => {
             const cityArray = geoMap[country][state]
             cityList = geoMap[country][state].map((cityObj) => {
                 return {...cityObj}
-            })
+            });
             cityArray.forEach((cityObj) => {
-                delete cityObj['city']
-            })
-            return cityArray
-        }
+                delete cityObj['city'];
+            });
+            return cityArray;
+        };
     }
 
     const cleanTableData = rawData => {
-        
-        return rawData.map( item => item.children[2].value )
-        
-        //Pseudocode: Array[0-19] --> children[2].value
+      //Pseudocode: Array[0-19] --> children[2].value
+      return rawData.map( item => item.children[2].value );
     }
 
     const fetchSightingData = (cityName) => {
-        const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
-        const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/"
+      const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
+      const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
 
-        // need to figure out why this is undefined
-        console.log("city name right before fetch call:", cityName)
+      fetch(proxyURL + baseURL + country + "_" + state + "_" + cityName + ".xml")
+        .then(response => response.text())
+        .then(data => {
+          const xml = new XMLParser().parseFromString(data);
 
-        fetch(proxyURL + baseURL + country + "_" + state + "_" + cityName + ".xml")
-            .then(response => response.text())
-            .then(data => {
-                const xml = new XMLParser().parseFromString(data)
-                
-                const itemData = xml.getElementsByTagName('item')                
-                const cleanedData = cleanTableData(itemData)
-                
-                setSightingChart(cleanedData)
+          const itemData = xml.getElementsByTagName('item');
+          const cleanedData = cleanTableData(itemData);
 
-               }
-            )
+          setSightingChart(cleanedData);
         }
-        
+      );
+    }
+
     useEffect( () => {
         if(country && state){
-            const closestLatLon = findNearest({latitude: latitude,longitude: longitude} ,getCityArray())
+            const closestLatLon = findNearest(
+              {latitude: latitude,longitude: longitude}, getCityArray()
+            );
+            
             cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city
             console.log("Searching here:", cityName)
             fetchSightingData(cityName)
         }
 
-    }, [country, state])    
-    //Will probably want to refactor to render chart conditionally - using a useEffect?
-
+    }, [country, state])
 
     const chartRows = () => {
         return sightingChart.map( row => <p>{row}</p> )
@@ -76,10 +70,10 @@ const Sightingtable = ( {searchResult} ) => {
     return(
         <>
             <h2>Search results below</h2>
-            {   !searchResult 
-                    ? 
-                <p>No results yet, please search above</p> 
-                    : 
+            {   !searchResult
+                    ?
+                <p>No results yet, please search above</p>
+                    :
                 <>
                     <h3>Latitude: {searchResult.lat}</h3>
                     <h3>Longitude: {searchResult.lon}</h3>
@@ -90,19 +84,19 @@ const Sightingtable = ( {searchResult} ) => {
                     <br/>
                     <button onClick={fetchSightingData}>Go get the sighting chart data! </button>
                     <br/>
-                    
+
                     <p>
                         Chart data!!! ...after you search and then hit fetch button
-                        
+
                         {sightingChart && chartRows()}
-                        
+
                         Also example of needing to conditionally render with useState
                     </p>
 
                 </>
             }
-            
-        
+
+
         </>
     )
 
@@ -112,7 +106,7 @@ const Sightingtable = ( {searchResult} ) => {
 export default Sightingtable
 
 /*
-Where you got stuck tryingt o convert stuff to state - forever re-rendering error:
+Where you got stuck trying to convert stuff to state - forever re-rendering error:
 
 const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
@@ -136,11 +130,11 @@ const [latitude, setLatitude] = useState("")
         if(country && state){
             const geoLibCityArray = geoMap[country][state]
             setCityList(geoMap[country][state])
-            
+
             // cityList = geoMap[country][state].map((cityObj) => {
             //     return {...cityObj}
             // })
-            
+
             geoLibCityArray.forEach((cityObj) => {
                 delete cityObj['city']
             })
