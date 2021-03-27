@@ -52,16 +52,15 @@ const SightingTable = ({ searchResult }) => {
     }
 
     useEffect( () => {
-        if(country && state){
-            const closestLatLon = findNearest(
-              {latitude: latitude,longitude: longitude}, getCityArray()
-            );
+      if(country && state){
+        const closestLatLon = findNearest(
+          {latitude: latitude,longitude: longitude}, getCityArray()
+        );
 
-            const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
-            fetchSightingData(cityName)
-        }
-
-    }, [country, state])
+        const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
+        fetchSightingData(cityName)
+      }
+    }, [country, state, latitude, longitude])
 
     const chartRows = () => {
         return sightingChart.map( row => <p>{row}</p> )
@@ -80,10 +79,6 @@ const SightingTable = ({ searchResult }) => {
                     <h3>Country: {country}</h3>
                     <h3>State: {state}</h3>
                     <p>Full data from API: {searchResultObject?.display_name}</p>
-
-                    <br/>
-                    <button onClick={fetchSightingData}>Go get the sighting chart data! </button>
-                    <br/>
 
                     <p>
                         Chart data!!! ...after you search and then hit fetch button
