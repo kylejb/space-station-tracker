@@ -1,98 +1,25 @@
-import { useState, useEffect } from 'react';
-import { findNearest } from 'geolib';
-import XMLParser from 'react-xml-parser';
-
-let geoMap = require('geoMap.json');
-
-const SightingTable = ({ searchResult }) => {
-
-    const searchResultObject = searchResult && searchResult[0];
-
-    const latitude = searchResultObject?.lat
-    const longitude = searchResultObject?.lon
-    const country = searchResultObject?.display_name.split(", ")[4].replace(" ","_")
-    const state = searchResultObject?.display_name.split(", ")[2].replace(" ","_")
-    let cityList;
-    const [sightingChart, setSightingChart] = useState(null);
 
 
-    const getCityArray = () => {
-        if(country && state){
-            const cityArray = geoMap[country][state]
-            cityList = geoMap[country][state].map((cityObj) => {
-                return {...cityObj}
-            });
-            cityArray.forEach((cityObj) => {
-                delete cityObj['city'];
-            });
-            return cityArray;
-        };
-    }
+const SightingTable = ({ tableData }) => {
 
-    const cleanTableData = rawData => {
-      //Pseudocode: Array[0-19] --> children[2].value
-      return rawData.map( item => item.children[2].value );
-    }
-
-    const fetchSightingData = (city) => {
-      const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
-      const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
-
-      fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
-        .then(response => response.text())
-        .then(data => {
-          const xml = new XMLParser().parseFromString(data);
-
-          const itemData = xml.getElementsByTagName('item');
-          const cleanedData = cleanTableData(itemData);
-
-          setSightingChart(cleanedData);
-        }
-      );
-    }
-
-    useEffect( () => {
-      if(country && state){
-        const closestLatLon = findNearest(
-          {latitude: latitude,longitude: longitude}, getCityArray()
-        );
-
-        const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
-        fetchSightingData(cityName)
-      }
-    }, [country, state, latitude, longitude])
-
-    const chartRows = () => {
-        return sightingChart.map( row => <p>{row}</p> )
-    }
+  const chartRows = () => {
+    return tableData.map( row => <p>{row}</p> )
+  }
 
     return(
-        <>
-            <h2>Search results below</h2>
-            {   !searchResult
-                    ?
-                <p>No results yet, please search above</p>
-                    :
-                <>
-                    <h3>Latitude: {latitude}</h3>
-                    <h3>Longitude: {longitude}</h3>
-                    <h3>Country: {country}</h3>
-                    <h3>State: {state}</h3>
-                    <p>Full data from API: {searchResultObject?.display_name}</p>
-
-                    <p>
-                        Chart data!!! ...after you search and then hit fetch button
-
-                        {sightingChart && chartRows()}
-
-                        Also example of needing to conditionally render with useState
-                    </p>
-
-                </>
-            }
-
-
-        </>
+      <>
+        <h2>Search results below</h2>
+        { !tableData
+          ?
+            <p>No results yet, please search above</p>
+          :
+            <p>
+              Chart data!!! ...after you search and then hit fetch button
+              {chartRows()}
+              Also example of needing to conditionally render with useState
+            </p>
+        }
+      </>
     )
 
 }
@@ -110,15 +37,15 @@ const [latitude, setLatitude] = useState("")
     const [cityList, setCityList] = useState("")
     const [cityName, setCityName] = useState("")
 
-    useEffect((searchResult) => {
-        if(searchResult)
+    useEffect((tableData) => {
+        if(tableData)
             {
-                setLatitude( searchResult.lat )
-                setLongitude( searchResult.lon )
-                setCountry( searchResult.display_name.split(", ")[4].replace(" ","_") )
-                setState( searchResult.display_name.split(", ")[2].replace(" ","_") )
+                setLatitude( tableData.lat )
+                setLongitude( tableData.lon )
+                setCountry( tableData.display_name.split(", ")[4].replace(" ","_") )
+                setState( tableData.display_name.split(", ")[2].replace(" ","_") )
             }
-        }, [searchResult]
+        }, [tableData]
     )
 
     const getCityArray = () => {

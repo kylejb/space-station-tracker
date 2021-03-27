@@ -2,7 +2,7 @@ import { useState } from 'react';
 // import Earth from 'components/earth';
 import Search from 'components/search';
 // import Dropdown from 'components/dropdown';
-import SightingTable from 'components/sightingtable';
+import SightingContainer from 'containers/SightingContainer';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -27,6 +27,7 @@ const App = () => {
   };
 
   const fetchNasaShowPages = async () => {
+    const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
     const BASE_API_URL = "https://spotthestation.nasa.gov/"
     const ENDPOINT = "sightings/location_files/"
     const PARAMS = "United_States.html"
@@ -37,15 +38,10 @@ const App = () => {
         'Content-Type': 'application/json',
         'User-Agent': 'Student-Project-v0'
       },
-      mode: "no-cors"
-      // Host: "spotthestation.nasa.gov",
-      // Referer: "https://spotthestation.nasa.gov/"
     };
 
-    fetch(BASE_API_URL+ENDPOINT+PARAMS, options)
+    fetch(`${proxyURL}${BASE_API_URL}${ENDPOINT}${PARAMS}`, options)
     .then(response => console.log(response.json()))
-
-
   }
 
 
@@ -57,7 +53,7 @@ const App = () => {
       {/* <Earth searchResult={searchResult} /> */}
       {/* <Dropdown/> */}
       {/* {SightingTable should be conditionally rendered when necessary props are available} */}
-      <SightingTable searchResult={searchResult} />
+      <SightingContainer searchResult={searchResult} />
     </div>
   );
 };
