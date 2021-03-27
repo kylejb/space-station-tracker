@@ -4,15 +4,15 @@ import XMLParser from 'react-xml-parser';
 
 let geoMap = require('geoMap.json');
 
-const SightingTable = ( {searchResult} ) => {
+const SightingTable = ({ searchResult }) => {
 
+    const searchResultObject = searchResult && searchResult[0];
 
-    const latitude = searchResult?.lat
-    const longitude = searchResult?.lon
-    const country = searchResult?.display_name.split(", ")[4].replace(" ","_")
-    const state = searchResult?.display_name.split(", ")[2].replace(" ","_")
+    const latitude = searchResultObject?.lat
+    const longitude = searchResultObject?.lon
+    const country = searchResultObject?.display_name.split(", ")[4].replace(" ","_")
+    const state = searchResultObject?.display_name.split(", ")[2].replace(" ","_")
     let cityList;
-    let cityName;
     const [sightingChart, setSightingChart] = useState(null);
 
 
@@ -34,11 +34,11 @@ const SightingTable = ( {searchResult} ) => {
       return rawData.map( item => item.children[2].value );
     }
 
-    const fetchSightingData = (cityName) => {
+    const fetchSightingData = (city) => {
       const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
       const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
 
-      fetch(proxyURL + baseURL + country + "_" + state + "_" + cityName + ".xml")
+      fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
         .then(response => response.text())
         .then(data => {
           const xml = new XMLParser().parseFromString(data);
@@ -57,8 +57,7 @@ const SightingTable = ( {searchResult} ) => {
               {latitude: latitude,longitude: longitude}, getCityArray()
             );
 
-            cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city
-            console.log("Searching here:", cityName)
+            const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
             fetchSightingData(cityName)
         }
 
@@ -76,11 +75,11 @@ const SightingTable = ( {searchResult} ) => {
                 <p>No results yet, please search above</p>
                     :
                 <>
-                    <h3>Latitude: {searchResult.lat}</h3>
-                    <h3>Longitude: {searchResult.lon}</h3>
-                    <h3>Country: {searchResult.display_name.split(", ")[4].replace(" ","_")}</h3>
-                    <h3>State: {searchResult.display_name.split(", ")[2].replace(" ","_")}</h3>
-                    <p>Full data from API: {searchResult.display_name}</p>
+                    <h3>Latitude: {latitude}</h3>
+                    <h3>Longitude: {longitude}</h3>
+                    <h3>Country: {country}</h3>
+                    <h3>State: {state}</h3>
+                    <p>Full data from API: {searchResultObject?.display_name}</p>
 
                     <br/>
                     <button onClick={fetchSightingData}>Go get the sighting chart data! </button>
