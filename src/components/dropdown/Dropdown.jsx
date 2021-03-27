@@ -1,9 +1,8 @@
-import { useState } from "react"
+import { useState } from 'react'
 import parse from 'html-react-parser'
 import XMLParser from 'react-xml-parser'
 
 const Dropdown = () => {
-
     const [stateListValue, setStateListValue] = useState("")
     const [cityListValue, setCityListValue] = useState("")
     const [sightingLocationData, setSightingLocationData] = useState("")
@@ -14,12 +13,12 @@ const Dropdown = () => {
 
     const fetchStateData = (country) => {
         console.log(`I just got ALL the states from ${country}`)
-        
+
         //NOTE: For everything NOT USA or UK there is "none" for state
 
         const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
         const baseURL = `https://spotthestation.nasa.gov/sightings/location_files/`;
-        
+
 
         fetch(proxyURL + baseURL + country + ".html")
             .then(response => response.text())
@@ -32,24 +31,24 @@ const Dropdown = () => {
 
     const fetchCityData = (state) => {
         console.log(`I just got ALL the cities from ${state}`)
-        
+
         const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
         const baseURL = `https://spotthestation.nasa.gov/sightings/location_files/`;
-        
+
         fetch(proxyURL + baseURL + state + ".html")
             .then(response => response.text())
             .then(data => setCityListValue(data))
     }
 
     //NOTE: this will evntually go in the app level since we'll need to feed info down into globe
-    
+
     const cityFetchHelper = (e) => {
         console.log(`Going to fetch the sighting data from ${e.target.value}`)
         fetchSightingData(e.target.value)
     }
-    
+
     const fetchSightingData = (citySearchInfo) => {
-        
+
         const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
         const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/"
 
@@ -67,7 +66,7 @@ return(
 <>
     <br/><br/><br/>
     <h3>Dropdowns</h3>
-    
+
     <label>Country</label>
     <input type="text" list="country" aria-label="country" onChange={countryDropdownHelper} />
     <datalist id="country">

@@ -1,3 +1,3 @@
-import Earth from "./Earth";
+import Earth from './Earth';
 
 export default Earth;
