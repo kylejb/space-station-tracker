@@ -1,7 +1,6 @@
 import { useState } from 'react';
 // import Earth from 'components/earth';
 import Search from 'components/search';
-// import Dropdown from 'components/dropdown';
 import SightingContainer from 'containers/SightingContainer';
 
 const App = () => {
@@ -51,8 +50,7 @@ const App = () => {
       <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
       <button onClick={fetchNasaShowPages}>Fetch united states data</button>
       {/* <Earth searchResult={searchResult} /> */}
-      {/* <Dropdown/> */}
-      {/* {SightingTable should be conditionally rendered when necessary props are available} */}
+      {/* {SightingContainer should be conditionally rendered when necessary props are available} */}
       <SightingContainer searchResult={searchResult} />
     </div>
   );
