@@ -1,8 +1,8 @@
-import { useState } from "react";
-// import Earth from "components/earth";
-import Search from "components/search";
-// import Dropdown from "components/dropdown/Dropdown"
-import SightingTable from "components/sightingtable/SightingTable"
+import { useState } from 'react';
+// import Earth from 'components/earth';
+import Search from 'components/search';
+// import Dropdown from 'components/dropdown';
+import SightingTable from 'components/sightingtable';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
