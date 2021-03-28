@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Search from 'containers/search';
+import SearchContainer from 'containers/SearchContainer';
 // import Earth from 'components/earth';
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
   return (
     <div className="app">
       <h1>App Component</h1>
-      <Search fetchGeoDataFromZip={fetchGeoDataFromZip} searchResult={searchResult} />
+      <SearchContainer fetchGeoDataFromZip={fetchGeoDataFromZip} searchResult={searchResult} />
       {/* <Earth searchResult={searchResult} /> */}
     </div>
   );

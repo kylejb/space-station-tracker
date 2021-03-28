@@ -1,10 +1,10 @@
 import SearchResultsContainer from './SearchResultsContainer';
-import Search from 'components/search';
+import SearchBar from 'components/search';
 
 const SearchContainer = ({ fetchGeoDataFromZip, searchResult }) => {
     return (
         <div className="search-container">
-            <Search fetchGeoDataFromZip={fetchGeoDataFromZip} />
+            <SearchBar fetchGeoDataFromZip={fetchGeoDataFromZip} />
             <SearchResultsContainer searchResult={searchResult} />
         </div>
     );
