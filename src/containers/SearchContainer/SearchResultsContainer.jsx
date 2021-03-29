@@ -57,16 +57,20 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
   useEffect(() => {
     if (searchResult && country && state) {
-      const closestLatLon = findNearest(
-        {
-          latitude: latitude,
-          longitude: longitude
-        },
-        getCityArray()
-      );
+      let closestLatLon, cityName;
 
-      const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
-
+      if (cityList.length > 1) {
+        closestLatLon = findNearest(
+          {
+            latitude: latitude,
+            longitude: longitude
+          },
+          getCityArray()
+        );
+        cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
+      } else {
+        cityName = cityList[0].city
+      }
       fetchSightingData(cityName);
     }
   }, [searchResult]);
