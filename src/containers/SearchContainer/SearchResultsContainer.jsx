@@ -5,27 +5,32 @@ import SearchResults from 'components/search/search-results.component';
 
 let geoMap = require('data/geoMap.json');
 
-
-const SearchResultsContainer = ({ searchResult }) => {
-  const searchResultObject = searchResult && searchResult[0];
-  const latitude = searchResultObject?.lat
-  const longitude = searchResultObject?.lon
-  const country = searchResultObject?.display_name.split(", ")[4].replace(" ","_")
-  const state = searchResultObject?.display_name.split(", ")[2].replace(" ","_")
-  let cityList;
+const SearchResultsContainer = ({ searchResult, currentUser }) => {
   const [sightingChart, setSightingChart] = useState(null);
 
+  const searchResultObject = searchResult?.[0];
+  const latitude = searchResultObject?.lat;
+  const longitude = searchResultObject?.lon;
+
+  const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
+  const country = currentUser.country;
+
+  const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
+  const state = searchResultDisplayNameArray && countriesWithRegions.includes(country)
+    ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ","_")
+    : "None";
+
+
+  const cityArray = (searchResult && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
+  const cityList = (searchResult && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
+
   const getCityArray = () => {
-      if(country && state){
-          const cityArray = geoMap[country][state]
-          cityList = geoMap[country][state].map((cityObj) => {
-              return {...cityObj}
-          });
-          cityArray.forEach((cityObj) => {
-              delete cityObj['city'];
-          });
-          return cityArray;
-      };
+    if (country && state) {
+      cityArray.forEach((cityObj) => {
+        delete cityObj['city'];
+      });
+      return cityArray;
+    };
   }
 
   const cleanTableData = rawData => {
@@ -50,19 +55,24 @@ const SearchResultsContainer = ({ searchResult }) => {
     );
   }
 
-  useEffect( () => {
-    if (country && state) {
+  useEffect(() => {
+    if (searchResult && country && state) {
       const closestLatLon = findNearest(
-        {latitude: latitude,longitude: longitude}, getCityArray()
+        {
+          latitude: latitude,
+          longitude: longitude
+        },
+        getCityArray()
       );
 
       const cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
-      fetchSightingData(cityName)
+
+      fetchSightingData(cityName);
     }
-  }, [country, state, latitude, longitude]);
+  }, [searchResult]);
 
   return (
-    <SearchResults tableData={sightingChart}/>
+    searchResult ? <SearchResults tableData={sightingChart}/> : null
   );
 }
 
