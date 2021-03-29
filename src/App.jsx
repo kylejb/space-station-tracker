@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 // import Earth from 'components/earth';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
+  const [currentUser, setCurrentUser] = useState({ country: null });
+
+  useEffect(() => {
+    const getUserCountry = async () => {
+      const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
+      const response = await fetch(`${proxyURL}https://freegeoip.app/json`);
+      const data = await response.json();
+      const userCountry = data.country_name;
+      setCurrentUser({country: userCountry.replace(" ", "_")});
+    }
+    getUserCountry();
+  }, [])
 
   const fetchGeoDataFromZip = async (zip) => {
     const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
     const ENDPOINT = `search?`;
-    const PARAMS = `postalcode=${zip}&format=json`;
+    const PARAMS = `q=${currentUser.country.replace("_", "+")},${zip}&format=json`;
+
 
     const options = {
       method: 'GET',
@@ -27,7 +40,11 @@ const App = () => {
   return (
     <div className="app">
       <h1>App Component</h1>
-      <SearchContainer fetchGeoDataFromZip={fetchGeoDataFromZip} searchResult={searchResult} />
+      <SearchContainer
+        currentUser={currentUser}
+        searchResult={searchResult}
+        fetchGeoDataFromZip={fetchGeoDataFromZip}
+      />
       {/* <Earth searchResult={searchResult} /> */}
     </div>
   );
