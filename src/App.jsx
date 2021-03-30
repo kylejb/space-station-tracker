@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
-import Earth from 'components/earth';
+import Earth from 'containers/EarthContainer';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
