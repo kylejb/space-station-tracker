@@ -47,6 +47,18 @@ const Earth = ( props ) => {
     globeEl.current.controls().autoRotateSpeed = 0.1;
   }, []);
 
+  useEffect(() => {
+    if ( props.searchResult.length ) {
+      globeEl.current.controls().autoRotate = false;
+      globeEl.current.pointOfView({
+        lat: props.searchResult[0].lat,
+        lng: props.searchResult[0].lon,
+        altitude: 2
+      });
+    }
+
+  }, [props.searchResult]);
+
 
   return (
     <>
