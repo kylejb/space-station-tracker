@@ -23,15 +23,26 @@ const Earth = ( props ) => {
 
 
   // Camera follows ISS on state change
-  useEffect(() => {
-    if (stationObj.length) {
-      globeEl.current.pointOfView({
-        lat: stationObj[0].latitude,
-        lng: stationObj[0].longitude,
-        altitude: 2
-      });
-    }
-  }, [stationObj]);
+  // useEffect(() => {
+  //   if (stationObj.length) {
+  //     globeEl.current.pointOfView({
+  //       lat: stationObj[0].latitude,
+  //       lng: stationObj[0].longitude,
+  //       altitude: 2
+  //     });
+  //   }
+  // }, [stationObj]);
+
+  // Default view
+   useEffect(() => {
+    globeEl.current.pointOfView({
+      lat: 39.9,
+      lng: -97.8,
+      altitude: 2
+    });
+    globeEl.current.controls().autoRotate = true;
+    globeEl.current.controls().autoRotateSpeed = 0.1;
+  }, []);
 
 
   return (
