@@ -152,5 +152,5 @@ export const countryOptions = [
     { value:"Vietnam", label:"Vietnam" },
     { value:"Yemen", label:"Yemen" },
     { value:"Zambia", label:"Zambia" },
-    { value:"Zimbabwe", label:"Zimbabwe"}
+    { value:"Zimbabwe", label:"Zimbabwe" }
 ];
