@@ -6,6 +6,7 @@ const Earth = ( props ) => {
   const globeEl = useRef();
   // react-globe expects stationObj to be iterable
   const [stationObj, setStationObj] = useState([]);
+  const [followISS, setFollowISS] = useState(false);
 
 
   useEffect(()=> {
@@ -23,15 +24,17 @@ const Earth = ( props ) => {
 
 
   // Camera follows ISS on state change
-  // useEffect(() => {
-  //   if (stationObj.length) {
-  //     globeEl.current.pointOfView({
-  //       lat: stationObj[0].latitude,
-  //       lng: stationObj[0].longitude,
-  //       altitude: 2
-  //     });
-  //   }
-  // }, [stationObj]);
+  useEffect(() => {
+    if ( followISS && stationObj.length ) {
+      globeEl.current.controls().autoRotate = false;
+
+      globeEl.current.pointOfView({
+        lat: stationObj[0].latitude,
+        lng: stationObj[0].longitude,
+        altitude: 2
+      });
+    }
+  }, [followISS, stationObj]);
 
   // Default view
    useEffect(() => {
@@ -48,6 +51,8 @@ const Earth = ( props ) => {
   return (
     <>
       <h1>Earth Component</h1>
+      <label>Follow ISS</label>
+      <input type="checkbox" value={followISS} onChange={() => setFollowISS(!followISS)} />
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
