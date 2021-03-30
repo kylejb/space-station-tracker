@@ -11,6 +11,6 @@ import Search from './Search';
 
 test('renders Search Component', () => {
   render(<Search />);
-  const linkElement = screen.getByText(/Search Component/i);
+  const linkElement = screen.getByText(/Search results below/i);
   expect(linkElement).toBeInTheDocument();
 });
