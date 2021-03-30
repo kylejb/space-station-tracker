@@ -3,7 +3,7 @@ import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
 
 const App = () => {
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState([]);
   const [currentUser, setCurrentUser] = useState({ country: "" });
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const App = () => {
   const fetchGeoDataFromZip = async (zip) => {
     const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
     const ENDPOINT = `search?`;
+    // TODO - error/logic handling for missing country when fetching
     const PARAMS = `q=${currentUser.country.replace("_", "+")},${zip}&format=json`;
 
 

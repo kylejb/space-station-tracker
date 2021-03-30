@@ -22,8 +22,8 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     : "None";
 
   // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
-  const cityArray = (searchResult && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
-  const cityList = (searchResult && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
+  const cityArray = (searchResultObject && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
+  const cityList = (searchResultObject && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
 
   const getCityArray = () => {
     if (country && state) {
