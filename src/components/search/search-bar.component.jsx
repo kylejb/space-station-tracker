@@ -16,12 +16,12 @@ const SearchBar = ({ fetchGeoDataFromZip }) => {
         placeholder="Enter postcode"
         value={userInput}
         onChange={searchValueHandler}
-      />
+        />
       <input
         type="submit"
         value="Search"
         onClick={(e) => fetchGeoDataFromZip(userInput)}
-      />
+        />
     </div>
   );
 };

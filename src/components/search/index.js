@@ -1,3 +1,3 @@
-import SearchBar from './SearchBar';
+import Search from './Search';
 
-export default SearchBar;
+export default Search;

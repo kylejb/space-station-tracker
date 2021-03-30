@@ -12,8 +12,9 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
   const latitude = searchResultObject?.lat;
   const longitude = searchResultObject?.lon;
 
+  // Regions - the key after countries - are "None" for all countries except the below
   const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
-  const country = currentUser.country;
+  const country = currentUser?.country;
 
   const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
   const state = searchResultDisplayNameArray && countriesWithRegions.includes(country)
@@ -34,7 +35,6 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
   }
 
   const cleanTableData = rawData => {
-    //Pseudocode: Array[0-19] --> children[2].value
     return rawData.map( item => item.children[2].value );
   }
 
@@ -73,6 +73,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
       }
       fetchSightingData(cityName);
     }
+    // eslint-disable-next-line
   }, [searchResult]);
 
   return (
