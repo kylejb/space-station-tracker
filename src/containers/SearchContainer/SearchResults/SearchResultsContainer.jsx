@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
-import SearchResults from 'components/search/search-results.component';
+import SightingTable from 'components/sightingtable';
 
 let geoMap = require('data/geoMap.json');
 
@@ -77,7 +77,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
   }, [searchResult]);
 
   return (
-    searchResult ? <SearchResults tableData={sightingChart}/> : null
+    searchResult ? <SightingTable tableData={sightingChart}/> : null
   );
 }
 

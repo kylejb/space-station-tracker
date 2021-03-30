@@ -1,4 +1,4 @@
-const SearchResults = ({ tableData }) => {
+const SightingTable = ({ tableData }) => {
   const chartRows = () => {
     return tableData.map( row => <p>{row}</p> )
   }
@@ -20,4 +20,4 @@ const SearchResults = ({ tableData }) => {
 
 }
 
-export default SearchResults;
+export default SightingTable;
