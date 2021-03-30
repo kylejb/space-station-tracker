@@ -64,8 +64,14 @@ const Earth = ( props ) => {
   return (
     <>
       <h1>Earth Component</h1>
-      <label>Follow ISS</label>
-      <input type="checkbox" value={followISS} checked={followISS} onChange={() => setFollowISS(!followISS)} />
+      <label ariaLabel="Follow ISS">Follow ISS</label>
+      <input
+        ariaLabel="Toggle to follow ISS"
+        type="checkbox"
+        value={followISS}
+        checked={followISS}
+        onChange={() => setFollowISS(!followISS)}
+      />
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
