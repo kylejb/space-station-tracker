@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
-// import Earth from 'components/earth';
+import Earth from 'components/earth';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState(null);
@@ -46,7 +46,7 @@ const App = () => {
         fetchGeoDataFromZip={fetchGeoDataFromZip}
         setCurrentUser={setCurrentUser}
       />
-      {/* <Earth searchResult={searchResult} /> */}
+      <Earth searchResult={searchResult} />
     </div>
   );
 };
