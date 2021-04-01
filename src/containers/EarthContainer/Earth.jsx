@@ -64,9 +64,9 @@ const Earth = ( props ) => {
   return (
     <>
       <h1>Earth Component</h1>
-      <label ariaLabel="Follow ISS">Follow ISS</label>
+      <label aria-label="Follow ISS">Follow ISS</label>
       <input
-        ariaLabel="Toggle to follow ISS"
+        aria-label="Toggle to follow ISS"
         type="checkbox"
         value={followISS}
         checked={followISS}
