@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+
 const SearchBar = ({ fetchGeoDataFromZip }) => {
   const [userInput, setUserInput] = useState("");
 

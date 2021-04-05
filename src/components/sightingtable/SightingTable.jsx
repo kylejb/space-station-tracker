@@ -12,7 +12,7 @@ const SightingTable = ({ tableData }) => {
   }
   return (
     <>
-      <h1>SightingTable Component</h1>
+      {/* <h1>SightingTable Component</h1> */}
       { !tableData
         ?
           <p>No results yet, please search above</p>

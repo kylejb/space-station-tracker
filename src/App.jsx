@@ -1,3 +1,4 @@
+import './app.scss';
 import { useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
@@ -40,22 +41,14 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>App Component</h1>
-<<<<<<< HEAD
-      <Search fetchGeoDataFromZip={fetchGeoDataFromZip}/>
-      <button onClick={fetchNasaShowPages}>Fetch united states data</button>
-      <Earth searchResult={searchResult} />
-      {/* <Dropdown/> */}
-      <Sightingtable searchResult={searchResult} />
-=======
-      <SearchContainer
-        currentUser={currentUser}
-        searchResult={searchResult}
-        fetchGeoDataFromZip={fetchGeoDataFromZip}
-        setCurrentUser={setCurrentUser}
-      />
-      <Earth searchResult={searchResult} />
->>>>>>> 7301c116d2670306620dd8ada6cc4f72850a8ae7
+      {/* <h1>App Component</h1> */}
+        <SearchContainer
+          currentUser={currentUser}
+          searchResult={searchResult}
+          fetchGeoDataFromZip={fetchGeoDataFromZip}
+          setCurrentUser={setCurrentUser}
+        />
+        <Earth searchResult={searchResult} />
     </div>
   );
 };
