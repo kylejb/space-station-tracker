@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
+import spaceimage from './spaceimage.jpeg'
 import "./style.scss"
 
 
@@ -85,7 +86,7 @@ const Earth = ( props ) => {
         pointsMerge={true}
         pointColor={() => 'red'}
         pointResolution={12}
-
+        backgroundImageUrl={spaceimage}
         labelsData={props.searchResult}
         labelLat={d => d.lat}
         labelLng={d => d.lon}
