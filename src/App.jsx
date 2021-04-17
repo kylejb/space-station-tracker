@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
 
@@ -20,9 +20,7 @@ const App = () => {
   const fetchGeoDataFromZip = async (zip) => {
     const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
     const ENDPOINT = `search?`;
-    // TODO - error/logic handling for missing country when fetching
     const PARAMS = `country=${currentUser.country.replace("_", "%20")}&postalcode=${zip}&format=json`;
-
 
     const options = {
       method: 'GET',
@@ -38,6 +36,12 @@ const App = () => {
     setSearchResult([data[0]]);
   };
 
+  const resetSearchResultOnCountryChange = useCallback((userObj) => {
+    setSearchResult([]);
+    setCurrentUser(userObj);
+  }, []);
+
+
   return (
     <div className="app">
       <h1>App Component</h1>
@@ -45,7 +49,7 @@ const App = () => {
         currentUser={currentUser}
         searchResult={searchResult}
         fetchGeoDataFromZip={fetchGeoDataFromZip}
-        setCurrentUser={setCurrentUser}
+        setCurrentUser={resetSearchResultOnCountryChange}
       />
       <Earth searchResult={searchResult} />
     </div>
