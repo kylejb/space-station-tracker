@@ -51,7 +51,7 @@ const App = () => {
         fetchGeoDataFromZip={fetchGeoDataFromZip}
         setCurrentUser={resetSearchResultOnCountryChange}
       />
-      <Earth searchResult={searchResult} />
+      { searchResult[0] ? <Earth searchResult={searchResult} /> : <Earth searchResult={[]} /> }
     </div>
   );
 };
