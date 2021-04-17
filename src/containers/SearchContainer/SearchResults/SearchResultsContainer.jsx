@@ -7,7 +7,7 @@ import geoMap from 'data/geoMap.json';
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState(null),
           [cityList, setCityList] = useState(null),
-          [country, ] = useState(currentUser.country),
+          [country, setCountry] = useState(currentUser.country),
           [state, setState] = useState(null);
 
 
@@ -42,16 +42,20 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         const searchResultObject = searchResult[0];
         const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
         const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
+        const _country = currentUser.country;
         // Regions - the key after countries - are "None" for all countries except the below
-        const state = searchResultDisplayNameArray && countriesWithRegions.includes(country)
+        const _state = searchResultDisplayNameArray && countriesWithRegions.includes(_country)
         ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ","_")
         : "None";
 
-        // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
-        setCityList(JSON.parse(JSON.stringify(geoMap[country][state])));
-        setState(state);
+        if (searchResultObject) {
+            setCountry(_country);
+            setState(_state);
+            // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
+            setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
+        }
     // eslint-disable-next-line
-    }, []);
+    }, [searchResult, currentUser]);
 
 
     useEffect(() => {
@@ -80,7 +84,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
                 setSightingChart(cleanedData);
             });
         }
-        if (searchResult && country && state) {
+        if (searchResult[0] && country && state) {
             let closestLatLon, cityName;
 
             if (cityList.length > 1) {
@@ -102,7 +106,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
 
     return (
-        searchResult ? <SightingTable tableData={sightingChart}/> : null
+        searchResult[0] ? <SightingTable tableData={sightingChart}/> : null
     );
 }
 
