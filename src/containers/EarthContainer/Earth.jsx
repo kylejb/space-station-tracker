@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
+import "./style.scss"
 
 
 const Earth = ( props ) => {
@@ -62,16 +63,16 @@ const Earth = ( props ) => {
 
 
   return (
-    <>
-      <h1>Earth Component</h1>
-      <label aria-label="Follow ISS">Follow ISS</label>
+    <div className="earth-container">
+      {/* <h1>Earth Component</h1> */}
+      {/* <label aria-label="Follow ISS">Follow ISS</label>
       <input
         aria-label="Toggle to follow ISS"
         type="checkbox"
         value={followISS}
         checked={followISS}
         onChange={() => setFollowISS(!followISS)}
-      />
+      /> */}
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
@@ -84,7 +85,7 @@ const Earth = ( props ) => {
         pointsMerge={true}
         pointColor={() => 'red'}
         pointResolution={12}
-
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         labelsData={props.searchResult}
         labelLat={d => d.lat}
         labelLng={d => d.lon}
@@ -94,7 +95,7 @@ const Earth = ( props ) => {
         labelColor={() => 'teal'}
         labelResolution={2}
       />
-    </>
+    </div>
   );
 };
 

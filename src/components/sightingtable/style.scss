@@ -1,0 +1,15 @@
+.sightingcard {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    // span {
+    //     margin: 7px;
+    // }
+}
+
+.sightingresults {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+

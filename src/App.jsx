@@ -1,3 +1,4 @@
+import './app.scss';
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
@@ -51,7 +52,6 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>App Component</h1>
       <SearchContainer
         currentUser={currentUser}
         searchResult={searchResult}

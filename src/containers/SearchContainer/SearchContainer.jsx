@@ -1,6 +1,7 @@
 import SearchResultsContainer from './SearchResults';
 import DropdownContainer from './Dropdown';
 import Search from 'components/search';
+import "./style.scss"
 
 const SearchContainer = ({ fetchGeoDataFromZip, searchResult, currentUser, setCurrentUser }) => {
   return (
