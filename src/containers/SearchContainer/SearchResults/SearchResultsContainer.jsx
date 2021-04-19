@@ -2,106 +2,112 @@ import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
-
-let geoMap = require('data/geoMap.json');
+import geoMap from 'data/geoMap.json';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
-  const [sightingChart, setSightingChart] = useState(null);
+    const [sightingChart, setSightingChart] = useState(null),
+          [cityList, setCityList] = useState(null),
+          [country, setCountry] = useState(currentUser.country),
+          [state, setState] = useState(null);
 
-  const searchResultObject = searchResult?.[0];
-  const latitude = searchResultObject?.lat;
-  const longitude = searchResultObject?.lon;
 
-  // Regions - the key after countries - are "None" for all countries except the below
-  const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
-  const country = currentUser?.country;
-
-  const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
-  const state = searchResultDisplayNameArray && countriesWithRegions.includes(country)
-    ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ","_")
-    : "None";
-
-  // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
-  const cityArray = (searchResultObject && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
-  const cityList = (searchResultObject && country && state) && JSON.parse(JSON.stringify(geoMap[country][state]));
-
-  const getCityArray = () => {
-    if (country && state) {
-      cityArray.forEach((cityObj) => {
-        delete cityObj['city'];
-      });
-      return cityArray;
-    };
-  }
-
-  const cleanTableData = rawData => {
-    const arrayOfHTMLStrings = rawData.map( item => item.children[2].value );
-    const cleanData = [];
-    for (const row of arrayOfHTMLStrings) {
-      // spacing around split removes unnecessary whitespace without needing trim()
-      const rowArray = row.split(' &lt;br/&gt; ');
-      const rowObj = {
-        date: rowArray[0].split(": ")[1], // 'Date: Monday Mar 29, 2021'
-        time: rowArray[1].split(": ")[1],
-        duration: rowArray[2].split(": ")[1],
-        maxElevation: rowArray[3].split(": ")[1],
-        approach: rowArray[4].split(": ")[1],
-        // 'Departure: 10&#176; above NE &lt;br/&gt;'
-        departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim(),
-      };
-      cleanData.push(rowObj);
+    const cleanTableData = rawData => {
+        const arrayOfHTMLStrings = rawData.map( item => item.children[2].value );
+        const cleanData = [];
+        for (const row of arrayOfHTMLStrings) {
+            // spacing around split removes unnecessary whitespace without needing trim()
+            const rowArray = row.split(' &lt;br/&gt; ');
+            const rowObj = {
+                date: rowArray[0].split(": ")[1], // 'Date: Monday Mar 29, 2021'
+                time: rowArray[1].split(": ")[1],
+                duration: rowArray[2].split(": ")[1],
+                maxElevation: rowArray[3].split(": ")[1],
+                approach: rowArray[4].split(": ")[1],
+                // 'Departure: 10&#176; above NE &lt;br/&gt;'
+                departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim(),
+            };
+            cleanData.push(rowObj);
+        }
+        return cleanData;
     }
-    return cleanData;
-  }
 
-  // helper function for cleanTableData
-  // eslint-disable-next-line
-  const createRowObj = (row) => {
-    const rowArr = row.split(": ");
-    return { [rowArr[0].toLowerCase()]: rowArr[1] }
-  }
-
-  const fetchSightingData = (city) => {
-    const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
-    const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
-
-    fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
-      .then(response => response.text())
-      .then(data => {
-        const xml = new XMLParser().parseFromString(data);
-
-        const itemData = xml.getElementsByTagName('item');
-        const cleanedData = cleanTableData(itemData);
-
-        setSightingChart(cleanedData);
-      }
-    );
-  }
-
-  useEffect(() => {
-    if (searchResult && country && state) {
-      let closestLatLon, cityName;
-
-      if (cityList.length > 1) {
-        closestLatLon = findNearest(
-          {
-            latitude: latitude,
-            longitude: longitude
-          },
-          getCityArray()
-        );
-        cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
-      } else {
-        cityName = cityList[0].city
-      }
-      fetchSightingData(cityName);
-    }
+    // helper function for cleanTableData
     // eslint-disable-next-line
-  }, [searchResult]);
+    const createRowObj = (row) => {
+        const rowArr = row.split(": ");
+        return { [rowArr[0].toLowerCase()]: rowArr[1] }
+    }
 
-  return (
-    searchResult ? <SightingTable tableData={sightingChart}/> : null
-  );
+    useEffect(() => {
+        const searchResultObject = searchResult[0];
+        const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
+        const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
+        const _country = currentUser.country;
+        // Regions - the key after countries - are "None" for all countries except the below
+        const _state = searchResultDisplayNameArray && countriesWithRegions.includes(_country)
+        ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ","_")
+        : "None";
+
+        if (searchResultObject) {
+            setCountry(_country);
+            setState(_state);
+            // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
+            setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
+        }
+    // eslint-disable-next-line
+    }, [searchResult, currentUser]);
+
+
+    useEffect(() => {
+        const getCityCoordsList = () => {
+            const _cityCoordsList = [...cityList];
+            if (country && state) {
+                _cityCoordsList.forEach((cityObj) => {
+                delete {...cityObj['city']};
+            });
+            return _cityCoordsList;
+            };
+        }
+
+        const fetchSightingData = (city) => {
+            const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
+            const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
+
+            fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
+            .then(response => response.text())
+            .then(data => {
+                const xml = new XMLParser().parseFromString(data);
+
+                const itemData = xml.getElementsByTagName('item');
+                const cleanedData = cleanTableData(itemData);
+
+                setSightingChart(cleanedData);
+            });
+        }
+        if (searchResult[0] && country && state) {
+            let closestLatLon, cityName;
+
+            if (cityList.length > 1) {
+                closestLatLon = findNearest(
+                {
+                    latitude: searchResult[0].lat,
+                    longitude: searchResult[0].lon
+                },
+                getCityCoordsList()
+                );
+
+                cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
+            } else {
+                cityName = cityList[0].city
+            }
+            fetchSightingData(cityName);
+        }
+    }, [searchResult, cityList, country, state]);
+
+
+    return (
+        searchResult[0] ? <SightingTable tableData={sightingChart}/> : null
+    );
 }
 
 export default SearchResultsContainer;

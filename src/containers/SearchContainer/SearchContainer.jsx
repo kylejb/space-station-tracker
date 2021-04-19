@@ -8,10 +8,7 @@ const SearchContainer = ({ fetchGeoDataFromZip, searchResult, currentUser, setCu
           <Search fetchGeoDataFromZip={fetchGeoDataFromZip}>
             <DropdownContainer currentUser={currentUser} setCurrentUser={setCurrentUser} />
           </Search>
-          {searchResult[0]
-            ? <SearchResultsContainer currentUser={currentUser} searchResult={searchResult} />
-            : null
-          }
+          <SearchResultsContainer currentUser={currentUser} searchResult={searchResult} />
       </div>
   );
 }
