@@ -6,8 +6,7 @@ import "./style.scss"
 
 const Earth = ( props ) => {
   const globeEl = useRef();
-  // react-globe expects stationObj to be iterable
-  const [stationObj, setStationObj] = useState([]);
+  const [satelliteCollection, setSatelliteCollection] = useState([]);
   const [followISS, setFollowISS] = useState(false);
 
 
@@ -16,7 +15,7 @@ const Earth = ( props ) => {
     const findISS = async () => {
       const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
       let data = await response.json();
-      setStationObj([ data ]);
+      setSatelliteCollection([ data ]);
     }
     const interval = setInterval(() => {
       findISS();
@@ -27,16 +26,16 @@ const Earth = ( props ) => {
 
   // Camera follows ISS on state change
   useEffect(() => {
-    if ( followISS && stationObj.length ) {
+    if ( followISS && satelliteCollection.length ) {
       globeEl.current.controls().autoRotate = false;
 
       globeEl.current.pointOfView({
-        lat: stationObj[0].latitude,
-        lng: stationObj[0].longitude,
+        lat: satelliteCollection[0].latitude,
+        lng: satelliteCollection[0].longitude,
         altitude: 2
       });
     }
-  }, [followISS, stationObj]);
+  }, [followISS, satelliteCollection]);
 
   // Default view
    useEffect(() => {
@@ -79,7 +78,7 @@ const Earth = ( props ) => {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
-        customLayerData={stationObj}
+        customLayerData={satelliteCollection}
         customThreeObject={d => new THREE.Mesh(
             new THREE.SphereBufferGeometry(4000 * 4e-4),
             new THREE.MeshLambertMaterial({ color: "white" })
