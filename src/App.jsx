@@ -1,5 +1,5 @@
 import './app.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
 
@@ -21,9 +21,7 @@ const App = () => {
   const fetchGeoDataFromZip = async (zip) => {
     const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
     const ENDPOINT = `search?`;
-    // TODO - error/logic handling for missing country when fetching
-    const PARAMS = `q=${currentUser.country.replace("_", "+")},${zip}&format=json`;
-
+    const PARAMS = `country=${currentUser.country.replace("_", "%20")}&postalcode=${zip}&format=json`;
 
     const options = {
       method: 'GET',
@@ -33,22 +31,34 @@ const App = () => {
       },
     };
 
-    const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
-    let data = await response.json();
-    // Globe's dependencies expects searchResults to be iterable
-    setSearchResult([data[0]]);
+    if (zip !== "" && zip.length > 2) {
+        const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
+        let data = await response.json();
+
+        // when nothing is found, data is an empty array
+        if (data[0]) {
+            // Globe's dependencies expects searchResults to be iterable
+            setSearchResult([data[0]]);
+        } else {
+            setSearchResult([]);
+        }
+    }
   };
+
+  const resetSearchResultOnCountryChange = useCallback((userObj) => {
+    setSearchResult([]);
+    setCurrentUser(userObj);
+  }, []);
 
   return (
     <div className="app">
-      {/* <h1>App Component</h1> */}
-        <SearchContainer
-          currentUser={currentUser}
-          searchResult={searchResult}
-          fetchGeoDataFromZip={fetchGeoDataFromZip}
-          setCurrentUser={setCurrentUser}
-        />
-        <Earth searchResult={searchResult} />
+      <SearchContainer
+        currentUser={currentUser}
+        searchResult={searchResult}
+        fetchGeoDataFromZip={fetchGeoDataFromZip}
+        setCurrentUser={resetSearchResultOnCountryChange}
+      />
+      <Earth searchResult={searchResult} />
     </div>
   );
 };
