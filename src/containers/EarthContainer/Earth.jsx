@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import "./style.scss"
 
@@ -76,22 +77,23 @@ const Earth = ( props ) => {
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-        pointsData={stationObj}
-        pointLat={d => d.latitude}
-        pointLng={d => d.longitude}
-        pointLabel={d => "ISS"}
-        pointAltitude={0.9}
-        pointRadius={0.25}
-        pointsMerge={true}
-        pointColor={() => 'red'}
-        pointResolution={12}
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+
+        customLayerData={stationObj}
+        customThreeObject={d => new THREE.Mesh(
+            new THREE.SphereBufferGeometry(4000 * 4e-4),
+            new THREE.MeshLambertMaterial({ color: "white" })
+        )}
+        customThreeObjectUpdate={(obj, d) => {
+            Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
+        }}
+
         labelsData={props.searchResult}
         labelLat={d => d.lat}
         labelLng={d => d.lon}
         labelText={d => "Postcode"}
         labelSize={1000 * 4e-4}
-        labelDotRadius={1400 * 4e-4}
+        labelDotRadius={6000 * 5}
         labelColor={() => 'teal'}
         labelResolution={2}
       />
