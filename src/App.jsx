@@ -33,8 +33,14 @@ const App = () => {
     if (zip !== "" && zip.length > 2) {
         const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
         let data = await response.json();
-        // Globe's dependencies expects searchResults to be iterable
-        setSearchResult([data[0]]);
+
+        // when nothing is found, data is an empty array
+        if (data[0]) {
+            // Globe's dependencies expects searchResults to be iterable
+            setSearchResult([data[0]]);
+        } else {
+            setSearchResult([]);
+        }
     }
   };
 
@@ -52,7 +58,7 @@ const App = () => {
         fetchGeoDataFromZip={fetchGeoDataFromZip}
         setCurrentUser={resetSearchResultOnCountryChange}
       />
-      { searchResult[0] ? <Earth searchResult={searchResult} /> : <Earth searchResult={[]} /> }
+      <Earth searchResult={searchResult} />
     </div>
   );
 };
