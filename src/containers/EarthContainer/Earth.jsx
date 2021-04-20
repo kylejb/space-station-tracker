@@ -67,7 +67,6 @@ const Earth = ( props ) => {
 
   return (
     <div className="earth-container">
-      {/* <h1>Earth Component</h1> */}
       {/* <label aria-label="Follow ISS">Follow ISS</label>
       <input
         aria-label="Toggle to follow ISS"
