@@ -3,6 +3,7 @@ import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
+import "./style.scss"
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState(null),
