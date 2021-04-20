@@ -28,5 +28,6 @@ const useFetch = endpoint => {
     return {
       get,
     };
-  };
-  export default useFetch;
+};
+
+export default useFetch;
