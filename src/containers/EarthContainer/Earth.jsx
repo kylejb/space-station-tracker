@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import useViewport from 'hooks/useViewport';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import "./style.scss"
@@ -61,6 +62,8 @@ const Earth = ( props ) => {
 
   }, [props.searchResult]);
 
+  const { width, height } = useViewport();
+
 
   return (
     <div className="earth-container">
@@ -75,6 +78,9 @@ const Earth = ( props ) => {
       /> */}
       <Globe
         ref={globeEl}
+        width={width}
+        height={height}
+
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
