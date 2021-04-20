@@ -98,7 +98,7 @@ const Earth = ( props ) => {
         labelLng={d => d.lon}
         labelText={d => "Postcode"}
         labelSize={1000 * 4e-4}
-        labelDotRadius={6000 * 5}
+        labelDotRadius={1000 * 4e-4}
         labelColor={() => 'teal'}
         labelResolution={2}
       />
