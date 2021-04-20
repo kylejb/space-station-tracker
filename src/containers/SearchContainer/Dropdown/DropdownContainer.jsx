@@ -12,11 +12,24 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
   }, [userInput, setCurrentUser]);
 
   const customStyles = {
-    container: (provided, state) => ({
+    // container: (provided, state) => ({
+    //   ...provided,
+    //   width: '65px',
+    // }),
+    // singleValue: (provided, state) => ({
+    //   ...provided,
+    //   width: '50px'
+    // }),
+    // option: (provided, state) => ({
+    //   ...provided,
+    //   width: '50px'
+    // })
+    control: (provided, state) => ({
       ...provided,
-      width: '300px' ,
-    })
-    
+      width: 65,
+      height: 25,
+      // minHeight: 25
+    }),
   }
 
   return (
@@ -27,7 +40,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         ))}
         options={countryOptions}
         onChange={(e) => setUserInput(e.value)}
-        placeholder="Select your country..."
+        placeholder="Country"
         styles={customStyles}
       />
     </div>
