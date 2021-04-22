@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import useViewport from 'hooks/useViewport';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
-import "./style.scss"
+import './style.scss';
 
 
 const Earth = ( props ) => {
