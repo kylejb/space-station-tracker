@@ -2,36 +2,12 @@
     "name": "space-station-tracker",
     "version": "1.0.0",
     "private": true,
-    "dependencies": {
-        "geolib": "^3.3.3",
-        "luxon": "^2.3.0",
-        "node-sass": "^6.0.0",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "react-globe.gl": "^2.19.0",
-        "react-scripts": "^4.0.3",
-        "react-select": "^4.3.1",
-        "react-xml-parser": "^1.1.8",
-        "svg-arc": "^1.0.2",
-        "three": "0.133.0"
-    },
-    "devDependencies": {
-        "@testing-library/jest-dom": "^5.16.1",
-        "@testing-library/react": "^12.1.2",
-        "@testing-library/user-event": "^13.5.0"
-    },
     "scripts": {
         "start-client": "react-scripts start",
         "build": "react-scripts build && (cd server && npm install)",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "start": "cd server && npm start"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
     },
     "browserslist": {
         "production": [
@@ -45,7 +21,34 @@
             "last 1 safari version"
         ]
     },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
     "engines": {
         "node": "16.x"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.5.1",
+        "country-emoji": "^1.5.6",
+        "geolib": "^3.3.3",
+        "luxon": "^2.3.0",
+        "node-sass": "^6.0.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-globe.gl": "^2.19.0",
+        "react-redux": "^7.2.4",
+        "react-select": "^4.3.1",
+        "react-scripts": "^4.0.3",
+        "react-xml-parser": "^1.1.8",
+        "worldwindjs": "^1.8.0"
+    },
+    "devDependencies": {
+        "@redux-devtools/core": "^3.9.2",
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0"
     }
 }
