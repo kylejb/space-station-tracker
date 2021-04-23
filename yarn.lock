@@ -10659,6 +10659,11 @@ sockjs@^0.3.21:
     uuid "^3.4.0"
     websocket-driver "^0.7.4"
 
+solar-calculator@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/solar-calculator/-/solar-calculator-0.3.0.tgz#dc9dea9e0d8d5c9c30267ea4a4ab8dde983b1394"
+  integrity sha1-3J3qng2NXJwwJn6kpKuN3pg7E5Q=
+
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
