@@ -3,10 +3,12 @@ import Select from 'react-select';
 import { countryOptions } from 'data/countryOptions';
 import "./style.scss";
 //why didn't the import work??
-import {flag, code, name, countries} from 'country-emoji';
+// import Flag from '/Users/matthewgreen/Desktop/Programming_Projects/space-station-tracker/node_modules/country-emoji';
+
+import {flag} from "country-emoji"
 
 // github link: https://github.com/meeDamian/country-emoji
-// const flag = require('country-emoji');
+// const {flag} = require("country-emoji");
 
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
@@ -19,9 +21,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
   //helper function that sets user input and then finds correct emoji and fills button
   const dropdownSelectHelper = (e) => {
     setUserInput(e.value)
-    
-    // const emoji = "flag(e.value)"
-    // setEmojiButton(`${emoji}  ▼`)
+    // console.log(e.value)
+    let emoji = flag(e.value.replace("_", " "))
+    // console.log(emoji)
+    setEmojiButton(`${emoji}  ▼`)
   }
 
   const emojiClickHandler = () => {
