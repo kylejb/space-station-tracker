@@ -93,13 +93,15 @@ const Earth = ( props ) => {
     };
 
 
-      useEffect(() => {
-        (function iterateTime() {
-          setDt(dt => dt + VELOCITY * 60 * 1000);
-          requestAnimationFrame(iterateTime);
-        })();
-      }, []);
+    useEffect(() => {
+        const iterateTime = () => {
+            setDt(dt => dt + VELOCITY * 60 * 1000);
+            globeEl.current = requestAnimationFrame(iterateTime);
+        }
 
+        globeEl.current = requestAnimationFrame(iterateTime);
+        return () => cancelAnimationFrame(globeEl.current);
+    }, []);
 
 
     const { width, height } = useViewport();
@@ -131,7 +133,7 @@ const Earth = ( props ) => {
             tilesTransitionDuration={0}
 
             // globeMaterial={globeMaterial}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+            globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
             bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
             backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
