@@ -4,6 +4,7 @@ import * as solar from 'solar-calculator';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import './style.scss';
+import { MeshLambertMaterial } from 'three';
 
 
 const Earth = ( props ) => {
@@ -69,21 +70,47 @@ const Earth = ( props ) => {
 
 //   }, [props.searchResult]);
 
-    // const globeMaterial = new THREE.MeshPhongMaterial();
-    // globeMaterial.bumpScale = 10;
-    // new THREE.TextureLoader().load(
-    //     '//unpkg.com/three-globe/example/img/earth-water.png',
-    //     texture => {
-    //         globeMaterial.specularMap = texture;
-    //         globeMaterial.specular = new THREE.Color('grey');
-    //         globeMaterial.shininess = 15;
-    //     }
-    // );
+    const globeMaterial = new THREE.MeshPhongMaterial();
+    globeMaterial.bumpScale = 10;
+    new THREE.TextureLoader().load(
+        '//unpkg.com/three-globe/example/img/earth-water.png',
+        texture => {
+            globeMaterial.specularMap = texture;
+            globeMaterial.specular = new THREE.Color('grey');
+            globeMaterial.shininess = 15;
+        }
+    );
     const [dt, setDt] = useState(+new Date());
 
-    const VELOCITY = 9; // minutes per frame
+    const VELOCITY = 0; // minutes per frame
 
-    const solarMaterial = new THREE.MeshLambertMaterial({ color: '#ffff00', opacity: 0.3, transparent: true });
+    const canvasReDrawTest = () => {
+        const textureLoader = new THREE.TextureLoader;
+
+        function texture() {
+            const myMaterial = new MeshLambertMaterial();
+            myMaterial.onBeforeCompile = shader => {
+                // console.log("vert", shader.vertexShader);
+                // console.log("frag", shader.fragmentShader);
+                shader.fragmentShader = shader.fragmentShader.replace(textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg"), '#include <color_fragment>');
+
+            }
+            myMaterial.map = textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")
+
+            return myMaterial;
+        }
+        // const geometry = new THREE.SphereGeometry( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+        // const material = new THREE.MeshBasicMaterial( { color: 0xddddff } );
+        // const mesh = new THREE.Mesh( geometry, material );
+        // mesh.material.side = THREE.DoubleSide;
+        // globeEl.current.scene().add(mesh)
+        return texture();
+    }
+
+    const solarMaterial = () => {
+        return new THREE.MeshLambertMaterial({ color: '#414040', opacity: 0.3, transparent: true });
+    }
+    // const solarMaterial = new THREE.MeshLambertMaterial({ color: '#2e2e29', opacity: 0.3, transparent: true });
 
     const sunPosAt = dt => {
       const day = new Date(+dt).setUTCHours(0, 0, 0, 0);
@@ -96,16 +123,23 @@ const Earth = ( props ) => {
     useEffect(() => {
         const iterateTime = () => {
             setDt(dt => dt + VELOCITY * 60 * 1000);
-            globeEl.current = requestAnimationFrame(iterateTime);
+            globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
         }
 
+        // globeEl.current.scene().background = "//unpkg.com/three-globe/example/img/earth-day.jpg"
         globeEl.current = requestAnimationFrame(iterateTime);
-        return () => cancelAnimationFrame(globeEl.current);
+        return () => cancelAnimationFrame(globeEl.current.iterateTime);
     }, []);
 
 
     const { width, height } = useViewport();
+    const getAntipodeLat = lat => {
+        return lat * -1;
+    }
 
+    const getAntipodeLng = lng => {
+        return lng > 0 ? lng - 180 : lng + 180;
+    }
 
     return (
         <div className="earth-container">
@@ -123,19 +157,30 @@ const Earth = ( props ) => {
             height={height}
 
             tilesData={[{ pos: sunPosAt(dt) }]}
-            tileLng={d => d.pos[0]}
-            tileLat={d => d.pos[1]}
+            tileLng={d => getAntipodeLng(d.pos[0])}
+            tileLat={d => getAntipodeLat(d.pos[1])}
             tileAltitude={0.005}
             tileWidth={180}
             tileHeight={180}
             tileUseGlobeProjection={false}
-            tileMaterial={() => solarMaterial}
+            tileMaterial={() => solarMaterial()}
             tilesTransitionDuration={0}
 
-            // globeMaterial={globeMaterial}
+            globeMaterial={globeMaterial}
             globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
             bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
             backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+
+            // customLayerData={canvasReDrawTest()}
+            // customThreeObject={d => (d
+            //         // const geometry = new THREE.SphereGeometry( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+            //         // const material = d;
+            //         // const mesh = new THREE.Mesh( geometry, material );
+            //         // mesh.material.side = THREE.DoubleSide;
+            //     )}
+            // customThreeObjectUpdate={(obj, d) => {
+            //     Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
+            // }}
 
             // customLayerData={satelliteCollection}
             // customThreeObject={d => new THREE.Mesh(
@@ -160,3 +205,19 @@ const Earth = ( props ) => {
 };
 
 export default Earth;
+
+// const canvasReDrawTest = () => {
+//     const textureLoader = new THREE.TextureLoader();
+//     textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")
+//     function texture() {
+//         return new THREE.MeshLambertMaterial({map: textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")})
+//     }
+//     const geometry = new THREE.SphereGeometry( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+//     const material = texture();
+//     const mesh = new THREE.Mesh( geometry, material );
+//     mesh.material.side = THREE.DoubleSide;
+//     globeEl.current.scene(mesh)
+
+//     // console.log("GCS", globeEl.current.scene(mesh))
+//     return mesh.material.side
+// }
