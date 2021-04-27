@@ -67,14 +67,17 @@ const Earth = ( props ) => {
 
   return (
     <div className="earth-container">
-      {/* <label aria-label="Follow ISS">Follow ISS</label>
-      <input
-        aria-label="Toggle to follow ISS"
-        type="checkbox"
-        value={followISS}
-        checked={followISS}
-        onChange={() => setFollowISS(!followISS)}
-      /> */}
+      <h1>Where iss the ISS?</h1>
+      <span>
+        <input
+          aria-label="Toggle to follow ISS"
+          type="checkbox"
+          value={followISS}
+          checked={followISS}
+          onChange={() => setFollowISS(!followISS)}
+        />
+        <label aria-label="Follow ISS"> Follow Station</label>
+      </span>
       <Globe
         ref={globeEl}
         width={width}
