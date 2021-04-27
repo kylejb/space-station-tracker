@@ -20,7 +20,7 @@ const SearchBar = ({ fetchGeoDataFromZip }) => {
         />
       <input
         type="submit"
-        value="Search 🛰️"
+        value="🛰️ Sightings"
         onClick={(e) => fetchGeoDataFromZip(userInput)}
         />
     </div>
