@@ -16,34 +16,42 @@ const filterSightingCardsByDate = (numOfDays=1) => {
 }
 
 const SightingTable = ({ tableData }) => {
-  const filteredSightingCards = () => {
-    return tableData.filter(rowObj => {
-      return rowObj.date > filterSightingCardsByDate() && parseInt(rowObj.maxElevation) >= 20 && parseInt(rowObj.duration[0])
-    })
-  }
+    const filteredSightingCards = () => {
+        return tableData.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+            && parseInt(rowObj.maxElevation) >= 20
+            && parseInt(rowObj.duration[0])
+        ));
+    }
 
-  const renderSightingCards = () => {
-    let count = -1
-    return filteredSightingCards().map( rowObj => <SightingCard key={++count} sightingData={rowObj}/> )
-  }
+    const renderSightingCards = () => {
+        let count = -1;
+        return filteredSightingCards().map( rowObj => (
+            <SightingCard
+                key={++count}
+                sightingData={rowObj}
+            />
+        ));
+    }
 
-  const headerData = {
-    date: "Date", time: "Time", duration: "Duration"
-  }
+    const headerData = {
+        date: "Date",
+        time: "Time",
+        duration: "Duration"
+    };
 
-  return (
-    <>
-      { !tableData
-        ?
-          <p>No results yet, please search above</p>
-        :
-          <div className="sightingresults">
-                <SightingCard header sightingData={headerData}/>
-                {renderSightingCards()}
-          </div>
-      }
-    </>
-  );
+    return (
+        <>
+            {!tableData
+                ?
+                    <p>No results yet, please search above</p>
+                :
+                    <div className="sightingresults">
+                        <SightingCard header sightingData={headerData}/>
+                        {renderSightingCards()}
+                    </div>
+            }
+        </>
+    );
 }
 
 export default SightingTable;
