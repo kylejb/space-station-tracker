@@ -1,14 +1,24 @@
-import SightingCard from './SightingCard'
+import SightingCard from './SightingCard';
+
+
+/**
+ * Create a historic Date object.
+ *
+ * Helper function to set a baseline for items to return.
+ *
+ * @param {number}  numOfDays=1     Set the number of days from present to return with default of 1.
+ *
+ * @yield {Date}    Returns past date for filtering purposes.
+ */
+const filterSightingCardsByDate = (numOfDays=1) => {
+    const dateThreshold = new Date();
+    return new Date(dateThreshold.setDate(dateThreshold.getDate() - numOfDays));
+}
 
 const SightingTable = ({ tableData }) => {
-
-  const dateToday = new Date();
-  const dateYesterday = new Date(dateToday.setDate(dateToday.getDate() - 1))
-
   const filteredSightingCards = () => {
-    console.log(tableData)
     return tableData.filter(rowObj => {
-      return rowObj.date > dateYesterday && parseInt(rowObj.maxElevation) >= 20 && parseInt(rowObj.duration[0])
+      return rowObj.date > filterSightingCardsByDate() && parseInt(rowObj.maxElevation) >= 20 && parseInt(rowObj.duration[0])
     })
   }
 
