@@ -82,38 +82,7 @@ const Earth = ( props ) => {
 
     const VELOCITY = 0; // minutes per frame
 
-    const textureLoader = new THREE.TextureLoader();
-    const canvasReDrawTest = () => {
-        function texture() {
-            const myMaterial = new THREE.MeshLambertMaterial();
-            myMaterial.onBeforeCompile = shader => {
-                // console.log("vert", shader.vertexShader);
-                // console.log("frag", shader.fragmentShader);
-                shader.fragmentShader = shader.fragmentShader.replace(textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg"), '#include <color_fragment>');
-
-            }
-            myMaterial.map = textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")
-
-            return myMaterial;
-        }
-        // const geometry = new THREE.SphereGeometry( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
-        // const material = new THREE.MeshBasicMaterial( { color: 0xddddff } );
-        // const mesh = new THREE.Mesh( geometry, material );
-        // mesh.material.side = THREE.DoubleSide;
-        // globeEl.current.scene().add(mesh)
-        return texture();
-    }
-
-    const solarMaterial = () => {
-        return new THREE.MeshLambertMaterial({
-            color: '#2e2e29',
-            clearcoat: 1.0,
-            opacity: 0.3,
-            transparent: true,
-            normalScale: new THREE.Vector2( 0.15, 0.15 ),
-        });
-    }
-    // const solarMaterial = new THREE.MeshLambertMaterial({ color: '#2e2e29', opacity: 0.3, transparent: true });
+    const solarMaterial = new THREE.MeshLambertMaterial({ color: '#2e2e29', opacity: 0.3, transparent: true });
 
     const sunPosAt = dt => {
       const day = new Date(+dt).setUTCHours(0, 0, 0, 0);
