@@ -14,7 +14,6 @@ const Earth = ( props ) => {
   useEffect(()=> {
     setTimeout(() => { // wait for scene to be populated (asynchronously)
         const directionalLight = globeEl.current.scene().children.find(obj3d => obj3d.type === 'DirectionalLight');
-        console.log("DL", directionalLight);
         directionalLight && directionalLight.position.set(0, 1, 0); // change light position to see the specularMap's effect
       });
 
