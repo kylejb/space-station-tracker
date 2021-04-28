@@ -138,7 +138,7 @@ const Earth = ( props ) => {
                 tileWidth={180}
                 tileHeight={180}
                 tileUseGlobeProjection={false}
-                tileMaterial={() => solarMaterial()}
+                tileMaterial={() => solarMaterial}
                 tilesTransitionDuration={0}
 
                 globeMaterial={globeMaterial}
