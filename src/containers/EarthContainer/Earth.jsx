@@ -115,52 +115,55 @@ const Earth = ( props ) => {
 
     return (
         <div className="earth-container">
-        {/* <label aria-label="Follow ISS">Follow ISS</label>
-        <input
-            aria-label="Toggle to follow ISS"
-            type="checkbox"
-            value={followISS}
-            checked={followISS}
-            onChange={() => setFollowISS(!followISS)}
-        /> */}
-        <Globe
-            ref={globeEl}
-            width={width}
-            height={height}
+        <h1>Where iss the ISS?</h1>
+        <span>
+            <input
+                aria-label="Toggle to follow ISS"
+                type="checkbox"
+                value={followISS}
+                checked={followISS}
+                onChange={() => setFollowISS(!followISS)}
+            />
+        <label aria-label="Follow ISS">Follow Station</label>
+        </span>
+            <Globe
+                ref={globeEl}
+                width={width}
+                height={height}
 
-            tilesData={[{ pos: sunPosAt(dt) }]}
-            tileLng={d => getAntipodeLng(d.pos[0])}
-            tileLat={d => getAntipodeLat(d.pos[1])}
-            tileAltitude={0.005}
-            tileWidth={180}
-            tileHeight={180}
-            tileUseGlobeProjection={false}
-            tileMaterial={() => solarMaterial()}
-            tilesTransitionDuration={0}
+                tilesData={[{ pos: sunPosAt(dt) }]}
+                tileLng={d => getAntipodeLng(d.pos[0])}
+                tileLat={d => getAntipodeLat(d.pos[1])}
+                tileAltitude={0.005}
+                tileWidth={180}
+                tileHeight={180}
+                tileUseGlobeProjection={false}
+                tileMaterial={() => solarMaterial()}
+                tilesTransitionDuration={0}
 
-            globeMaterial={globeMaterial}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
-            bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-            backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+                globeMaterial={globeMaterial}
+                globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+                backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
-            customLayerData={satelliteCollection}
-            customThreeObject={d => new THREE.Mesh(
-                new THREE.SphereBufferGeometry(4000 * 4e-4),
-                new THREE.MeshLambertMaterial({ color: "white" }),
-            )}
-            customThreeObjectUpdate={(obj, d) => {
-                Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
-            }}
+                customLayerData={satelliteCollection}
+                customThreeObject={d => new THREE.Mesh(
+                    new THREE.SphereBufferGeometry(4000 * 4e-4),
+                    new THREE.MeshLambertMaterial({ color: "white" }),
+                )}
+                customThreeObjectUpdate={(obj, d) => {
+                    Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
+                }}
 
-            labelsData={props.searchResult}
-            labelLat={d => d.lat}
-            labelLng={d => d.lon}
-            labelText={d => "Postcode"}
-            labelSize={1000 * 4e-4}
-            labelDotRadius={1000 * 4e-4}
-            labelColor={() => 'teal'}
-            labelResolution={2}
-        />
+                labelsData={props.searchResult}
+                labelLat={d => d.lat}
+                labelLng={d => d.lon}
+                labelText={d => "Postcode"}
+                labelSize={1000 * 4e-4}
+                labelDotRadius={1000 * 4e-4}
+                labelColor={() => 'teal'}
+                labelResolution={2}
+            />
         </div>
     );
 };

@@ -1,3 +1,26 @@
 .earth-container {
     position: absolute;
+    h1 {
+        color: white;
+        font-size: 2em;
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        z-index: 5;
+        font-family: 'Woodchuck-Bold';
+    }
+    
+    span {
+        position: fixed;
+        bottom: 50px;
+        left: 46%;
+        z-index: 1;
+        label {
+            color: white;
+            font-family: 'Basier';
+        }
+
+    }
+    
 }
+

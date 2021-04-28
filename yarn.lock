@@ -3732,6 +3732,10 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
+"country-emoji@https://github.com/meeDamian/country-emoji.git":
+  version "1.5.6"
+  resolved "https://github.com/meeDamian/country-emoji.git#24c2c5fe737110c6d2eeef4327a4f414bcbb42e3"
+
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"
