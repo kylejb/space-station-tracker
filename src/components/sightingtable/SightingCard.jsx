@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import './style.scss';
 
-const SightingCard = ({ sightingData }) => {
+/*  prop.header is temporarily being used to make SightingCard reusable
+    if header, click should be disabled and we are not receiving a date object
+    all else is won't conflict
+*/
+const SightingCard = ({ sightingData, header }) => {
     const [renderDetails, setrenderDetails] = useState(false);
 
     const renderDetailsHelper = () => {
-        setrenderDetails(!renderDetails);
+        !header && setrenderDetails(!renderDetails);
     }
 
     return (
         <div className="sightingcard" onClick={renderDetailsHelper}>
             <div className="card_overview">
-                <span>{sightingData.date.toDateString()}</span>
+                <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
                 <span>{sightingData.time}</span>
                 <span>{sightingData.duration}</span>
             </div>
