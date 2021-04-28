@@ -19,10 +19,10 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             // spacing around split removes unnecessary whitespace without needing trim()
             const rowArray = row.split(' &lt;br/&gt; ');
             const rowObj = {
-                date: rowArray[0].split(": ")[1], // 'Date: Monday Mar 29, 2021'
+                date: new Date(rowArray[0].split(": ")[1]), // 'Date: Monday Mar 29, 2021'
                 time: rowArray[1].split(": ")[1],
                 duration: rowArray[2].split(": ")[1],
-                maxElevation: rowArray[3].split(": ")[1],
+                maxElevation: rowArray[3].split(": ")[1].split("&")[0],
                 approach: rowArray[4].split(": ")[1],
                 // 'Departure: 10&#176; above NE &lt;br/&gt;'
                 departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim(),
