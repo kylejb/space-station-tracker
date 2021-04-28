@@ -4,7 +4,7 @@ import { flag } from 'country-emoji';
 import { countryOptions } from 'data/countryOptions';
 import './style.scss';
 
-
+// TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState("");
     const [isCountryDropdownClicked, setIsCountryDropdownClicked] = useState(null);
