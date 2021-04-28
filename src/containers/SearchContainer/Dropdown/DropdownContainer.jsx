@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { flag } from "country-emoji";
+import { flag } from 'country-emoji';
 import { countryOptions } from 'data/countryOptions';
 import './style.scss';
 
@@ -11,7 +11,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
   const [emojiValue, setEmojiValue] = useState("🇺🇸  ▼");
 
 
-  //helper function that sets user input and then finds correct emoji and fills button
   const dropdownSelectHelper = (e) => {
     setUserInput(e.value)
     let emoji = flag(e.value.replace("_", " "))
@@ -32,23 +31,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
   }, [userInput, setCurrentUser]);
 
   const customStyles = {
-    // container: (provided, state) => ({
-    //   ...provided,
-    //   width: '65px',
-    // }),
-    // singleValue: (provided, state) => ({
-    //   ...provided,
-    //   width: '50px'
-    // }),
-    // option: (provided, state) => ({
-    //   ...provided,
-    //   width: '50px'
-    // })
     control: (provided, state) => ({
       ...provided,
       width: 180,
       height: 25,
-      // minHeight: 25
     }),
     menu:(provided, state) => ({
       ...provided,
