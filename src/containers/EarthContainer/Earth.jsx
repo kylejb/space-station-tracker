@@ -166,19 +166,3 @@ const Earth = ( props ) => {
 };
 
 export default Earth;
-
-// const canvasReDrawTest = () => {
-//     const textureLoader = new THREE.TextureLoader();
-//     textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")
-//     function texture() {
-//         return new THREE.MeshLambertMaterial({map: textureLoader.load("//unpkg.com/three-globe/example/img/earth-day.jpg")})
-//     }
-//     const geometry = new THREE.SphereGeometry( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
-//     const material = texture();
-//     const mesh = new THREE.Mesh( geometry, material );
-//     mesh.material.side = THREE.DoubleSide;
-//     globeEl.current.scene(mesh)
-
-//     // console.log("GCS", globeEl.current.scene(mesh))
-//     return mesh.material.side
-// }
