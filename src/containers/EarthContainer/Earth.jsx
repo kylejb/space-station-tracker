@@ -68,16 +68,17 @@ const Earth = ( props ) => {
 
   }, [props.searchResult]);
 
-    const globeMaterial = new THREE.MeshPhongMaterial();
-    globeMaterial.bumpScale = 10;
-    new THREE.TextureLoader().load(
-        '//unpkg.com/three-globe/example/img/earth-water.png',
-        texture => {
-            globeMaterial.specularMap = texture;
-            globeMaterial.specular = new THREE.Color('grey');
-            globeMaterial.shininess = 15;
-        }
-    );
+    //! Fix behavior during re-render
+    // const globeMaterial = new THREE.MeshPhongMaterial();
+    // globeMaterial.bumpScale = 10;
+    // new THREE.TextureLoader().load(
+    //     '//unpkg.com/three-globe/example/img/earth-water.png',
+    //     texture => {
+    //         globeMaterial.specularMap = texture;
+    //         globeMaterial.specular = new THREE.Color('grey');
+    //         globeMaterial.shininess = 15;
+    //     }
+    // );
 
     const [dt, setDt] = useState(+new Date());
 
@@ -141,7 +142,7 @@ const Earth = ( props ) => {
                 tileMaterial={() => solarMaterial}
                 tilesTransitionDuration={0}
 
-                globeMaterial={globeMaterial}
+                // globeMaterial={globeMaterial}
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
