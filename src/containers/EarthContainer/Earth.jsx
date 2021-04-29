@@ -14,27 +14,32 @@ const Earth = ( props ) => {
     // Camera follows ISS on state change
     useEffect(() => {
         if ( followISS && satelliteCollection.length ) {
-        globeEl.current.controls().autoRotate = false;
-
-        globeEl.current.pointOfView({
-            lat: satelliteCollection[0].latitude,
-            lng: satelliteCollection[0].longitude,
-            altitude: 2
-        });
-        } else if (props.searchResult.length) {
-            setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
+
             globeEl.current.pointOfView({
-            lat: props.searchResult[0].lat,
-            lng: props.searchResult[0].lon,
-            altitude: 2
+                lat: satelliteCollection[0].latitude,
+                lng: satelliteCollection[0].longitude,
+                altitude: 2
             });
+        } else if (props.searchResult.length) {
+            globeEl.current.controls().autoRotate = false;
         } else {
             globeEl.current.controls().autoRotate = true;
         }
 
     }, [followISS, satelliteCollection, props.searchResult]);
 
+  useEffect(() => {
+    if ( props.searchResult.length ) {
+      setFollowISS(false);
+      globeEl.current.controls().autoRotate = false;
+      globeEl.current.pointOfView({
+        lat: props.searchResult[0].lat,
+        lng: props.searchResult[0].lon,
+        altitude: 2
+      });
+    }
+  }, [props.searchResult]);
 
     //! Fix behavior during re-render
     // const globeMaterial = new THREE.MeshPhongMaterial();
@@ -55,10 +60,10 @@ const Earth = ( props ) => {
     const solarMaterial = new THREE.MeshLambertMaterial({ color: '#2e2e29', opacity: 0.3, transparent: true });
 
     const sunPosAt = dt => {
-      const day = new Date(+dt).setUTCHours(0, 0, 0, 0);
-      const t = solar.century(dt);
-      const longitude = (day - dt) / 864e5 * 360 - 180;
-      return [longitude - solar.equationOfTime(t) / 4, solar.declination(t)];
+        const day = new Date(+dt).setUTCHours(0, 0, 0, 0);
+        const t = solar.century(dt);
+        const longitude = (day - dt) / 864e5 * 360 - 180;
+        return [longitude - solar.equationOfTime(t) / 4, solar.declination(t)];
     };
 
 
@@ -66,9 +71,9 @@ const Earth = ( props ) => {
         setTimeout(() => { // wait for scene to be populated (asynchronously)
             const directionalLight = globeEl.current.scene().children.find(obj3d => obj3d.type === 'DirectionalLight');
             directionalLight && directionalLight.position.set(0, 1, 0); // change light position to see the specularMap's effect
-          });
+        });
 
-          // ISS Satellite ID is 25544 at this endpoint
+        // ISS Satellite ID is 25544 at this endpoint
         const findISS = async () => {
             const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
             let data = await response.json();
@@ -88,7 +93,7 @@ const Earth = ( props ) => {
 
         const interval = setInterval(() => {
             findISS();
-        }, 5000);
+        }, 2000);
         const iterateTime = () => {
             setDt(dt => dt + VELOCITY * 60 * 1000);
             globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
