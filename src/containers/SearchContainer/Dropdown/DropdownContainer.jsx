@@ -1,10 +1,48 @@
 import { useEffect, useState, useRef } from 'react';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import { flag } from 'country-emoji';
 import { countryOptions } from 'data/countryOptions';
 import './style.scss';
 
 // TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627
+const Option = ({ data, ...otherProps }) => {
+    return (
+        <components.Option {...otherProps}>
+            <div>{data.label}</div>
+        </components.Option>
+    );
+}
+
+const Control = ({ children, ...props }) => {
+    const { emoji, getCountryEmoji } = props.selectProps;
+
+    const onClick = () => console.log('controlledClick', document.activeElement);
+    const getClickFocus = (e) => {
+        e.target.focus();
+        getCountryEmoji(e);
+        onClick();
+    };
+
+    return (
+        <components.Control {...props}>
+            <span onMouseDown={getClickFocus}>
+
+            {/* <input
+                id="emojidropdown"
+                // style={{display: isCountryDropdownClicked ? "none" : "block"}}
+                type="button"
+                value={emoji}
+                onClick={getClickFocus}
+            /> */}
+                {emoji}
+            </span>
+            {children}
+            {/* <button onClick={getClickFocus}>Focused</button> */}
+        </components.Control>
+    );
+}
+
+
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState("");
     const [isCountryDropdownClicked, setIsCountryDropdownClicked] = useState(null);
@@ -26,8 +64,8 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     }
 
     /**
-     * Parameters:
-     * SyntheticKeyboardEvent
+     *
+     * @{param} SyntheticKeyboardEvent
      */
     const keyDownHandler = (e) => {
         switch (e.key) {
@@ -45,10 +83,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         setIsCountryDropdownClicked(false);
     }, [userInput, setCurrentUser]);
 
+    // display: isCountryDropdownClicked ? "none" : "block",
     const customStyles = {
         container: (provided, state) => ({
             ...provided,
-            display: isCountryDropdownClicked ? "block" : "none",
             focus: true,
         }),
         control: (provided, state) => ({
@@ -63,11 +101,23 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         }),
     }
 
+    const onClick = (e) => {
+        emojiClickHandler(e);
+    }
+
     return (
         <div className="dropdown-container">
             <Select
                 ref={selectRef}
+                emoji={emojiValue}
+                getCountryEmoji={onClick}
                 options={countryOptions}
+                components={{
+                    Option,
+                    Control,
+                    DropdownIndicator:() => null,
+                    IndicatorSeparator:() => null,
+                }}
                 styles={customStyles}
                 placeholder="Country"
                 openMenuOnFocus
@@ -76,14 +126,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                 value={countryOptions.find(country => (
                     (country.value === userInput) || (country.value === currentUser.country)
                 ))}
-            />
-
-            <input
-                id="emojidropdown"
-                style={{display: isCountryDropdownClicked ? "none" : "block"}}
-                type="button"
-                value={emojiValue}
-                onClick={emojiClickHandler}
             />
         </div>
     );
