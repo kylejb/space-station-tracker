@@ -14,7 +14,7 @@ const SightingCard = ({ sightingData, header }) => {
 
     return (
         <div className="sightingcard" onClick={renderDetailsHelper}>
-            <div className="card_overview">
+            <div className={header ? "sightingheader" : "card_overview"}>
                 <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
                 <span>{sightingData.time}</span>
                 <span>{sightingData.duration}</span>

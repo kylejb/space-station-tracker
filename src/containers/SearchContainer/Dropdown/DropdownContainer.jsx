@@ -1,51 +1,51 @@
 import { useEffect, useState, useRef } from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { flag } from 'country-emoji';
 import { countryOptions } from 'data/countryOptions';
 import './style.scss';
 
 // TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627
-const Option = ({ data, ...otherProps }) => {
-    return (
-        <components.Option {...otherProps}>
-            <div>{data.label}</div>
-        </components.Option>
-    );
-}
+// const Option = ({ data, ...otherProps }) => {
+//     return (
+//         <components.Option {...otherProps}>
+//             <div>{data.label}</div>
+//         </components.Option>
+//     );
+// }
 
-const Control = ({ children, ...props }) => {
-    const { emoji, getCountryEmoji } = props.selectProps;
+// const Control = ({ children, ...props }) => {
+//     const { emoji, getCountryEmoji } = props.selectProps;
 
-    const onClick = () => console.log('controlledClick', document.activeElement);
-    const getClickFocus = (e) => {
-        e.target.focus();
-        getCountryEmoji(e);
-        onClick();
-    };
+//     const onClick = () => console.log('controlledClick', document.activeElement);
+//     const getClickFocus = (e) => {
+//         e.target.focus();
+//         getCountryEmoji(e);
+//         onClick();
+//     };
 
-    return (
-        <components.Control {...props}>
-            <span onMouseDown={getClickFocus}>
+//     return (
+//         <components.Control {...props}>
+//             <span onMouseDown={getClickFocus}>
 
-            {/* <input
-                id="emojidropdown"
-                // style={{display: isCountryDropdownClicked ? "none" : "block"}}
-                type="button"
-                value={emoji}
-                onClick={getClickFocus}
-            /> */}
-                {emoji}
-            </span>
-            {children}
-            {/* <button onClick={getClickFocus}>Focused</button> */}
-        </components.Control>
-    );
-}
+//             {/* <input
+//                 id="emojidropdown"
+//                 // style={{display: isDropdownOpen ? "none" : "block"}}
+//                 type="button"
+//                 value={emoji}
+//                 onClick={getClickFocus}
+//             /> */}
+//                 {emoji}
+//             </span>
+//             {children}
+//             {/* <button onClick={getClickFocus}>Focused</button> */}
+//         </components.Control>
+//     );
+// }
 
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState("");
-    const [isCountryDropdownClicked, setIsCountryDropdownClicked] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [emojiValue, setEmojiValue] = useState("🇺🇸  ▼");
     const selectRef = useRef(null);
 
@@ -59,7 +59,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     // selectRef.current should be accessed after state is changed
     const emojiClickHandler = () => {
         //! await seems to have the desired effect despite object not being a Promise
-        setIsCountryDropdownClicked(!isCountryDropdownClicked);
+        setIsDropdownOpen(!isDropdownOpen);
         // selectRef.current.focus();
     }
 
@@ -71,7 +71,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         switch (e.key) {
             case "Escape":
                 // hardcoded to guarantee exit
-                setIsCountryDropdownClicked(false);
+                setIsDropdownOpen(false);
                 break;
             default:
                 break;
@@ -80,14 +80,14 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     useEffect(() => {
         setCurrentUser({country: userInput.replace(" ", "_")});
-        setIsCountryDropdownClicked(false);
+        setIsDropdownOpen(false);
     }, [userInput, setCurrentUser]);
 
-    // display: isCountryDropdownClicked ? "none" : "block",
+    // display: isDropdownOpen ? "none" : "block",
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-            width: isCountryDropdownClicked ? 180 : null,
+            width: isDropdownOpen ? 180 : null,
             minHeight: 25,
         }),
         menu: (provided, state) => ({
@@ -97,32 +97,59 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         }),
     }
 
-    const onClick = (e) => {
-        emojiClickHandler(e);
-    }
+    useEffect(() => {
+        if (isDropdownOpen) {
+            selectRef.current.focus()
+        }
+    },[isDropdownOpen]);
+
+    useEffect(() => {
+        if (currentUser.country === "") {
+            setEmojiValue("🇺🇸  ▼" );
+        } else {
+            const emoji = flag(currentUser.country.replace("_", " "));
+            setEmojiValue(`${emoji}  ▼`);
+        }
+    },[currentUser]);
+
+    useEffect(() => {
+        setCurrentUser({country: userInput.replace(" ", "_")});
+        setIsDropdownOpen(false);
+    }, [userInput, setCurrentUser]);
+
 
     return (
         <div className="dropdown-container">
-            <Select
-                blurInputOnSelect
-                openMenuOnFocus
-                ref={selectRef}
-                emoji={emojiValue}
-                getCountryEmoji={onClick}
-                options={countryOptions}
-                components={{
-                    Option,
-                    Control,
-                    DropdownIndicator:() => null,
-                    IndicatorSeparator:() => null,
-                }}
-                styles={customStyles}
-                onChange={dropdownSelectHelper}
-                onKeyDown={keyDownHandler}
-                value={countryOptions.find(country => (
-                    (country.value === userInput) || (country.value === currentUser.country)
-                ))}
-            />
+            {isDropdownOpen
+                ?
+                    <Select
+                        blurInputOnSelect
+                        openMenuOnFocus
+                        ref={selectRef}
+                        menuIsOpen={isDropdownOpen}
+                        options={countryOptions}
+                        components={{
+                            DropdownIndicator:() => null,
+                            IndicatorSeparator:() => null,
+                        }}
+                        styles={customStyles}
+                        onChange={dropdownSelectHelper}
+                        onKeyDown={keyDownHandler}
+                        value={countryOptions.find(country => (
+                            (country.value === userInput) || (country.value === currentUser.country)
+                        ))}
+                        // emoji={emojiValue}
+                        // getCountryEmoji={onClick}
+                    />
+                :
+                    <input
+                        type="button"
+                        value={emojiValue}
+                        id="emojidropdown"
+                        onClick={emojiClickHandler}
+                    />
+            }
+
         </div>
     );
 }

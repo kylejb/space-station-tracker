@@ -23,9 +23,9 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
                 time: rowArray[1].split(": ")[1],
                 duration: rowArray[2].split(": ")[1],
                 maxElevation: rowArray[3].split(": ")[1].split("&")[0],
-                approach: rowArray[4].split(": ")[1],
+                approach: rowArray[4].split(": ")[1].replace('&#176;', '°'),
                 // 'Departure: 10&#176; above NE &lt;br/&gt;'
-                departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim(),
+                departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim().replace('&#176;', '°'),
             };
             cleanData.push(rowObj);
         }
