@@ -29,17 +29,18 @@ const Earth = ( props ) => {
 
     }, [followISS, satelliteCollection, props.searchResult]);
 
-  useEffect(() => {
-    if ( props.searchResult.length ) {
-      setFollowISS(false);
-      globeEl.current.controls().autoRotate = false;
-      globeEl.current.pointOfView({
-        lat: props.searchResult[0].lat,
-        lng: props.searchResult[0].lon,
-        altitude: 2
-      });
-    }
-  }, [props.searchResult]);
+
+    useEffect(() => {
+        if ( props.searchResult.length ) {
+            setFollowISS(false);
+            globeEl.current.controls().autoRotate = false;
+            globeEl.current.pointOfView({
+                lat: props.searchResult[0].lat,
+                lng: props.searchResult[0].lon,
+                altitude: 2
+            });
+        }
+    }, [props.searchResult]);
 
     //! Fix behavior during re-render
     // const globeMaterial = new THREE.MeshPhongMaterial();
