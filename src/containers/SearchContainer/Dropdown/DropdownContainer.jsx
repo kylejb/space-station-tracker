@@ -57,10 +57,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     // setTimeout(() => selectRef.current.focus(), 1000);
     // selectRef.current should be accessed after state is changed
-    const emojiClickHandler = async () => {
+    const emojiClickHandler = () => {
         //! await seems to have the desired effect despite object not being a Promise
-        await setIsCountryDropdownClicked(!isCountryDropdownClicked);
-        selectRef.current.focus();
+        setIsCountryDropdownClicked(!isCountryDropdownClicked);
+        // selectRef.current.focus();
     }
 
     /**
@@ -85,14 +85,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     // display: isCountryDropdownClicked ? "none" : "block",
     const customStyles = {
-        container: (provided, state) => ({
-            ...provided,
-            focus: true,
-        }),
         control: (provided, state) => ({
             ...provided,
-            width: 180,
-            height: 25,
+            width: isCountryDropdownClicked ? 180 : null,
+            minHeight: 25,
         }),
         menu: (provided, state) => ({
             ...provided,
@@ -108,6 +104,8 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     return (
         <div className="dropdown-container">
             <Select
+                blurInputOnSelect
+                openMenuOnFocus
                 ref={selectRef}
                 emoji={emojiValue}
                 getCountryEmoji={onClick}
@@ -119,8 +117,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                     IndicatorSeparator:() => null,
                 }}
                 styles={customStyles}
-                placeholder="Country"
-                openMenuOnFocus
                 onChange={dropdownSelectHelper}
                 onKeyDown={keyDownHandler}
                 value={countryOptions.find(country => (
