@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
-const SearchBar = ({ fetchGeoDataFromZip }) => {
+const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
   const [userInput, setUserInput] = useState("");
 
   const searchValueHandler = (event) => {
     setUserInput(event.target.value);
   };
+
+  useEffect(() => {
+    setUserInput("");
+  }, [currentUser]);
 
 
   return (

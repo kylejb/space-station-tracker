@@ -1,14 +1,13 @@
 import SearchBar from './search-bar.component';
-import "./style.scss"
+import "./style.scss";
 
-const Search = ({ children, fetchGeoDataFromZip }) => {
-  return (
-    <div className="search">
-      {/* <h1>Search Component</h1> */}
-      {children}
-      <SearchBar fetchGeoDataFromZip={fetchGeoDataFromZip} />
-    </div>
-  );
+const Search = ({ children, currentUser, fetchGeoDataFromZip }) => {
+    return (
+        <div className="search">
+            {children}
+            <SearchBar fetchGeoDataFromZip={fetchGeoDataFromZip} currentUser={currentUser} />
+        </div>
+    );
 }
 
 export default Search;
