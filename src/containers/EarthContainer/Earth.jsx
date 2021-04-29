@@ -6,48 +6,35 @@ import Globe from 'react-globe.gl';
 import './style.scss';
 
 const Earth = ( props ) => {
-  const globeEl = useRef();
-  const [satelliteCollection, setSatelliteCollection] = useState([]);
-  const [followISS, setFollowISS] = useState(false);
+    const globeEl = useRef();
+    const [satelliteCollection, setSatelliteCollection] = useState([]);
+    const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  // Camera follows ISS on state change
-  useEffect(() => {
-    if ( followISS && satelliteCollection.length ) {
-      globeEl.current.controls().autoRotate = false;
+    // Camera follows ISS on state change
+    useEffect(() => {
+        if ( followISS && satelliteCollection.length ) {
+        globeEl.current.controls().autoRotate = false;
 
-      globeEl.current.pointOfView({
-        lat: satelliteCollection[0].latitude,
-        lng: satelliteCollection[0].longitude,
-        altitude: 2
-      });
-    }
+        globeEl.current.pointOfView({
+            lat: satelliteCollection[0].latitude,
+            lng: satelliteCollection[0].longitude,
+            altitude: 2
+        });
+        } else if (props.searchResult.length) {
+            setFollowISS(false);
+            globeEl.current.controls().autoRotate = false;
+            globeEl.current.pointOfView({
+            lat: props.searchResult[0].lat,
+            lng: props.searchResult[0].lon,
+            altitude: 2
+            });
+        } else {
+            globeEl.current.controls().autoRotate = true;
+        }
 
-  }, [followISS, satelliteCollection]);
+    }, [followISS, satelliteCollection, props.searchResult]);
 
-  // Default view
-//    useEffect(() => {
-//     globeEl.current.pointOfView({
-//       lat: 39.9,
-//       lng: -97.8,
-//       altitude: 2
-//     });
-//     globeEl.current.controls().autoRotate = true;
-//     globeEl.current.controls().autoRotateSpeed = 0.1;
-//   }, []);
-
-  useEffect(() => {
-    if ( props.searchResult.length ) {
-      setFollowISS(false);
-      globeEl.current.controls().autoRotate = false;
-      globeEl.current.pointOfView({
-        lat: props.searchResult[0].lat,
-        lng: props.searchResult[0].lon,
-        altitude: 2
-      });
-    }
-
-  }, [props.searchResult]);
 
     //! Fix behavior during re-render
     // const globeMaterial = new THREE.MeshPhongMaterial();
