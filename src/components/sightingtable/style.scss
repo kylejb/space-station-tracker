@@ -7,9 +7,19 @@
     background: rgba(125, 125, 124, 0.25);
     border-radius: 2%;
     padding: 5px 15px 5px 15px;
+    width: 115%;
     // background: #AFAEAD;
     // opacity: 20%;
     
+    #sightingheader {
+        color: #C6C6C5;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 0px 10px 0px;
+        border-bottom: 1px dotted #C6C6C5;
+    }
+
     .sightingcard {
         color: #C6C6C5;
         display: flex;
@@ -17,6 +27,7 @@
         // justify-content: space-between;
         padding: 10px 0px 10px 0px;
         border-bottom: 1px dotted #C6C6C5;
+        font-size: .9em;
         // box-shadow: 5px 5px rbga(255, 255, 255, 0.3);
         
         -webkit-transform-style: preserve-3d;
@@ -45,9 +56,15 @@
         .card_detail {
             display: flex;
             justify-content: space-between;
-            &.hidden {
-                display: none;
+            flex-direction: column;
+
+            span {
+                margin-top: 6px;
             }
+        }
+
+        #sightingdownarrow {
+            transform: scale(.5);
         }
 
     }

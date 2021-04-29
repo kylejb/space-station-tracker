@@ -28,7 +28,7 @@ const SightingTable = ({ tableData }) => {
           <p>No results yet, please search above</p>
         :
           <div className="sightingresults">
-                {/* <SightingCard sightingData={headerData}/> */}
+                <SightingCard sightingData={headerData}/>
                 {renderSightingCards()}
           </div>
       }

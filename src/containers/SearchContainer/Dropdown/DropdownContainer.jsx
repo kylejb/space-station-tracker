@@ -1,50 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, forwardRef } from 'react';
 import Select from 'react-select';
 import { countryOptions } from 'data/countryOptions';
 import "./style.scss";
-//why didn't the import work??
-// import Flag from '/Users/matthewgreen/Desktop/Programming_Projects/space-station-tracker/node_modules/country-emoji';
-
 import {flag} from "country-emoji"
-
-// github link: https://github.com/meeDamian/country-emoji
-// const {flag} = require("country-emoji");
 
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
   const [userInput, setUserInput] = useState("");
-  const [dropdownDisplay, setDropdownDisplay] = useState("none")
-  const [emojiDisplay, setEmojiDisplay] = useState("block")
-  const [emojiButton, setEmojiButton] = useState("🇺🇸  ▼")
+  const selectRef = useRef(null)
+  const [isCountryClicked, setIsCountryClicked] = useState(false)
+  const [emojiButton, setEmojiButton] = useState(null)
+  
 
-
-  //helper function that sets user input and then finds correct emoji and fills button
   const dropdownSelectHelper = (e) => {
     setUserInput(e.value)
-    // console.log(e.value)
     let emoji = flag(e.value.replace("_", " "))
-    // console.log(emoji)
     setEmojiButton(`${emoji}  ▼`)
   }
 
   const emojiClickHandler = () => {
-    setDropdownDisplay("block")
-    setEmojiDisplay("none")
+    setIsCountryClicked(true)
   }
 
   const dropDownChangeHandler = () => {
-    setDropdownDisplay("none")
-    setEmojiDisplay("block")
+    setIsCountryClicked(false)
+    
   }
 
   useEffect(() => {
-    setCurrentUser({country: userInput.replace(" ", "_")})
-  }, [userInput, setCurrentUser]);
+    if(isCountryClicked){
+      selectRef.current.focus()
+    }
+  },[isCountryClicked])
 
   useEffect(() => {
+    if(currentUser.country === ""){
+      setEmojiButton("🇺🇸  ▼" )
+    } else {
+      let emoji = flag(currentUser.country.replace("_", " "))
+      setEmojiButton(`${emoji}  ▼`)
+    }
+  },[currentUser])
+
+  useEffect(() => {
+    setCurrentUser({country: userInput.replace(" ", "_")})
     dropDownChangeHandler()
-  }, [userInput]
-  );
+  }, [userInput, setCurrentUser]);
+
+
 
   const customStyles = {
     // container: (provided, state) => ({
@@ -74,18 +77,25 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
   return (
     <div className="dropdown-container">
-      <div style={{display: `${dropdownDisplay}`}}>
-        <Select
-          value={countryOptions.find(country => (
-            (country.value === userInput) || (country.value === currentUser.country)
-          ))}
-          options={countryOptions}
-          onChange={(e) => dropdownSelectHelper(e)}
-          placeholder="Country"
-          styles={customStyles}
-        />
-      </div>
-    <input type="button" value={emojiButton} id="emojidropdown" style={{display: `${emojiDisplay}`}} onClick={emojiClickHandler}></input>
+        {isCountryClicked
+          ?
+        <div >
+          <Select
+            ref={selectRef}
+            value={countryOptions.find(country => (
+              (country.value === userInput) || (country.value === currentUser.country)
+            ))}
+            options={countryOptions}
+            onChange={(e) => dropdownSelectHelper(e)}
+            placeholder="Country"
+            styles={customStyles}
+            menuIsOpen={isCountryClicked}
+            openMenuOnFocus
+          />
+        </div>
+          :
+          <input type="button" value={emojiButton} id="emojidropdown" onClick={emojiClickHandler}></input>
+        }
     </div>
   );
 }
