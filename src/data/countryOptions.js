@@ -1,6 +1,4 @@
 export const countryOptions = [
-    //? is there value in keeping line 3
-    { value: null, label: "Select your country...", isDisabled: true },
     { value:"Afghanistan", label:"Afghanistan" },
     { value:"Albania", label:"Albania" },
     { value:"Algeria", label:"Algeria" },
