@@ -18,14 +18,15 @@ const SightingCard = ({ sightingData, header }) => {
                 <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
                 <span>{sightingData.time}</span>
                 <span>{sightingData.duration}</span>
+                <span id="sightingdownarrow">▼</span>
             </div>
 
             {renderDetails
                 ?
                     <div className="card_detail">
-                        <span>{sightingData.maxElevation}°</span>
-                        <span>{sightingData.approach}</span>
-                        <span>{sightingData.departure}</span>
+                        <span>Max Elevation: {sightingData.maxElevation}°</span>
+                        <span>Enters Sky: {sightingData.approach}</span>
+                        <span>Leaves Sky: {sightingData.departure}</span>
                     </div>
                 :
                     null
