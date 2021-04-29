@@ -50,9 +50,9 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const selectRef = useRef(null);
 
     const dropdownSelectHelper = (e) => {
-        setUserInput(e.value)
-        const emoji = flag(e.value.replace("_", " "))
-        setEmojiValue(`${emoji}  ▼`)
+        setUserInput(e.value);
+        const emoji = flag(e.value.replace("_", " "));
+        setEmojiValue(`${emoji}  ▼`);
     }
 
     // setTimeout(() => selectRef.current.focus(), 1000);
