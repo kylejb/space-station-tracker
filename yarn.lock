@@ -12265,6 +12265,11 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.1"
 
+worldwindjs@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/worldwindjs/-/worldwindjs-1.8.0.tgz#f52f9d5d6a55e0a171676e2f27b36d2af08184d9"
+  integrity sha512-CdqgWchHWxD3eio3sY7SHz0k76AVSfoA2yWeF75Rdg89mp5YPpO2up8PSqnwe8nCrs5XdLCQL23tKXHWnn6Spg==
+
 wrap-ansi@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-5.1.0.tgz#1fd1f67235d5b6d0fee781056001bfb694c03b09"
