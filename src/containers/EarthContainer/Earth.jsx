@@ -9,26 +9,7 @@ const Earth = ( props ) => {
   const globeEl = useRef();
   const [satelliteCollection, setSatelliteCollection] = useState([]);
   const [followISS, setFollowISS] = useState(false);
-
-
-  useEffect(()=> {
-    setTimeout(() => { // wait for scene to be populated (asynchronously)
-        const directionalLight = globeEl.current.scene().children.find(obj3d => obj3d.type === 'DirectionalLight');
-        directionalLight && directionalLight.position.set(0, 1, 0); // change light position to see the specularMap's effect
-      });
-
-    // ISS Satellite ID is 25544 at this endpoint
-    const findISS = async () => {
-      const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
-      let data = await response.json();
-      setSatelliteCollection([ data ]);
-    }
-    const interval = setInterval(() => {
-      findISS();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   // Camera follows ISS on state change
   useEffect(() => {
@@ -41,18 +22,19 @@ const Earth = ( props ) => {
         altitude: 2
       });
     }
+
   }, [followISS, satelliteCollection]);
 
   // Default view
-   useEffect(() => {
-    globeEl.current.pointOfView({
-      lat: 39.9,
-      lng: -97.8,
-      altitude: 2
-    });
-    globeEl.current.controls().autoRotate = true;
-    globeEl.current.controls().autoRotateSpeed = 0.1;
-  }, []);
+//    useEffect(() => {
+//     globeEl.current.pointOfView({
+//       lat: 39.9,
+//       lng: -97.8,
+//       altitude: 2
+//     });
+//     globeEl.current.controls().autoRotate = true;
+//     globeEl.current.controls().autoRotateSpeed = 0.1;
+//   }, []);
 
   useEffect(() => {
     if ( props.searchResult.length ) {
@@ -94,14 +76,44 @@ const Earth = ( props ) => {
 
 
     useEffect(() => {
+        setTimeout(() => { // wait for scene to be populated (asynchronously)
+            const directionalLight = globeEl.current.scene().children.find(obj3d => obj3d.type === 'DirectionalLight');
+            directionalLight && directionalLight.position.set(0, 1, 0); // change light position to see the specularMap's effect
+          });
+
+          // ISS Satellite ID is 25544 at this endpoint
+        const findISS = async () => {
+            const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
+            let data = await response.json();
+            setSatelliteCollection([ data ]);
+            if (isFirstLoad) {
+                globeEl.current.pointOfView({
+                    lat: data.latitude,
+                    lng: data.longitude,
+                    altitude: 2
+                });
+                setIsFirstLoad(false);
+            }
+        }
+
+        globeEl.current.controls().autoRotate = true;
+        globeEl.current.controls().autoRotateSpeed = 0.1;
+
+        const interval = setInterval(() => {
+            findISS();
+        }, 5000);
         const iterateTime = () => {
             setDt(dt => dt + VELOCITY * 60 * 1000);
             globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
         }
 
         globeEl.current = requestAnimationFrame(iterateTime);
-        return () => cancelAnimationFrame(globeEl.current.iterateTime);
-    }, []);
+
+        return () => {
+            cancelAnimationFrame(globeEl.current.iterateTime);
+            clearInterval(interval);
+        }
+    }, [isFirstLoad]);
 
 
     const { width, height } = useViewport();
