@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+// computeShiftedPositions
 const Satellite = () => {
     const [stationObj, setStationObj] = useState([]);
 
