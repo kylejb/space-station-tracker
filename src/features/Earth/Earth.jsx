@@ -1,4 +1,4 @@
-import Globe from 'api/globe/Globe';
+import Globe from 'components/globe';
 import WorldWind from 'worldwindjs';
 
 const globe = new Globe("globe-canvas");
