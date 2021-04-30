@@ -1,3 +1,4 @@
+import useViewport from 'hooks/useViewport';
 import { useEffect, useState } from 'react';
 import WorldWind from 'worldwindjs';
 
@@ -107,10 +108,15 @@ const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
             // const layerManager = new LayerManager(wwd);
         }
     }, [wwd]);
+    const { width, height } = useViewport();
 
     return (
-        <canvas id="canvasOne" {...customAttributes}>
-
+        <canvas
+            id="canvasOne"
+            width={width}
+            height={height}
+            style={{width: width, height: height, ...customAttributes}}
+        >
         </canvas>
     )
 
