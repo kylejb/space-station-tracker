@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
-import SightingTable from 'components/sightingtable';
+import SightingTable from './sightingtable';
 import geoMap from './geoMap.json';
 import './style.scss';
 
