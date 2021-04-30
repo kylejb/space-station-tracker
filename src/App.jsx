@@ -1,7 +1,7 @@
-import './app.scss';
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
+import './app.scss';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState([]);
