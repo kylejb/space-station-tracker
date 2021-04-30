@@ -1,5 +1,6 @@
-import useViewport from 'hooks/useViewport';
 import { useEffect, useState } from 'react';
+import useViewport from 'hooks/useViewport';
+import Canvas from 'components/canvas';
 import WorldWind from 'worldwindjs';
 
 const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
@@ -41,7 +42,8 @@ const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
     }
 
     useEffect(() => {
-        setWWD(new WorldWind.WorldWindow('canvasOne'));
+        
+        setWWD(new WorldWind.WorldWindow('canvas-globe'));
     }, [])
 
     useEffect(() => {
@@ -111,13 +113,13 @@ const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
     const { width, height } = useViewport();
 
     return (
-        <canvas
-            id="canvasOne"
+        <Canvas
+            id="globe-canvas"
             width={width}
             height={height}
-            style={{width: width, height: height, ...customAttributes}}
+            // style={{width: width, height: height, ...customAttributes}}
         >
-        </canvas>
+        </Canvas>
     )
 
 }
