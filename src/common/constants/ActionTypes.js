@@ -1,1 +1,2 @@
 export const GET_ISS_LOCATION = 'GET_ISS_LOCATION';
+export const GET_USER_LOCATION = 'GET_USER_LOCATION';
