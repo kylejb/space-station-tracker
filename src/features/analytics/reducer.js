@@ -1,6 +1,6 @@
 import { GET_USER_LOCATION } from 'common/constants/ActionTypes';
 
-const userReducer = (currentState, action) => {
+const userReducer = (currentState = {user: []}, action) => {
     switch (action.type) {
         case GET_USER_LOCATION:
             const { ...metaData } = action.payload;
