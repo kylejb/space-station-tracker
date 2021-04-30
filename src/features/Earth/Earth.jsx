@@ -1,15 +1,20 @@
-import Globe from 'components/globe';
+import { useEffect } from 'react';
+import Canvas from 'common/components/canvas';
+import Globe from 'common/components/globe';
 import WorldWind from 'worldwindjs';
 
-const globe = new Globe("globe-canvas");
-// Add layers to the globe
-globe.addLayer(new WorldWind.BMNGLayer(), {
-    category: "base"
-});
 
-const Earth = () => {
+const Earth = ({ searchResult, ...props }) => {
+    useEffect(() => {
+        const globe = new Globe("globe-canvas");
+        globe.addLayer(new WorldWind.BMNGLayer(), {
+        // Add layers to the globe
+            category: "base"
+        });
+    }, []);
 
-    return null;
+
+    return <Canvas id="globe-canvas" />;
 }
 
 export default Earth;

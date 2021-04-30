@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
-import Earth from 'containers/EarthContainer';
-import Canvas from 'common/components/canvas';
+import Earth from 'features/earth';
 import './app.scss';
 
 const App = () => {
@@ -54,8 +53,6 @@ const App = () => {
 
     return (
         <div className="app">
-           <Canvas id="globe-canvas" />
-
             <SearchContainer
                 currentUser={currentUser}
                 searchResult={searchResult}
