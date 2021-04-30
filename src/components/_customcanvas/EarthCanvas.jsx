@@ -1,225 +1,127 @@
-// import React, { Component } from 'react';
-// import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-// import './style.scss';
+import { useEffect, useState } from 'react';
+import useViewport from 'hooks/useViewport';
+import Canvas from 'components/canvas';
+import WorldWind from 'worldwindjs';
 
+const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
+    const [wwd, setWWD] = useState(null);
 
-// class EarthCanvas extends Component {
-//     constructor(selector) {
-//         super(selector)
+    const threeDimTest = () => {
+        const polygonLayer = new WorldWind.RenderableLayer();
+        wwd.addLayer(polygonLayer);
 
-// 		this.selector = selector;
-// 		this.width = window.innerWidth;
-// 		this.height = window.innerHeight;
-// 		this.frameEvent = new Event('frame');
+        const polygonAttributes = new WorldWind.ShapeAttributes(null);
+        polygonAttributes.interiorColor = new WorldWind.Color(0, 1, 1, 0.75);
+        polygonAttributes.outlineColor = WorldWind.Color.BLUE;
+        polygonAttributes.drawOutline = true;
+        polygonAttributes.applyLighting = true;
 
-// 		this.textureLoader = new THREE.TextureLoader();
-// 	}
+        const boundaries = [];
+        boundaries.push(new WorldWind.Position(20.0, -75.0, 700000.0));
+        boundaries.push(new WorldWind.Position(25.0, -85.0, 700000.0));
+        boundaries.push(new WorldWind.Position(20.0, -95.0, 700000.0));
 
-// 	setScene() {
-// 		this.scene = new THREE.Scene();
-// 		this.scenary = new THREE.Object3D();
+        const polygon = new WorldWind.Polygon(boundaries, polygonAttributes);
+        polygon.extrude = true;
+        polygonLayer.addRenderable(polygon);
+    }
 
-// 		this.scene.add(this.scenary);
-// 	}
+    const threeDimSatTest = () => {
+        const modelLayer = new WorldWind.RenderableLayer();
+        wwd.addLayer(modelLayer);
 
-// 	setCamera() {
-// 		this.camera = new THREE.PerspectiveCamera(50, this.width/this.height, 1, 20000);
-// 		this.camera.position.y = 25;
-// 		this.camera.position.z = 300;
-// 	}
+        // Position takes the following position arguments: lat, lon, altitude
+        const position = new WorldWind.Position(-51.151321133767, -6.0196159367604, 800000.0);
+        const config = {dirPath: WorldWind.configuration.baseUrl};
+        const colladaLoader = new WorldWind.ColladaLoader(position, config);
 
-// 	set_Renderer() {
-// 		this._renderer = new THREE.WebGL_Renderer({
-// 			antialias: true
-// 		});
-// 		this._renderer.setSize(this.width, this.height);
-// 		this.canvas = document.querySelector(this.selector).appendChild(this._renderer.domElement);
-// 	}
+        colladaLoader.load('satellite.dae', function (colladaModel) {
+            colladaModel.scale = 1500;
+            modelLayer.addRenderable(colladaModel);
+        })
+    }
 
-// 	setControls() {
-// 		this.controls = new OrbitControls(this.camera, this.canvas);
-// 		this.controls.maxDistance = 500;
-// 		this.controls.minDistance = 200;
-// 	}
+    useEffect(() => {
+        setWWD(new WorldWind.WorldWindow('canvas-globe'));
+    }, [])
 
-// 	addHelpers() {
-// 		this.axes = new THREE.AxesHelper(500);
-// 		this.scenary.add(this.axes);
-// 	}
+    useEffect(() => {
+        // Tell WorldWind to log only warnings and errors.
+        WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_WARNING);
 
-// 	addLights() {
-// 		this.ambientLight = new THREE.AmbientLight(0x555555);
-// 		this.directionalLight = new THREE.DirectionalLight(0xffffff);
-// 		this.directionalLight.position.set(10, 0, 10).normalize();
+        if (wwd) {
+            //* needs useCallback, if implemented this way
+            // threeDimSatTest();
+            // threeDimTest();
 
-// 		this.scenary.add(this.ambientLight);
-// 		this.scenary.add(this.directionalLight);
-// 	}
+            // Create the WorldWindow.
+            // Create imagery layers.
+            // const BMNGOneImageLayer = new WorldWind.BMNGOneImageLayer("https://github.com/NASAWorldWind/WebWorldWind/blob/develop/images/BMNG_world.topo.bathy.200405.3.2048x1024.jpg");
+            const BMNGOneImageLayer = new WorldWind.BMNGOneImageLayer();
+            const BMNGLayer = new WorldWind.BMNGLayer();
+            wwd.addLayer(BMNGOneImageLayer);
+            wwd.addLayer(BMNGLayer);
 
-// 	_render() {
-// 		this.renderer._render(this.scene, this.camera);
-// 		this.canvas.dispatchEvent(this.frameEvent);
-// 		this.frameRequest = window.requestAnimationFrame(this._render.bind(this));
-// 	}
+            // Use the StarField layer to show stars and the Sun around the globe, and the Atmosphere layer to display
+            // the atmosphere effect and the night side of the Earth.
+            // Note that the StarField layer requires a dark canvas background color.
+            // The StarField layer should be added before the Atmosphere layer.
+            // const starFieldLayer = new WorldWind.StarFieldLayer();
+            const atmosphereLayer = new WorldWind.AtmosphereLayer("https://unpkg.com/worldwindjs@1.7.0/build/dist/images/dnb_land_ocean_ice_2012.png");
+            // wwd.addLayer(starFieldLayer);
+            wwd.addLayer(atmosphereLayer);
 
-// 	destroy() {
-// 		window.cancelAnimationFrame(this.frameRequest);
-// 		this.scene.children = [];
-// 		this.canvas.remove();
-// 	}
+            // Set a date property for the StarField and Atmosphere layers to the current date and time.
+            // This enables the Atmosphere layer to show a night side (and dusk/dawn effects in Earth's terminator).
+            // The StarField layer positions its stars according to this date.
+            const now = new Date();
+            // starFieldLayer.time = now;
+            atmosphereLayer.time = now;
 
-// 	addSky() {
-// 		let radius = 400,
-// 			segments = 50;
+            // In this example, each full day/night cycle lasts 8 seconds in real time.
+            const simulatedMillisPerDay = 8000;
 
-// 		this.skyGeometry = new THREE.SphereGeometry(radius, segments, segments);
-// 		this.skyMaterial = new THREE.MeshPhongMaterial({
-// 			color: 0x666666,
-// 			side: THREE.BackSide,
-// 			shininess: 0
-// 		});
-// 		this.sky = new THREE.Mesh(this.skyGeometry, this.skyMaterial);
+            // Begin the simulation at the current time as provided by the browser.
+            const startTimeMillis = Date.now();
 
-// 		this.scenary.add(this.sky);
+            function runSimulation() {
+                // Compute the number of simulated days (or fractions of a day) since the simulation began.
+                const elapsedTimeMillis = Date.now() - startTimeMillis;
+                const simulatedDays = elapsedTimeMillis / simulatedMillisPerDay;
 
-// 		this.loadSkyTextures();
-// 	}
+                // Compute a real date in the future given the simulated number of days.
+                const millisPerDay = 24 * 3600 * 1000; // 24 hours/day * 3600 seconds/hour * 1000 milliseconds/second
+                const simulatedMillis = simulatedDays * millisPerDay;
+                const simulatedDate = new Date(startTimeMillis + simulatedMillis);
 
-// 	loadSkyTextures() {
-// 		this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/sky-texture.jpg', texture => {
-// 			this.skyMaterial.map = texture;
-// 			this.skyMaterial.needsUpdate = true;
-// 		});
-// 	}
+                // Update the date in both the Starfield and the Atmosphere layers.
+                // starFieldLayer.time = simulatedDate;
+                atmosphereLayer.time = simulatedDate;
+                wwd.redraw(); // Update the WorldWindow scene.
 
-// 	addEarth() {
-// 		let radius = 100,
-// 			segments = 50;
+                requestAnimationFrame(runSimulation);
+            }
 
-// 		this.earthGeometry = new THREE.SphereGeometry(radius, segments, segments);
-// 		this.earthMaterial = new THREE.ShaderMaterial({
-// 			bumpScale: 5,
-// 			specular: new THREE.Color(0x333333),
-// 			shininess: 50,
-// 			uniforms: {
-// 				sunDirection: {
-// 					value: new THREE.Vector3(1, 1, .5)
-// 				},
-// 				dayTexture: {
-// 					value: this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/earth-texture.jpg')
-// 				},
-// 				nightTexture: {
-// 					value: this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/earth-night.jpg')
-// 				}
-// 			},
-// 			vertexShader: this.dayNightShader.vertex,
-// 			fragmentShader: this.dayNightShader.fragment
-// 		});
-// 		this.earth = new THREE.Mesh(this.earthGeometry, this.earthMaterial);
+            // Animate the starry sky as well as the globe's day/night cycle.
+            requestAnimationFrame(runSimulation);
 
-// 		this.scenary.add(this.earth);
+            // return () => cancelAnimationFrame()
+            // Create a layer manager for controlling layer visibility.
+            // const layerManager = new LayerManager(wwd);
+        }
+    }, [wwd]);
+    const { width, height } = useViewport();
 
-// 		this.loadEarthTextures();
-// 		// this.addAtmosphere();
-// 	}
+    return (
+        <Canvas
+            id="globe-canvas"
+            width={width}
+            height={height}
+            // style={{width: width, height: height, ...customAttributes}}
+        >
+        </Canvas>
+    )
 
-// 	loadEarthTextures() {
-// 		this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/earth-texture.jpg', texture => {
-// 			this.earthMaterial.map = texture;
-// 			this.earthMaterial.needsUpdate = true;
-// 		});
-// 		this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/earth-bump.jpg', texture => {
-// 			this.earthMaterial.bumpMap = texture;
-// 			this.earthMaterial.needsUpdate = true;
-// 		});
-// 		this.textureLoader.load('https://acaua.gitlab.io/webgl-with-threejs/img/textures/earth/earth-specular.jpg', texture => {
-// 			this.earthMaterial.specularMap = texture;
-// 			this.earthMaterial.needsUpdate = true;
-// 		});
-// 	}
+}
 
-// 	// addAtmosphere() {
-// 	// 	this.innerAtmosphereGeometry = this.earthGeometry.clone();
-// 	// 	this.innerAtmosphereMaterial = THREEx.createAtmosphereMaterial();
-// 	// 	this.innerAtmosphereMaterial.uniforms.glowColor.value.set(0x88ffff);
-// 	// 	this.innerAtmosphereMaterial.uniforms.coeficient.value = 1;
-// 	// 	this.innerAtmosphereMaterial.uniforms.power.value = 5;
-// 	// 	this.innerAtmosphere = new THREE.Mesh(this.innerAtmosphereGeometry, this.innerAtmosphereMaterial);
-// 	// 	this.innerAtmosphere.scale.multiplyScalar(1.008);
-
-// 	// 	this.outerAtmosphereGeometry = this.earthGeometry.clone();
-// 	// 	this.outerAtmosphereMaterial = THREEx.createAtmosphereMaterial();
-// 	// 	this.outerAtmosphereMaterial.side = THREE.BackSide;
-// 	// 	this.outerAtmosphereMaterial.uniforms.glowColor.value.set(0x0088ff);
-// 	// 	this.outerAtmosphereMaterial.uniforms.coeficient.value = .68;
-// 	// 	this.outerAtmosphereMaterial.uniforms.power.value = 10;
-// 	// 	this.outerAtmosphere = new THREE.Mesh(this.outerAtmosphereGeometry, this.outerAtmosphereMaterial);
-// 	// 	this.outerAtmosphere.scale.multiplyScalar(1.06);
-
-// 	// 	this.earth.add(this.innerAtmosphere);
-// 	// 	this.earth.add(this.outerAtmosphere);
-// 	// }
-
-// 	get dayNightShader() {
-// 		return {
-// 			vertex: `
-// 				varying vec2 vUv;
-// 				varying vec3 vNormal;
-
-// 				void main() {
-// 					vUv = uv;
-// 					vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-// 					vNormal = normalMatrix * normal;
-// 					gl_Position = projectionMatrix * mvPosition;
-// 				}
-// 			`,
-// 			fragment: `
-// 				uniform sampler2D dayTexture;
-// 				uniform sampler2D nightTexture;
-
-// 				uniform vec3 sunDirection;
-
-// 				varying vec2 vUv;
-// 				varying vec3 vNormal;
-
-// 				void main(void) {
-// 					vec3 dayColor = texture2D(dayTexture, vUv).rgb;
-// 					vec3 nightColor = texture2D(nightTexture, vUv).rgb;
-
-// 					float cosineAngleSunToNormal = dot(normalize(vNormal), sunDirection);
-
-// 					cosineAngleSunToNormal = clamp(cosineAngleSunToNormal * 5.0, -1.0, 1.0);
-
-// 					float mixAmount = cosineAngleSunToNormal * 0.5 + 0.5;
-
-// 					vec3 color = mix(nightColor, dayColor, mixAmount);
-
-// 					gl_FragColor = vec4(color, 1.0);
-// 				}
-// 			`
-// 		}
-// 	}
-
-// 	animate() {
-// 		this.canvas.addEventListener('frame', () => {
-// 			this.scenary.rotation.x += 0.0001;
-// 			this.scenary.rotation.y -= 0.0005;
-// 		});
-// 	}
-
-// 	init() {
-// 		this.setScene();
-// 		this.setCamera();
-// 		this.set_Renderer();
-// 		// this.setControls();
-// 		this.addLights();
-// 		this._render();
-// 		this.addSky();
-// 		this.addEarth();
-// 		this.animate();
-// 	}
-// }
-
-// // export const earthCanvas = new EarthCanvas('#canvas');
-// // earthCanvas.init();
+export default EarthCanvas;
