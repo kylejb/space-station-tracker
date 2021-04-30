@@ -10,7 +10,7 @@ const Canvas = ({id, ...props}) => {
             <canvas
                 id={id}
                 style={{ width: "100%", height: "100%" }}
-            />
+            >Your browser does not support HTML5 Canvas.</canvas>
         </div>
     );
 }
