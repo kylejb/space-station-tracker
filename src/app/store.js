@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import rootReducer from "common/reducers";
 
@@ -10,13 +9,15 @@ const middleware = [ thunk ];
 //     middleware.push();
 // }
 
-const composeEnhancers = composeWithDevTools({
-    // actionsBlacklist, actionsCreators, and other other options if needed
-});
+// TODO - Wire up Redux DevTools for development env
+// const composeEnhancers = composeWithDevTools({
+//     // actionsBlacklist, actionsCreators, and other other options if needed
+// });
 
-const Store = createStore(rootReducer, {}, composeEnhancers(
+const Store = createStore(
+    rootReducer,
     applyMiddleware(...middleware),
-));
+);
 
 //? Consider trigger dispatch to populate initial state upon store creation
 // Store.dispatch(getUserAndSatelliteInfo)
