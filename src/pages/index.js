@@ -1,7 +1,7 @@
-import Canvas from "components/canvas/Canvas";
-import EarthContainer from "containers/EarthContainer/Earth";
-import SearchContainer from "containers/SearchContainer";
-import Main from "layouts/Main";
+import Canvas from 'components/canvas/Canvas';
+import EarthContainer from 'containers/EarthContainer/Earth';
+import SearchContainer from 'containers/SearchContainer';
+import Main from 'layouts/Main';
 
 const Index = () => {
     <Main>
