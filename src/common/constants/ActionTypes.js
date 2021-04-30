@@ -1,0 +1,1 @@
+export const GET_ISS_LOCATION = 'GET_ISS_LOCATION';

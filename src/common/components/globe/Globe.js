@@ -1,6 +1,6 @@
 import WorldWind from 'worldwindjs';
-import EoxSentinal2CloudlessLayer from 'api/globe/EoxSentinal2CloudlessLayer';
-import EnhancedAtmosphereLayer from 'api/globe/EnhancedAtmosphereLayer';
+import EoxSentinal2CloudlessLayer from 'common/api/EoxSentinal2CloudlessLayer';
+import EnhancedAtmosphereLayer from 'common/api/EnhancedAtmosphereLayer';
 
 /**
  * The Globe encapsulates the WorldWindow object (wwd) and provides application specific logic for interacting with layers.
