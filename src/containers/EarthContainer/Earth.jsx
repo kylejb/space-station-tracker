@@ -21,24 +21,24 @@ const EarthContainer = ( props ) => {
   }, []);
 
     //! Experimental - for testing/development of Canvas component and api/Globe
-    // useEffect(() => {
-    //     // Create a globe
-    //     let globe = new Globe("globe-canvas");
+    useEffect(() => {
+        // Create a globe
+        let globe = new Globe("globe-canvas");
 
-    //     // Add layers to the globe
-    //     globe.addLayer(new WorldWind.BMNGLayer(), {
-    //         category: "base"
-    //     });
-    //     globe.addLayer(new WorldWind.CoordinatesDisplayLayer(globe.wwd), {
-    //         category: "setting"
-    //     });
-    //     globe.addLayer(new WorldWind.ViewControlsLayer(globe.wwd), {
-    //         category: "setting"
-    //     });
-    //     globe.addLayer(new WorldWind.CompassLayer(), {
-    //         category: "setting",
-    //     });
-    // },[]);
+        // Add layers to the globe
+        globe.addLayer(new WorldWind.BMNGLayer(), {
+            category: "base"
+        });
+        // globe.addLayer(new WorldWind.CoordinatesDisplayLayer(globe.wwd), {
+        //     category: "setting"
+        // });
+        // globe.addLayer(new WorldWind.ViewControlsLayer(globe.wwd), {
+        //     category: "setting"
+        // });
+        // globe.addLayer(new WorldWind.CompassLayer(), {
+        //     category: "setting",
+        // });
+    },[]);
 
     return (
         <div className="earth-container">
