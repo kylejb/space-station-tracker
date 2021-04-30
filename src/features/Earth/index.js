@@ -1,3 +1,8 @@
-import EarthCanvas from './EarthCanvas';
+import Earth from './earth';
 
-export default EarthCanvas;
+import * as actionCreators from './actionCreators';
+import reducer from './reducer';
+
+export { actionCreators, reducer };
+
+export default Earth;

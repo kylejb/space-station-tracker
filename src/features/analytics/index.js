@@ -1,8 +1,8 @@
-import Satellite from './satellite';
+import Analytics from './analytics';
 
 import * as actionCreators from './actionCreators';
 import reducer from './reducer';
 
 export { actionCreators, reducer };
 
-export default Satellite;
+export default Analytics;
