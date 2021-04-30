@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Globe from 'api/globe/Globe';
+import Globe from 'common/components/globe';
 import WorldWind from 'worldwindjs';
 import './style.scss';
 

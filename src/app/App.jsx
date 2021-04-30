@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
-import Canvas from 'components/canvas/Canvas';
+import Canvas from 'common/components/canvas';
 import './app.scss';
 
 const App = () => {

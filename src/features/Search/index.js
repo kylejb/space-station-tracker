@@ -1,4 +1,4 @@
-import Search from './search';
+import Search from './Search';
 
 import * as actionCreators from './actionCreators';
 import reducer from './reducer';

@@ -1,4 +1,4 @@
-import Earth from './earth';
+import Earth from './Earth';
 
 import * as actionCreators from './actionCreators';
 import reducer from './reducer';

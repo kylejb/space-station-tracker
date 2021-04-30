@@ -1,4 +1,4 @@
-import Satellite from './satellite';
+import Satellite from './Satellite';
 
 import * as actionCreators from './actionCreators';
 import reducer from './reducer';
