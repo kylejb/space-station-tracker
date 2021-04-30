@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
-import './app.scss';
 import Canvas from 'components/canvas/Canvas';
-import EarthCanvas from 'components/earth/EarthCanvas';
-import useViewport from 'hooks/useViewport';
+import './app.scss';
 
 const App = () => {
     const [searchResult, setSearchResult] = useState([]);
