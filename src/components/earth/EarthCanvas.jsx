@@ -42,7 +42,6 @@ const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
     }
 
     useEffect(() => {
-        
         setWWD(new WorldWind.WorldWindow('canvas-globe'));
     }, [])
 
@@ -106,6 +105,7 @@ const EarthCanvas = ({ satelliteCollection, ...customAttributes }) => {
             // Animate the starry sky as well as the globe's day/night cycle.
             requestAnimationFrame(runSimulation);
 
+            // return () => cancelAnimationFrame()
             // Create a layer manager for controlling layer visibility.
             // const layerManager = new LayerManager(wwd);
         }
