@@ -1,7 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Canvas from 'common/components/canvas';
 import Globe from './globe';
+
+import { fetchISS, allEarthMetadata } from './earthSlice';
 
 import EoxSentinal2CloudlessLayer from 'common/api/EoxSentinal2CloudlessLayer';
 import EnhancedAtmosphereLayer from 'common/api/EnhancedAtmosphereLayer';
@@ -15,23 +18,14 @@ const Earth = ({
     ...props
 }) => {
     const canvasRef = useRef(null);
-    const [earthMetadata, setEarthMetadata] = useState({
-        isValid: false,
-        isDropArmed: false,
-        wwd: null,
-        nextLayerId: 1,
-        categoryTimestamps: new Map(),
-        roundGlobe: null,
-        flatGlobe: null,
-        dropCallback: null,
-    })
+    const [wwd, setWWD] = useState(null);
+    // const earthMetadata = useSelector(allEarthMetadata);
 
     const setBaseUrl = (baseUrl) => {
         WorldWind.configuration.baseUrl = baseUrl;
     }
 
     const renderSatellite = () => {
-        const { wwd } = earthMetadata;
         const modelLayer = new WorldWind.RenderableLayer();
         wwd.addLayer(modelLayer);
 
@@ -45,9 +39,11 @@ const Earth = ({
             modelLayer.addRenderable(colladaModel);
         })
     }
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const wwd = new Globe("globe-canvas");
-
         wwd.addLayer(new WorldWind.BMNGLayer(), {
             // Add layers to the globe
             category: "base"
@@ -57,15 +53,11 @@ const Earth = ({
         //     category: "star-background"
         // });
 
-        setEarthMetadata(prevState =>({
-            ...prevState,
-            wwd: wwd.wwd,
-        }));
+        setWWD(wwd.wwd);
+        dispatch(fetchISS());
     }, []);
 
     useEffect(() => {
-        const { wwd } = earthMetadata;
-
         // Tell WorldWind to log only warnings and errors.
         WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_WARNING);
 
@@ -129,7 +121,7 @@ const Earth = ({
             // Create a layer manager for controlling layer visibility.
             // const layerManager = new LayerManager(wwd);
         }
-    }, [earthMetadata.wwd]);
+    }, [wwd]);
 
 
     return <Canvas ref={canvasRef} id="globe-canvas" />;
