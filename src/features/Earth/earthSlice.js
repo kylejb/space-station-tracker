@@ -1,26 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+const initialState = {
+    isValid: false,
+    isDropArmed: false,
+    nextLayerId: 1,
+    roundGlobe: null,
+    flatGlobe: null,
+    dropCallback: null,
+    satelliteCollection: [],
+    status: 'idle',
+    error: null,
+};
+
+export const fetchISS = createAsyncThunk('earth/fetchISS', async () => {
+    const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
+    let data = await response.json();
+    return data;
+});
 
 const earthSlice = createSlice({
     name: "earth",
-    initialState: {
-        isValid: false,
-        isDropArmed: false,
-        wwd: null,
-        nextLayerId: 1,
-        categoryTimestamps: new Map(),
-        roundGlobe: null,
-        flatGlobe: null,
-        dropCallback: null,
-    },
+    initialState,
     reducers: {
-        getISS: (state, action) => {
-            const { ...data } = action.payload;
-
-            console.log("what is state", state);
-            console.log("what is data", data);
-            return
-        }
-    }
+        updateISS: (state, action) => {
+            // TODO - add later
+        },
+    },
+    extraReducers: {
+        [fetchISS.pending]: (state, action) => {
+            state.status = 'loading';
+        },
+        [fetchISS.fulfilled]: (state, action) => {
+            state.status = 'succeeded';
+            state.satelliteCollection = state.satelliteCollection.concat(action.payload);
+        },
+        [fetchISS.rejected]: (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        },
+    },
 });
+
+export const {
+    getISS,
+    updateISS,
+} = earthSlice.actions;
+
+export const allEarthMetadata = (state) => state.earth;
 
 export default earthSlice.reducer;
