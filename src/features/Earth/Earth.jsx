@@ -121,8 +121,6 @@ const Earth = ({
 
                 canvasRef.current.runSim = requestAnimationFrame(runSimulation);
             }
-
-            console.log('canvasRef', wwd);
             // Animate the starry sky as well as the globe's day/night cycle.
             canvasRef.current.runSim = requestAnimationFrame(runSimulation);
             const refRunSim = canvasRef.current.runSim;
