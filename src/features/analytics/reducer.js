@@ -1,4 +1,4 @@
-const userReducer = (currentState = {user: []}, action) => {
+const userReducer = (currentState = [], action) => {
     switch (action.type) {
         case 'GET_USER_LOCATION':
             const { ...metaData } = action.payload;

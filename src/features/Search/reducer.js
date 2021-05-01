@@ -1,4 +1,4 @@
-const searchReducer = (currentState = {search: []}, action) => {
+const searchReducer = (currentState = [], action) => {
     switch (action.type) {
         case 'GET_ISS_LOCATION':
             const { ...metaData } = action.payload;
