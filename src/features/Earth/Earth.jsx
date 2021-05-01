@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Canvas from 'common/components/canvas';
 import Globe from './globe';
 
-import { fetchISS, allEarthMetadata } from './earthSlice';
+import { fetchISS, getSatellite } from './earthSlice';
 
 import EoxSentinal2CloudlessLayer from 'common/api/EoxSentinal2CloudlessLayer';
 import EnhancedAtmosphereLayer from 'common/api/EnhancedAtmosphereLayer';
@@ -19,20 +19,29 @@ const Earth = ({
 }) => {
     const canvasRef = useRef(null);
     const [wwd, setWWD] = useState(null);
-    // const earthMetadata = useSelector(allEarthMetadata);
+    const satelliteData = useSelector(getSatellite);
+    const { status, satelliteCollection } = satelliteData;
 
     const setBaseUrl = (baseUrl) => {
         WorldWind.configuration.baseUrl = baseUrl;
     }
 
     const renderSatellite = () => {
+        //? console.log("if", wwd.layers[3]);
+        // TODO - improve logic for removingOldLayer before replacing with updatedLayer
+        //* Alternatively, try to move object to next position (i.e., coords)
+        // if (wwd.layers[3]) {
+        //     new WorldWind.RenderableLayer().removeRenderable(wwd.layers[3].renderables[0])
+        // }
         const modelLayer = new WorldWind.RenderableLayer();
-        wwd.addLayer(modelLayer);
+        wwd.addLayer(modelLayer)
 
         // Position takes the following position arguments: lat, lon, altitude
-        const position = new WorldWind.Position(-51.151321133767, -6.0196159367604, 800000.0);
+        let position = new WorldWind.Position(satelliteCollection[0].latitude, satelliteCollection[0].longitude, 800000.0);
         const config = {dirPath: WorldWind.configuration.baseUrl};
         const colladaLoader = new WorldWind.ColladaLoader(position, config);
+
+        //? console.log("satPositionObj", position);
 
         colladaLoader.load('satellite.dae', function (colladaModel) {
             colladaModel.scale = 1500;
@@ -62,10 +71,6 @@ const Earth = ({
         WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_WARNING);
 
         if (wwd) {
-
-            //* needs useCallback, if implemented this way
-            renderSatellite();
-
             // Create the WorldWindow.
             // Create imagery layers.
             // const BMNGOneImageLayer = new WorldWind.BMNGOneImageLayer("https://github.com/NASAWorldWind/WebWorldWind/blob/develop/images/BMNG_world.topo.bathy.200405.3.2048x1024.jpg");
@@ -122,6 +127,13 @@ const Earth = ({
             // const layerManager = new LayerManager(wwd);
         }
     }, [wwd]);
+
+    useEffect(() => {
+        if (status === "succeeded") {
+            renderSatellite();
+        }
+        // dispatch(fetchISS());
+    }, [satelliteCollection]);
 
 
     return <Canvas ref={canvasRef} id="globe-canvas" />;
