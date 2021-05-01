@@ -1,8 +1,8 @@
 import Earth from './Earth';
 
 import * as actionCreators from './actionCreators';
-import reducer from './reducer';
+import earthReducer from './earthSlice';
 
-export { actionCreators, reducer };
+export { actionCreators, earthReducer };
 
 export default Earth;
