@@ -46,6 +46,9 @@ export const {
     updateISS,
 } = earthSlice.actions;
 
-export const allEarthMetadata = (state) => state.earth;
+export const getSatellite = (state) => ({
+    satelliteCollection: state.earth.satelliteCollection,
+    status: state.earth.status,
+});
 
 export default earthSlice.reducer;
