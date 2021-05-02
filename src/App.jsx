@@ -2,10 +2,13 @@ import './app.scss';
 import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
+import SplashPage from 'components/splashpage';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [currentUser, setCurrentUser] = useState({ country: "" });
+  const [firstLoad, setFirstLoad] = useState(true)
+  //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
 
   useEffect(() => {
     const getUserCountry = async () => {
@@ -50,8 +53,16 @@ const App = () => {
     setCurrentUser(userObj);
   }, []);
 
+
+  const splashHider = () => {
+    // setFirstLoad(false)
+    // currently causes the error from setallete API call
+    console.log("Splash HIDDEN")
+  }
+
   return (
     <div className="app">
+      {firstLoad ? <SplashPage splashHider={splashHider} /> : null}
       <SearchContainer
         currentUser={currentUser}
         searchResult={searchResult}

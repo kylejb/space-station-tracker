@@ -108,8 +108,9 @@ const Earth = ( props ) => {
         }
     }, [isFirstLoad]);
 
-
+    // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
+    
     const getAntipodeLat = lat => {
         return lat * -1;
     }

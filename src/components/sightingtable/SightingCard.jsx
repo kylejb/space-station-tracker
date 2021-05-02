@@ -18,7 +18,7 @@ const SightingCard = ({ sightingData, header }) => {
                 <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
                 <span>{sightingData.time}</span>
                 <span>{sightingData.duration}</span>
-                <span id="sightingdownarrow">▼</span>
+                {!header ? <span id="sightingdownarrow">▼</span> : null}
             </div>
 
             {renderDetails
