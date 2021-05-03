@@ -62,7 +62,7 @@ const App = () => {
 
   return (
     <div className="app">
-      {firstLoad ? <SplashPage splashHider={splashHider} /> : null}
+      {/* {firstLoad ? <SplashPage splashHider={splashHider} /> : null} */}
       <SearchContainer
         currentUser={currentUser}
         searchResult={searchResult}

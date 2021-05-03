@@ -53,10 +53,10 @@
 
     h2 {
         color: white;
-        font-size: 1.9em;
+        font-size: 1em;
         font-family: "Basier";
         position: fixed;
-        top: 5%;
+        top: 4%;
         // Screen is fof center somehow
         // text-align: center;
         right: 2%;
@@ -66,8 +66,8 @@
         animation-iteration-count: 1, infinite;
         animation-direction: normal, alternate;
         animation-delay: 2.2s, 3.7s;
-        animation-duration: 1.5s, 2s;
-        animation-timing-function: linear, ease;
+        animation-duration: 1.5s, 2.5s;
+        animation-timing-function: linear, linear;
         animation-fill-mode: forwards;
     }
 
