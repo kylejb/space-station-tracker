@@ -7,9 +7,10 @@
     background: rgba(27,29,33,0.75);
     border-radius: 15px;
     padding: 5px 15px 5px 15px;
-    width: 135%;
-    // background: #AFAEAD;
-    // opacity: 100%;
+    width: 400px;
+    //changing width to pixels to try to help with details div expansion
+    // previously: width: 135%;
+    
 
     .sightingheader {
         color: #C6C6C5;
@@ -18,6 +19,7 @@
         justify-content: space-between;
         padding: 5px 0px 5px 0px;
         border-bottom: 1px dotted #C6C6C5;
+        // width: 123%;
     }
 
     .sightingcard {
@@ -30,7 +32,7 @@
         font-size: .85em;
 
         &:hover {
-            transform: scale(1.0007, 1.0);
+            // transform: scale(1.000005, 1);
             color: #ebebeb;
             // -webkit-transform: scale(1.1, 1.1);
             // box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -48,17 +50,34 @@
 
         .card_detail {
             display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-
+            justify-content: space-evenly;
+            flex-direction: row;
+            margin-top: 2%;
             span {
-                margin-top: 6px;
+                display: flex;
+                // justify-content: space-between;
+                flex-direction: column;
+                span {
+                    margin-top: 9px;
+                }
+            }
+            span {
+                // margin-left: 1%;
+                img {
+                    width: 145px;
+                    padding-left: 50px;
+                    // padding-left: 5%;
+                }
             }
         }
 
         // #sightingdownarrow {
         //     transform: scale(.5);
         // }
+
+        #headerspacingspan {
+            width: 10%;
+        }
 
     }
 
