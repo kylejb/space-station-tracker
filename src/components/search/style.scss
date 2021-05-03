@@ -7,9 +7,30 @@
         #zipsearchsubmit {
             // padding: 0px, 5px, 0px, 5px;
             width: 105px;
+            font-family: "Basier";
+            background: rgba(27,29,33,0.95);
+            color: #C6C6C5;
+            border-radius: 0px 5px 5px 0px;
+            border: none;
+            // font-size: .6em;
         }
         #zipinput {
             width: 200px;
+            font-family: "Basier";
+            background: rgba(27,29,33,0.95);
+            color: #C6C6C5;            
+            border-left: 2px dotted #C6C6C5;
+            border-right: 2px dotted #C6C6C5;
+            border-bottom: none;
+            border-top: none;
+            // font-size: 1.2em;
+            
         }
+        
+        //Resets color of placeholder text from defailt grey to our grey
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #C6C6C5;
+            opacity: 1; /* Firefox */
+          }
     }
 }

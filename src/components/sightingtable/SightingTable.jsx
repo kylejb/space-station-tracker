@@ -34,9 +34,9 @@ const SightingTable = ({ tableData }) => {
     }
 
     const headerData = {
-        date: "Date",
-        time: "Time",
-        duration: "Duration"
+        date: "DATE",
+        time: "TIME",
+        duration: "DURATION"
     };
 
     return (
