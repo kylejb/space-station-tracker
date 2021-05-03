@@ -109,10 +109,10 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     useEffect(() => {
         if (currentUser.country === "") {
-            setEmojiValue("🇺🇸  ▼" );
+            setEmojiValue("🇺🇸 ▼" );
         } else {
             const emoji = flag(currentUser.country.replace("_", " "));
-            setEmojiValue(`${emoji}  ▼`);
+            setEmojiValue(`${emoji} ▼`);
         }
     },[currentUser]);
 

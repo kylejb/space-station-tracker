@@ -21,11 +21,13 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
         placeholder="Enter postcode"
         value={userInput}
         onChange={searchValueHandler}
+        id="zipinput"
         />
       <input
         type="submit"
-        value="🛰️ Sightings"
+        value="Find Sightings"
         onClick={(e) => fetchGeoDataFromZip(userInput)}
+        id="zipsearchsubmit"
         />
     </div>
   );

@@ -5,9 +5,10 @@
     flex-direction: column;
     justify-content: space-around;
     background: rgba(27,29,33,0.75);
-    border-radius: 15px;
+    border-radius: 0px 0px 15px 15px;
     padding: 5px 15px 5px 15px;
-    width: 400px;
+    width: 375px;
+    font-family: "Basier";
     //changing width to pixels to try to help with details div expansion
     // previously: width: 135%;
     
@@ -45,14 +46,15 @@
         .card_overview {
             display: flex;
             justify-content: space-between;
-
+            font-weight: bold;
         }
 
         .card_detail {
             display: flex;
             justify-content: space-evenly;
             flex-direction: row;
-            margin-top: 2%;
+            margin-top: 4%;
+            font-size: .9em;
             span {
                 display: flex;
                 // justify-content: space-between;
@@ -65,8 +67,8 @@
                 // margin-left: 1%;
                 img {
                     width: 145px;
-                    padding-left: 50px;
-                    // padding-left: 5%;
+                    padding: 0px 25px 0px 25px;
+                    border-radius: 29%;
                 }
             }
         }

@@ -21,7 +21,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             const rowObj = {
                 date: new Date(rowArray[0].split(": ")[1]), // 'Date: Monday Mar 29, 2021'
                 time: rowArray[1].split(": ")[1],
-                duration: rowArray[2].split(": ")[1],
+                duration: rowArray[2].split(": ")[1].replace("minutes", "min"),
                 maxElevation: rowArray[3].split(": ")[1].split("&")[0],
                 approach: rowArray[4].split(": ")[1].replace('&#176;', '°'),
                 // 'Departure: 10&#176; above NE &lt;br/&gt;'
