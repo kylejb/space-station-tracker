@@ -1,30 +1,54 @@
 .search {
     display: flex;
+    // border: 1px solid #C6C6C5;
+    // border-radius: 5px 5px 5px 5px;
+    
+
     .searchbar-input {
         input {
             height: 50px;
         }
+        
         #zipsearchsubmit {
             // padding: 0px, 5px, 0px, 5px;
-            width: 105px;
+            width: 125px;
             font-family: "Basier";
-            background: rgba(27,29,33,0.95);
-            color: #C6C6C5;
+            background: rgba(198,198,197,0.95);
+            color: rgb(27,29,33);
+            //alt colors:
+            // background: rgba(27,29,33,0.95);
+            // color: #C6C6C5;  
             border-radius: 0px 5px 5px 0px;
             border: none;
+            
+
             // font-size: .6em;
+            &:hover {
+                background: #737373;
+                color: black; 
+            }
+            
+            
         }
         #zipinput {
-            width: 200px;
+            width: 165px;
             font-family: "Basier";
             background: rgba(27,29,33,0.95);
             color: #C6C6C5;            
-            border-left: 2px dotted #C6C6C5;
-            border-right: 2px dotted #C6C6C5;
-            border-bottom: none;
-            border-top: none;
-            // font-size: 1.2em;
+            // border-left: 1px dotted #C6C6C5;
+            // border-right: 1px dotted #C6C6C5;
+            border: 1px solid #C6C6C5;
+            // border-bottom: none;
+            // border-top: none;
+            padding-left: 20px;
             
+            // font-size: 1.2em;
+            &:focus {
+                border: 1px solid #C6C6C5 !important;
+                // background: red;
+                outline: none !important;
+                box-shadow: inset 0px 0px 2px 1px #C6C6C5;
+            }
         }
         
         //Resets color of placeholder text from defailt grey to our grey
