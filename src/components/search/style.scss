@@ -13,15 +13,13 @@
             // padding: 0px, 5px, 0px, 5px;
             width: 125px;
             font-family: "Basier";
-            background: rgba(198,198,197,0.95);
+            background: rgba(198,198,197,0.84);
             color: rgb(27,29,33);
             //alt colors:
             // background: rgba(27,29,33,0.95);
             // color: #C6C6C5;  
             border-radius: 0px 5px 5px 0px;
             border: none;
-            
-
             // font-size: .6em;
             &:hover {
                 background: #737373;
@@ -33,13 +31,9 @@
         #zipinput {
             width: 165px;
             font-family: "Basier";
-            background: rgba(27,29,33,0.95);
+            background: rgba(27,29,33,0.75);
             color: #C6C6C5;            
-            // border-left: 1px dotted #C6C6C5;
-            // border-right: 1px dotted #C6C6C5;
-            border: 1px solid #C6C6C5;
-            // border-bottom: none;
-            // border-top: none;
+            border: 1px solid rgba(198,198,197,0.84);
             padding-left: 20px;
             
             // font-size: 1.2em;
@@ -47,7 +41,20 @@
                 border: 1px solid #C6C6C5 !important;
                 // background: red;
                 outline: none !important;
-                box-shadow: inset 0px 0px 2px 1px #C6C6C5;
+                box-shadow: inset 0px 0px 3px 2px #1b697d;
+                
+            }
+            &::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+                height: 1.1em;
+                width: 1.1em;
+                border-radius: 50em;
+                background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+                background-size: contain;
+                opacity: .5;
+                margin-right: 10px;
+                pointer-events: all;
+                filter: invert(1);
             }
         }
         
