@@ -32,7 +32,8 @@ const earthSlice = createSlice({
         },
         [fetchISS.fulfilled]: (state, action) => {
             state.status = 'succeeded';
-            state.satelliteCollection = state.satelliteCollection.concat(action.payload);
+            //! MVP: ISS satellite only within an array for ease of refactoring when adding more
+            state.satelliteCollection = [action.payload];
         },
         [fetchISS.rejected]: (state, action) => {
             state.status = 'failed';
