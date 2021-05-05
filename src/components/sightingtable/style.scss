@@ -1,9 +1,9 @@
 @keyframes fadein {
     from {
-        opacity: 0%
+        opacity: 0%;
     }
     to {
-        opacity: 100%
+        opacity: 100%;
     }   
 }
 
@@ -19,11 +19,9 @@
     //padding above was 10 to offset it
     // margin-top: -5px;
     
-    width: 377px;
+    // width: 377px; -- moved to the sigting cards
     font-family: "Basier";
-    //changing width to pixels to try to help with details div expansion
-    // previously: width: 135%;
-    
+    //changing width to pixels to try to help with details div expansion -- previously: width: 135%;    
     opacity: 0%;
     animation-name: fadein;
     animation-duration: .6s;
@@ -49,6 +47,8 @@
         padding: 17px 0px 17px 0px;
         border-bottom: 1px solid #393939;
         font-size: .85em;
+        width: 377px;
+        // width: 100%;
 
         &:hover {
             // transform: scale(1.000005, 1);

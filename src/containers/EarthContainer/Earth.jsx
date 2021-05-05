@@ -10,7 +10,7 @@ const Earth = ( props ) => {
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
-
+    
     // Camera follows ISS on state change
     useEffect(() => {
         if ( followISS && satelliteCollection.length ) {
@@ -118,6 +118,8 @@ const Earth = ( props ) => {
     const getAntipodeLng = lng => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
+
+    // console.log("globeisrendering", globeEl)
 
     return (
         <div className="earth-container">

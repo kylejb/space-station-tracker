@@ -55,14 +55,14 @@ const App = () => {
 
 
   const splashHider = () => {
-    // setFirstLoad(false)
+    setFirstLoad(false)
     // currently causes the error from setallete API call
-    console.log("Splash HIDDEN")
+    // console.log("Splash HIDDEN")
   }
 
   return (
     <div className="app">
-      {/* {firstLoad ? <SplashPage splashHider={splashHider} /> : null} */}
+      {firstLoad ? <SplashPage splashHider={splashHider} /> : null}
       <SearchContainer
         currentUser={currentUser}
         searchResult={searchResult}
