@@ -3,7 +3,7 @@ import { findNearest } from 'geolib';
 import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
-import "./style.scss"
+import './style.scss';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState(null),
@@ -18,14 +18,21 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         for (const row of arrayOfHTMLStrings) {
             // spacing around split removes unnecessary whitespace without needing trim()
             const rowArray = row.split(' &lt;br/&gt; ');
+
+            const approachObj = rowArray[4].split(": ")[1].replace('&#176;', '°');
+            // 'Departure: 10&#176; above NE &lt;br/&gt;'
+            const departureObj = rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim().replace('&#176;', '°');
+
             const rowObj = {
                 date: new Date(rowArray[0].split(": ")[1]), // 'Date: Monday Mar 29, 2021'
                 time: rowArray[1].split(": ")[1],
                 duration: rowArray[2].split(": ")[1].replace("minutes", "min"),
                 maxElevation: rowArray[3].split(": ")[1].split("&")[0],
-                approach: rowArray[4].split(": ")[1].replace('&#176;', '°'),
+                approachDir: approachObj.split("above")[1].trim(),
+                approachDeg: approachObj.split(" ")[0].trim(),
                 // 'Departure: 10&#176; above NE &lt;br/&gt;'
-                departure: rowArray[5].split(": ")[1].replace('&lt;br/&gt;', '').trim().replace('&#176;', '°'),
+                departureDir: departureObj.split("above")[1].trim(),
+                departureDeg: departureObj.split(" ")[0].trim(),
             };
             cleanData.push(rowObj);
         }
