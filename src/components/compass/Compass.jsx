@@ -1,8 +1,8 @@
-import './style.scss'
 import arc from 'svg-arc';
+import './style.scss'
 
 const Compass = (props) => {
-    
+
     const cardinalToDeg = {
         N: 0.0,
         NNE: 22.5,
@@ -28,8 +28,8 @@ const Compass = (props) => {
         y: 304,
         R: 180,
         r: 180,
-        start: cardinalToDeg[props.entersSky.split(" ")[2]],
-        end: cardinalToDeg[props.leavesSky.split(" ")[2]],
+        start: cardinalToDeg[props.entersSky],
+        end: cardinalToDeg[props.leavesSky],
     });
 
     // Will need to avg the start and end points and then create a new "arc of 1 degree"
@@ -41,7 +41,7 @@ const Compass = (props) => {
         start: 150,
         end: 151,
     })
-        
+
     // // When drawing a annulus, the attribute value of 'fill-rule' must be set to 'evenodd', otherwise the color cannot be filled correctly.
     //     path.setAttribute('fill-rule', 'evenodd');
 
@@ -54,9 +54,9 @@ const Compass = (props) => {
 
                 {/* Circle guide - will be transparrent */}
                 <circle cx="304" cy="304" r="180" fill="transparent" strokeWidth="2" stroke="#FFFFFF"></circle>
-                
+
                 {/* Directions */}
-                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 60)">N</text> 
+                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 60)">N</text>
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(433.6, 175.6)">NE</text>
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="start" alignmentBaseline="middle" transform="translate(548, 307)">E</text>
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(443.6, 443.6)">SE</text>
@@ -64,7 +64,7 @@ const Compass = (props) => {
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 443.6)">SW</text>
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="end" alignmentBaseline="middle" transform="translate(62, 307)">W</text>
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 180.6)">NW</text>
-                
+
                 {/* Arrow head - find better solution later */}
                 {/* <defs>
                     <marker id="arrowhead" fill="#4287f5" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">

@@ -31,8 +31,12 @@ const SightingCard = ({ sightingData, header }) => {
                             <span>Enters Sky: {sightingData.approachDeg} above {sightingData.approachDir}</span>
                             <span>Leaves Sky: {sightingData.departureDeg} above {sightingData.departureDir}</span>
                         </span>
+
                         <span>
-                            <Compass entersSky={sightingData.approach} leavesSky={sightingData.departure}/>
+                            <Compass
+                                entersSky={sightingData.approachDir}
+                                leavesSky={sightingData.departureDir}
+                            />
                         </span>
                     </div>
                 :
