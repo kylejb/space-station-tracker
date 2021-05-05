@@ -1,18 +1,34 @@
-
+@keyframes fadein {
+    from {
+        opacity: 0%
+    }
+    to {
+        opacity: 100%
+    }   
+}
 
 .sightingresults {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     background: rgba(27,29,33,0.75);
-    border-radius: 0px 0px 15px 15px;
-    padding: 10px 15px 5px 15px;
-    margin-top: -5px;
+    border-radius: 5px 5px 15px 15px;
+    padding: 5px 15px 5px 15px;
+    
+    //this margin was to make the chartconnected to search bar
+    //padding above was 10 to offset it
+    // margin-top: -5px;
+    
     width: 377px;
-    // border-top: 3px solid #393939;
     font-family: "Basier";
     //changing width to pixels to try to help with details div expansion
     // previously: width: 135%;
+    
+    opacity: 0%;
+    animation-name: fadein;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
     
 
     .sightingheader {
