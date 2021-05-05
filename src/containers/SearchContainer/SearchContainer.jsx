@@ -8,57 +8,60 @@ import arc from 'svg-arc';
 
 const Compass = props => {
 
-    // create SVG
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 300 300');
- 
-    // create path
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('fill', '#ddd');
-        svg.appendChild(path);
- 
-    // set path
-        const d = arc({
-            x: 150,
-            y: 150,
-            R: 100,
-            r: 80,
+
+    // library helper
+        const arcAttributes = arc({
+            x: 305,
+            y: 305,
+            R: 180,
+            r: 180,
             start: 100,
             end: 200,
         });
-        path.setAttribute('d', d);
- 
-    // When drawing a annulus, the attribute value of 'fill-rule' must be set to 'evenodd', otherwise the color cannot be filled correctly.
-        path.setAttribute('fill-rule', 'evenodd');
+
+        // Will need to avg the start and end points and then create a new "arc of 1 degree"
+        const arcMidpoint = arc({
+            x: 305,
+            y: 305,
+            R: 180,
+            r: 180,
+            start: 150,
+            end: 151,
+        })
+        
+    // // When drawing a annulus, the attribute value of 'fill-rule' must be set to 'evenodd', otherwise the color cannot be filled correctly.
+    //     path.setAttribute('fill-rule', 'evenodd');
 
     return (
         <svg width="100%" viewBox="0 0 608 608">
             <g>
-                <circle cx="304" cy="304" r="180" fill="transparent" strokeWidth="2" stroke="#FFFFFF"></circle>
+                {/* X and y Axis for compass */}
                 <line x1="304" x2="304" y1="64" y2="544" strokeWidth="2" stroke="#FFFFFF"></line>
                 <line x1="64" x2="544" y1="304" y2="304" strokeWidth="2" stroke="#FFFFFF"></line>
 
-                {/* Directions */}
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(433.6, 175.6)">NE</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(443.6, 443.6)">SE</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 180.6)">NW</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 443.6)">SW</text>
+                {/* Circle guide - will be transparrent */}
+                <circle cx="304" cy="304" r="180" fill="transparent" strokeWidth="2" stroke="#FFFFFF"></circle>
                 
-                <circle id="au" class="spot" cx="163.6" cy="189.6" r="4" fill="#a85e32"></circle>
-                <circle id="sl" class="spot" cx="433.6" cy="430" r="4" fill="#a85e32"></circle>
-                <circle id="cp" class="spot2" cx="0" cy="0" r="4" fill="#a85e32"></circle>
-
-                <path id="curve" d="M0 0" stroke="green" stroke-width="4" stroke-linecap="round" fill="transparent"></path>
-
-
-
-                {/* <text fontSize="20" fontWeight="bold" fill="#ffffff" transform="translate(476.79999999999995, 131.20000000000002)">3.0</text>*/}
+                {/* Directions */}
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 60)">N</text> 
-                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="start" alignmentBaseline="middle" transform="translate(548, 304)">E</text>
-                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 564)">S</text>
-                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="end" alignmentBaseline="middle" transform="translate(64, 304)">W</text>
-                {/* <path fill="transparent" strokeWidth="1" stroke="#FFFFFF" d=" M 300 200 A 100 100 0 0 1 102 217" />
-                <path fill="transparent" strokeWidth="2" stroke="#a85e32" d=" M 300 200 A 100 100 0 0 1 102 217" /> */}
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(433.6, 175.6)">NE</text>
+                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="start" alignmentBaseline="middle" transform="translate(548, 307)">E</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(443.6, 443.6)">SE</text>
+                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 572)">S</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 443.6)">SW</text>
+                <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="end" alignmentBaseline="middle" transform="translate(62, 307)">W</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 180.6)">NW</text>
+                
+                {/* Arrow head */}
+                <defs>
+                    <marker id="arrowhead" fill="#4287f5" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 2.5 3.5, 0 7" />
+                    </marker>
+                </defs>
+
+                {/* Curve that we'll need to render dynamically */}
+                <path fill="transparent" strokeWidth="8" stroke="#4287f5" d={arcAttributes} markerStart="url(#arrowhead)"/>
+                {/* <path fill="transparent" strokeWidth="8" stroke="#ff0000" d={arcMidpoint} /> */}
 
             </g>
             {/* <g>
