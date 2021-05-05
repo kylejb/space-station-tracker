@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './style.scss';
-import compass from '../../images/sample_compass.png'
-// src/images/sample_compass.png
+import Compass from 'components/compass'
+
+
 /*  prop.header is temporarily being used to make SightingCard reusable
     if header, click should be disabled and we are not receiving a date object
     all else is won't conflict
@@ -31,7 +32,7 @@ const SightingCard = ({ sightingData, header }) => {
                             <span>Leaves Sky: {sightingData.departure}</span>
                         </span>
                         <span>
-                            <img src={compass}></img>
+                            <Compass entersSky={sightingData.approach} leavesSky={sightingData.departure}/>
                         </span>
                     </div>
                 :
