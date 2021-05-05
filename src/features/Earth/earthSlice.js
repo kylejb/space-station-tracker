@@ -24,6 +24,12 @@ const earthSlice = createSlice({
     reducers: {
         updateISS: (state, action) => {
             // TODO - add later
+            // ISS Satellite ID is 25544 at this endpoint
+            // const findISS = async () => {
+            //     const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
+            //     let data = await response.json();
+            //     setStationObj([ data ]);
+            // }
         },
     },
     extraReducers: {
