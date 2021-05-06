@@ -26,7 +26,13 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
       <input
         type="submit"
         value="Find Sightings"
-        onClick={(e) => fetchGeoDataFromZip(userInput)}
+        onClick={(e) => {
+          if (userInput.length <= 2) {
+            // errorMessageRender if true here
+          } else {
+            fetchGeoDataFromZip(userInput)
+          }
+        }}
         id="zipsearchsubmit"
         />
     </div>

@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
+import { FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/constants';
 import useViewport from 'hooks/useViewport';
 import * as solar from 'solar-calculator';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import './style.scss';
 
-const Earth = ( props ) => {
+const Earth = (props) => {
     const globeEl = useRef();
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
-    
+
     // Camera follows ISS on state change
     useEffect(() => {
-        if ( followISS && satelliteCollection.length ) {
+        if (followISS && satelliteCollection.length) {
             globeEl.current.controls().autoRotate = false;
 
             globeEl.current.pointOfView({
@@ -21,7 +22,7 @@ const Earth = ( props ) => {
                 lng: satelliteCollection[0].longitude,
                 altitude: 2
             });
-        } else if (props.searchResult.length) {
+        } else if (props.searchResult.status === FETCH_SUCCESS) {
             globeEl.current.controls().autoRotate = false;
         } else {
             globeEl.current.controls().autoRotate = true;
@@ -31,12 +32,12 @@ const Earth = ( props ) => {
 
 
     useEffect(() => {
-        if ( props.searchResult.length ) {
+        if (props.searchResult.status === FETCH_SUCCESS) {
             setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
             globeEl.current.pointOfView({
-                lat: props.searchResult[0].lat,
-                lng: props.searchResult[0].lon,
+                lat: props.searchResult.value[0].lat,
+                lng: props.searchResult.value[0].lon,
                 altitude: 2
             });
         }
@@ -78,7 +79,7 @@ const Earth = ( props ) => {
         const findISS = async () => {
             const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
             let data = await response.json();
-            setSatelliteCollection([ data ]);
+            setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
                     lat: data.latitude,
@@ -110,7 +111,7 @@ const Earth = ( props ) => {
 
     // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
-    
+
     const getAntipodeLat = lat => {
         return lat * -1;
     }
@@ -123,17 +124,17 @@ const Earth = ( props ) => {
 
     return (
         <div className="earth-container">
-        <h1>Where iss the ISS?</h1>
-        <span>
-            <input
-                aria-label="Toggle to follow ISS"
-                type="checkbox"
-                value={followISS}
-                checked={followISS}
-                onChange={() => setFollowISS(!followISS)}
-            />
-        <label aria-label="Follow ISS">Follow Station</label>
-        </span>
+            <h1>Where iss the ISS?</h1>
+            <span>
+                <input
+                    aria-label="Toggle to follow ISS"
+                    type="checkbox"
+                    value={followISS}
+                    checked={followISS}
+                    onChange={() => setFollowISS(!followISS)}
+                />
+                <label aria-label="Follow ISS">Follow Station</label>
+            </span>
             <Globe
                 ref={globeEl}
                 width={width}
@@ -163,7 +164,7 @@ const Earth = ( props ) => {
                     Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
                 }}
 
-                labelsData={props.searchResult}
+                labelsData={props.searchResult.value}
                 labelLat={d => d.lat}
                 labelLng={d => d.lon}
                 labelText={d => "Postcode"}

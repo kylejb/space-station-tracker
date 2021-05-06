@@ -4,16 +4,17 @@ import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
 import './style.scss';
+import { FETCH_SUCCESS, FETCH_FAIL } from 'utils/constants';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState(null),
-          [cityList, setCityList] = useState(null),
-          [country, setCountry] = useState(currentUser.country),
-          [state, setState] = useState(null);
+        [cityList, setCityList] = useState(null),
+        [country, setCountry] = useState(currentUser.country),
+        [state, setState] = useState(null);
 
 
     const cleanTableData = rawData => {
-        const arrayOfHTMLStrings = rawData.map( item => item.children[2].value );
+        const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);
         const cleanData = [];
         for (const row of arrayOfHTMLStrings) {
             // spacing around split removes unnecessary whitespace without needing trim()
@@ -47,14 +48,14 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     }
 
     useEffect(() => {
-        const searchResultObject = searchResult[0];
+        const searchResultObject = searchResult.value[0];
         const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
         const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
         const _country = currentUser.country;
         // Regions - the key after countries - are "None" for all countries except the below
         const _state = searchResultDisplayNameArray && countriesWithRegions.includes(_country)
-        ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ","_")
-        : "None";
+            ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ", "_")
+            : "None";
 
         if (searchResultObject) {
             setCountry(_country);
@@ -62,7 +63,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
             setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
         }
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [searchResult, currentUser]);
 
 
@@ -71,9 +72,9 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             const _cityCoordsList = [...cityList];
             if (country && state) {
                 _cityCoordsList.forEach((cityObj) => {
-                delete {...cityObj['city']};
-            });
-            return _cityCoordsList;
+                    delete { ...cityObj['city'] };
+                });
+                return _cityCoordsList;
             };
         }
 
@@ -82,26 +83,26 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
 
             fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
-            .then(response => response.text())
-            .then(data => {
-                const xml = new XMLParser().parseFromString(data);
+                .then(response => response.text())
+                .then(data => {
+                    const xml = new XMLParser().parseFromString(data);
 
-                const itemData = xml.getElementsByTagName('item');
-                const cleanedData = cleanTableData(itemData);
+                    const itemData = xml.getElementsByTagName('item');
+                    const cleanedData = cleanTableData(itemData);
 
-                setSightingChart(cleanedData);
-            });
+                    setSightingChart(cleanedData);
+                });
         }
-        if (searchResult[0] && country && state) {
+        if (searchResult.value[0] && country && state) {
             let closestLatLon, cityName;
 
             if (cityList.length > 1) {
                 closestLatLon = findNearest(
-                {
-                    latitude: searchResult[0].lat,
-                    longitude: searchResult[0].lon
-                },
-                getCityCoordsList()
+                    {
+                        latitude: searchResult.value[0].lat,
+                        longitude: searchResult.value[0].lon
+                    },
+                    getCityCoordsList()
                 );
 
                 cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
@@ -114,7 +115,10 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
 
     return (
-        searchResult[0] ? <SightingTable tableData={sightingChart}/> : null
+        <>
+            { searchResult.status === FETCH_SUCCESS && <SightingTable tableData={sightingChart} />}
+            { searchResult.status === FETCH_FAIL && <h1 style={{color: "red"}}>Oops I did it again...</h1>}
+        </>
     );
 }
 

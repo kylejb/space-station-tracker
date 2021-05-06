@@ -3,10 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
 import SplashPage from 'components/splashpage';
+import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/constants';
 
 const App = () => {
-  const [searchResult, setSearchResult] = useState([]);
-  const [currentUser, setCurrentUser] = useState({ country: "" });
+  const [searchResult, setSearchResult] = useState({ value: [], status: INITIAL_LOAD });
+  const [currentUser, setCurrentUser] = useState({ country: "", status: INITIAL_LOAD });
   const [firstLoad, setFirstLoad] = useState(true)
   //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
 
@@ -15,8 +16,15 @@ const App = () => {
       const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
       const response = await fetch(`${proxyURL}https://freegeoip.app/json`);
       const data = await response.json();
-      const userCountry = data.country_name;
-      setCurrentUser({ country: userCountry.replace(" ", "_") });
+      
+      // TODO - refactor 'data' condition based success/fail types (e.g., HTTP Error codes)
+      if (data && data.country_name) {
+        const userCountry = data.country_name;
+        setCurrentUser({ country: userCountry.replace(" ", "_"), status: FETCH_SUCCESS });
+      } else {
+        // currently defaulting users to United_States
+        setCurrentUser({ country: "United_States", status: FETCH_FAIL });
+      }
     }
     getUserCountry();
   }, []);
@@ -35,21 +43,21 @@ const App = () => {
     };
 
     if (zip !== "" && zip.length > 2) {
-        const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
-        let data = await response.json();
+      const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
+      let data = await response.json();
 
-        // when nothing is found, data is an empty array
-        if (data[0]) {
-            // Globe's dependencies expects searchResults to be iterable
-            setSearchResult([data[0]]);
-        } else {
-            setSearchResult([]);
-        }
+      // when nothing is found, data is an empty array
+      if (data[0]) {
+        // Globe's dependencies expects searchResults to be iterable
+        setSearchResult({ value: [data[0]], status: FETCH_SUCCESS });
+      } else {
+        setSearchResult({ value: [], status: FETCH_FAIL });
+      }
     }
   };
 
   const resetSearchResultOnCountryChange = useCallback((userObj) => {
-    setSearchResult([]);
+    setSearchResult({ value: [], status: SEARCH_RESET });
     setCurrentUser(userObj);
   }, []);
 
@@ -68,6 +76,7 @@ const App = () => {
         searchResult={searchResult}
         fetchGeoDataFromZip={fetchGeoDataFromZip}
         setCurrentUser={resetSearchResultOnCountryChange}
+
       />
       <Earth searchResult={searchResult} />
     </div>
