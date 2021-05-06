@@ -22,15 +22,34 @@ const Compass = (props) => {
         NNW: 337.5,
     };
 
+    /*
+        ! TEMP - Missing edge case: entersSky + leavesSky === 180
+            ? take into account maxElev, if drawing line when maxElev !== 90
+    */
+    const getArchPathObj = () => {
+        if (cardinalToDeg[props.entersSky] + cardinalToDeg[props.leavesSky] > 180) {
+            return {
+                x: 304,
+                y: 304,
+                R: 180,
+                r: 180,
+                start: cardinalToDeg[props.leavesSky],
+                end: cardinalToDeg[props.entersSky],
+            };
+        } else {
+            return {
+                x: 304,
+                y: 304,
+                R: 180,
+                r: 180,
+                start: cardinalToDeg[props.entersSky],
+                end: cardinalToDeg[props.leavesSky],
+            };
+        }
+    }
+
     // library helper
-    const arcAttributes = arc({
-        x: 304,
-        y: 304,
-        R: 180,
-        r: 180,
-        start: cardinalToDeg[props.entersSky],
-        end: cardinalToDeg[props.leavesSky],
-    });
+    const arcAttributes = arc(getArchPathObj());
 
     // Will need to avg the start and end points and then create a new "arc of 1 degree"
     const arcMidpoint = arc({
