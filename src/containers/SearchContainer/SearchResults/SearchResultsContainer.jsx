@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { findNearest } from 'geolib';
+import { findNearest, getDistance, convertDistance } from 'geolib';
 import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
@@ -104,12 +104,26 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
                     },
                     getCityCoordsList()
                 );
-
                 cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
             } else {
                 cityName = cityList[0].city
             }
-            fetchSightingData(cityName);
+
+            const distanceFromSpot = convertDistance(getDistance(
+                {
+                    latitude: searchResult.value[0].lat,
+                    longitude: searchResult.value[0].lon
+                },
+                closestLatLon
+            ), 'mi');
+
+            // TODO - Improve UI based on the following concept:
+            if (distanceFromSpot > 50) {
+                console.log("TODO - User is not close enough to station", distanceFromSpot);
+            } else {
+                console.log("Distance is", distanceFromSpot);
+                fetchSightingData(cityName);
+            }
         }
     }, [searchResult, cityList, country, state]);
 
