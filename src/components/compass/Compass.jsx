@@ -26,30 +26,67 @@ const Compass = (props) => {
         ! TEMP - Missing edge case: entersSky + leavesSky === 180
             ? take into account maxElev, if drawing line when maxElev !== 90
     */
-    const getArchPathObj = () => {
-        if (cardinalToDeg[props.entersSky] + cardinalToDeg[props.leavesSky] > 180) {
-            return {
-                x: 304,
-                y: 304,
-                R: 180,
-                r: 180,
-                start: cardinalToDeg[props.leavesSky],
-                end: cardinalToDeg[props.entersSky],
-            };
-        } else {
-            return {
-                x: 304,
-                y: 304,
-                R: 180,
-                r: 180,
-                start: cardinalToDeg[props.entersSky],
-                end: cardinalToDeg[props.leavesSky],
-            };
+    const getArcPathObj = () => {
+        switch (cardinalToDeg[props.entersSky] > cardinalToDeg[props.leavesSky]) {
+            case true:
+                const startEndDelta = cardinalToDeg[props.entersSky] - cardinalToDeg[props.leavesSky];
+
+                if (startEndDelta > 180) {
+                    return {
+                        x: 304,
+                        y: 304,
+                        R: 180,
+                        r: 180,
+                        start: cardinalToDeg[props.entersSky],
+                        end: cardinalToDeg[props.leavesSky],
+                    };
+                } else {
+                    return {
+                        x: 304,
+                        y: 304,
+                        R: 180,
+                        r: 180,
+                        start: cardinalToDeg[props.leavesSky],
+                        end: cardinalToDeg[props.entersSky],
+                    };
+                }
+
+            case false:
+                const endStartDelta = cardinalToDeg[props.leavesSky] - cardinalToDeg[props.entersSky];
+                if (endStartDelta > 180) {
+                    return {
+                        x: 304,
+                        y: 304,
+                        R: 180,
+                        r: 180,
+                        start: cardinalToDeg[props.leavesSky],
+                        end: cardinalToDeg[props.entersSky],
+                    };
+                } else {
+                    return {
+                        x: 304,
+                        y: 304,
+                        R: 180,
+                        r: 180,
+                        start: cardinalToDeg[props.entersSky],
+                        end: cardinalToDeg[props.leavesSky],
+                    };
+                }
+            default:
+                return {
+                    x: 304,
+                    y: 304,
+                    R: 180,
+                    r: 180,
+                    start: cardinalToDeg[props.entersSky],
+                    end: cardinalToDeg[props.leavesSky],
+                };
         }
+
     }
 
     // library helper
-    const arcAttributes = arc(getArchPathObj());
+    const arcAttributes = arc(getArcPathObj());
 
     // Will need to avg the start and end points and then create a new "arc of 1 degree"
     const arcMidpoint = arc({
