@@ -1,89 +1,8 @@
+import { drawViewingArea } from 'utils/drawViewingAreaOnCompass';
 import arc from 'svg-arc';
 import './style.scss';
 
-const Compass = (props) => {
-
-    const cardinalToDeg = {
-        N: 0.0,
-        NNE: 22.5,
-        NE: 45.0,
-        ENE: 67.5,
-        E: 90.0,
-        ESE: 112.5,
-        SE: 135.0,
-        SSE: 157.5,
-        S: 180.0,
-        SSW: 202.5,
-        SW: 225.0,
-        WSW: 247.5,
-        W: 270.0,
-        WNW: 292.5,
-        NW: 315.0,
-        NNW: 337.5,
-    };
-
-    /*
-        ! TEMP - Missing edge case: entersSky + leavesSky === 180
-            ? take into account maxElev, if drawing line when maxElev !== 90
-    */
-    const getArcPathObj = () => {
-        switch (cardinalToDeg[props.entersSky] > cardinalToDeg[props.leavesSky]) {
-            case true:
-                const startEndDelta = cardinalToDeg[props.entersSky] - cardinalToDeg[props.leavesSky];
-
-                if (startEndDelta > 180) {
-                    return {
-                        x: 304,
-                        y: 304,
-                        R: 180,
-                        r: 180,
-                        start: cardinalToDeg[props.entersSky],
-                        end: cardinalToDeg[props.leavesSky],
-                    };
-                } else {
-                    return {
-                        x: 304,
-                        y: 304,
-                        R: 180,
-                        r: 180,
-                        start: cardinalToDeg[props.leavesSky],
-                        end: cardinalToDeg[props.entersSky],
-                    };
-                }
-
-            case false:
-                const endStartDelta = cardinalToDeg[props.leavesSky] - cardinalToDeg[props.entersSky];
-                if (endStartDelta > 180) {
-                    return {
-                        x: 304,
-                        y: 304,
-                        R: 180,
-                        r: 180,
-                        start: cardinalToDeg[props.leavesSky],
-                        end: cardinalToDeg[props.entersSky],
-                    };
-                } else {
-                    return {
-                        x: 304,
-                        y: 304,
-                        R: 180,
-                        r: 180,
-                        start: cardinalToDeg[props.entersSky],
-                        end: cardinalToDeg[props.leavesSky],
-                    };
-                }
-            default:
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: cardinalToDeg[props.entersSky],
-                    end: cardinalToDeg[props.leavesSky],
-                };
-        }
-
-    }
+const Compass = ({ entersSky, leavesSky }) => {
 
 
     return (
@@ -114,7 +33,13 @@ const Compass = (props) => {
                 </defs> */}
 
                 {/* Curve that we'll need to render dynamically */}
-                <path fill="transparent" strokeWidth="4" stroke="#4287f5" d={arc(getArcPathObj())} markerStart="url(#arrowhead)"/>
+                <path
+                    d={arc(drawViewingArea(entersSky, leavesSky))}
+                    fill="transparent"
+                    strokeWidth="4"
+                    stroke="#4287f5"
+                    markerStart="url(#arrowhead)"
+                />
                 {/* <path fill="transparent" strokeWidth="8" stroke="#ff0000" d={arcMidpoint} /> */}
 
             </g>
