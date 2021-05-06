@@ -1,5 +1,5 @@
 import arc from 'svg-arc';
-import './style.scss'
+import './style.scss';
 
 const Compass = (props) => {
 
@@ -85,21 +85,6 @@ const Compass = (props) => {
 
     }
 
-    // library helper
-    const arcAttributes = arc(getArcPathObj());
-
-    // Will need to avg the start and end points and then create a new "arc of 1 degree"
-    const arcMidpoint = arc({
-        x: 304,
-        y: 304,
-        R: 180,
-        r: 180,
-        start: 150,
-        end: 151,
-    })
-
-    // // When drawing a annulus, the attribute value of 'fill-rule' must be set to 'evenodd', otherwise the color cannot be filled correctly.
-    //     path.setAttribute('fill-rule', 'evenodd');
 
     return (
         <svg width="100%" viewBox="0 0 608 608">
@@ -129,7 +114,7 @@ const Compass = (props) => {
                 </defs> */}
 
                 {/* Curve that we'll need to render dynamically */}
-                <path fill="transparent" strokeWidth="4" stroke="#4287f5" d={arcAttributes} markerStart="url(#arrowhead)"/>
+                <path fill="transparent" strokeWidth="4" stroke="#4287f5" d={arc(getArcPathObj())} markerStart="url(#arrowhead)"/>
                 {/* <path fill="transparent" strokeWidth="8" stroke="#ff0000" d={arcMidpoint} /> */}
 
             </g>
@@ -142,4 +127,4 @@ const Compass = (props) => {
 }
 
 
-export default Compass
+export default Compass;
