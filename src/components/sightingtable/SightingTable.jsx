@@ -18,7 +18,7 @@ const filterSightingCardsByDate = (numOfDays=1) => {
 const SightingTable = ({ tableData }) => {
     const filteredSightingCards = () => {
         return tableData.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
-            && parseInt(rowObj.maxElevation) >= 20
+            && parseInt(rowObj.maxElevation) >= 30
             && parseInt(rowObj.duration[0])
         ));
     }

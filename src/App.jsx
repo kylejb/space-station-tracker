@@ -4,6 +4,7 @@ import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
 import SplashPage from 'components/splashpage';
 import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/constants';
+import Instructions from 'components/instructions'
 
 const App = () => {
   const [searchResult, setSearchResult] = useState({ value: [], status: INITIAL_LOAD });
@@ -79,6 +80,7 @@ const App = () => {
 
       />
       <Earth searchResult={searchResult} />
+      <Instructions/>
     </div>
   );
 };

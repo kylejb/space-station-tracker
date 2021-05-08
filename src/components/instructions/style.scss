@@ -1,0 +1,48 @@
+
+.instructionshidden {
+    z-index: 5;
+    position: fixed;
+    top: 850px;
+    left: 50px;
+    color: white;
+    background: rgba(27,29,33,0.75);
+    border-radius: 15px 15px 15px 15px;
+    padding: 15px 15px 15px 15px;
+    cursor: pointer;
+}
+
+.instructionscontainer {
+    z-index: 5;
+    position: fixed;
+    top: 700px;
+    left: 50px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(27,29,33,0.75);
+    border-radius: 15px 15px 15px 15px;
+    padding: 15px 15px 15px 15px;
+    color: white;
+    flex-wrap: wrap;
+    width: 300px;
+    
+
+    span {
+        margin-left: 250px;
+        cursor: pointer;
+    }
+
+    .instructionsheader {
+        text-align: center;
+        padding: 5px 0px 5px 0px!important;
+        
+        h1 {
+            text-align: center;
+        }
+    }
+
+    .instructionsstep {
+        padding: 10px 0px 10px 0px;
+        font-size: .8em;
+    }
+    
+}
