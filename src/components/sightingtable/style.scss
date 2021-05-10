@@ -73,12 +73,21 @@
             flex-direction: row;
             margin-top: 4%;
             font-size: .9em;
-            span {
+            
+            .detail_info {
                 display: flex;
-                // justify-content: space-between;
                 flex-direction: column;
-                span {
-                    margin-top: 9px;
+                justify-content: center;
+                width: 240px;
+                // span {
+                //     margin-top: 5px;
+                // }
+                .detail_info_title {
+                    text-decoration: underline;
+                    margin-bottom: 5px;
+                }
+                .detail_info_data {
+                    margin-bottom: 15px;
                 }
             }
             // span {

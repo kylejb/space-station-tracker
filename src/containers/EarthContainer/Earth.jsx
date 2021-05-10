@@ -167,11 +167,11 @@ const Earth = (props) => {
                 labelsData={props.searchResult.value}
                 labelLat={d => d.lat}
                 labelLng={d => d.lon}
-                labelText={d => "Postcode"}
+                labelText={d => ""}
                 labelSize={1000 * 4e-4}
-                labelDotRadius={1000 * 4e-4}
-                labelColor={() => 'teal'}
-                labelResolution={2}
+                labelDotRadius={1000 * 5e-4}
+                labelColor={() => '#c43335'}
+                labelResolution={3}
             />
         </div>
     );

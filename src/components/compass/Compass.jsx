@@ -9,11 +9,11 @@ const Compass = ({ entersSky, leavesSky }) => {
         <svg width="100%" viewBox="0 0 608 608">
             <g>
                 {/* X and y Axis for compass */}
-                <line x1="304" x2="304" y1="64" y2="544" strokeWidth="2" stroke="#FFFFFF"></line>
-                <line x1="64" x2="544" y1="304" y2="304" strokeWidth="2" stroke="#FFFFFF"></line>
+                <line x1="304" x2="304" y1="64" y2="544" strokeWidth="2" stroke="#FFFFFF" opacity="0.4"></line>
+                <line x1="64" x2="544" y1="304" y2="304" strokeWidth="2" stroke="#FFFFFF" opacity="0.4"></line>
 
                 {/* Circle guide - will be transparrent */}
-                <circle cx="304" cy="304" r="180" fill="transparent" strokeWidth="2" stroke="#FFFFFF"></circle>
+                <circle cx="304" cy="304" r="180" fill="transparent" strokeWidth="2" stroke="#FFFFFF" opacity="0.4"></circle>
 
                 {/* Directions */}
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 60)">N</text>
@@ -36,7 +36,7 @@ const Compass = ({ entersSky, leavesSky }) => {
                 <path
                     d={arc(drawViewingArea(entersSky, leavesSky))}
                     fill="transparent"
-                    strokeWidth="4"
+                    strokeWidth="6"
                     stroke="#4287f5"
                     markerStart="url(#arrowhead)"
                 />

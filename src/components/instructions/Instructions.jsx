@@ -1,5 +1,6 @@
 import './style.scss'
 import {useState} from 'react'
+import info from 'images/info.png'
 
 const Instructions = () => {
     
@@ -19,27 +20,27 @@ const Instructions = () => {
         
         <div className="instructionscontainer">
             <div className="instructionsheader">
-                <h1>How does this work?</h1>
+                <h1>Instructions</h1>
             </div>
 
             <div className="instructionsstep">
-                <p>1. Select country & enter ZIP code</p> 
+                <p>1. Select country & enter ZIP code.</p> 
             </div>
                  
             <div className="instructionsstep">
-                <p>2. Click day/time for sighting details</p>
+                <p>2. Click day for sighting details.</p>
             </div>
                 
             <div className="instructionsstep">
-                <p>3. Read chart for how to locate</p>
+                <p>3. Use chart to locate ISS in sky.</p>
             </div>
             <span onClick={instructionsHelper}>«</span>    
         </div>
 
         :
 
-        <div className="instructionshidden">
-            <h1 onClick={instructionsHelper}>How does this work? &nbsp;»</h1>
+        <div className="instructionshidden" onClick={instructionsHelper}>
+            <h1 >Instructions &nbsp;»</h1>
         </div>
         }
         </>

@@ -26,13 +26,13 @@ const SightingCard = ({ sightingData, header }) => {
             {renderDetails
                 ?
                     <div className="card_detail">
-                        <span>
-                            <span>Enters Sky: {sightingData.approachDeg} above {sightingData.approachDir}</span>
-                            <span>Max Elevation: {sightingData.maxElevation}°</span>
-                            <span>Leaves Sky: {sightingData.departureDeg} above {sightingData.departureDir}</span>
+                        <span className="detail_info">
+                            <span className="detail_info_title">Enters Sky</span> <span className="detail_info_data">{sightingData.approachDir}: {sightingData.approachDeg} above horizon</span>
+                            <span className="detail_info_title">Max Elevation</span> <span className="detail_info_data"> {sightingData.maxElevation}° above horizon</span>
+                            <span className="detail_info_title">Leaves Sky</span> <span className="detail_info_data">{sightingData.departureDir}: {sightingData.departureDeg} above horizon</span>
                         </span>
 
-                        <span>
+                        <span className="detail_compass">
                             <Compass
                                 entersSky={sightingData.approachDir}
                                 leavesSky={sightingData.departureDir}
