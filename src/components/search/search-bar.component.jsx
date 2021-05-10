@@ -18,7 +18,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
       <input
         name="searchZipCode"
         type="search"
-        placeholder="Enter postcode"
+        placeholder="Enter ZIP Code"
         value={userInput}
         onChange={searchValueHandler}
         id="zipinput"

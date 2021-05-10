@@ -23,11 +23,11 @@ const Instructions = () => {
             </div>
 
             <div className="instructionsstep">
-                <p>1. Select your country & enter your zip code</p> 
+                <p>1. Select country & enter ZIP code</p> 
             </div>
                  
             <div className="instructionsstep">
-                <p>2. Select sighting day</p>
+                <p>2. Click day/time for sighting details</p>
             </div>
                 
             <div className="instructionsstep">
@@ -39,7 +39,7 @@ const Instructions = () => {
         :
 
         <div className="instructionshidden">
-            <h1 onClick={instructionsHelper}>How does this work? »</h1>
+            <h1 onClick={instructionsHelper}>How does this work? &nbsp;»</h1>
         </div>
         }
         </>
