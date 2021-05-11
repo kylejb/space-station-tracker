@@ -139,7 +139,6 @@ const Earth = (props) => {
                 ref={globeEl}
                 width={width}
                 height={height}
-
                 tilesData={[{ pos: sunPosAt(dt) }]}
                 tileLng={d => getAntipodeLng(d.pos[0])}
                 tileLat={d => getAntipodeLat(d.pos[1])}

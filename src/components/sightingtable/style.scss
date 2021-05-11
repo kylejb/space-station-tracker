@@ -14,20 +14,24 @@
     background: rgba(27,29,33,0.75);
     border-radius: 5px 5px 15px 15px;
     padding: 5px 15px 5px 15px;
-    
-    //this margin was to make the chartconnected to search bar
-    //padding above was 10 to offset it
-    // margin-top: -5px;
+
     
     // width: 377px; -- moved to the sigting cards
-    font-family: "Basier";
     //changing width to pixels to try to help with details div expansion -- previously: width: 135%;    
+    font-family: "Basier";
     opacity: 0%;
     animation-name: fadein;
     animation-duration: .6s;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
     
+    //NOTE: to add the scrolling effect for sighting oportunities do the following
+    //FIRST, take off display: flex - not sure why but this was pushing content above viewing section
+    // YOU NEED to keep flex-direction though... somehow it still works without display flex...
+    //NEXT add an extra div and the following around just the sighting cards NOT header so we won't affect it
+    // potential issue - creates a problem with the folding out of cards... answer may just be to limit sighting data to # of cards
+    // max-height: 400px;
+    // overflow-y: auto;
 
     .sightingheader {
         color: #C6C6C5;
@@ -47,7 +51,8 @@
         padding: 17px 0px 17px 0px;
         border-bottom: 1px solid #393939;
         font-size: .85em;
-        width: 377px;
+        width: 362px;
+        //NOTE: width formerly 377 - 2 extra, subrtacted 30 to account for the padding on .sightingresults above - 15 and 15
         // width: 100%;
 
         &:hover {
@@ -72,16 +77,14 @@
             justify-content: space-evenly;
             flex-direction: row;
             margin-top: 4%;
-            font-size: .9em;
+            font-size: .88em;
             
             .detail_info {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 width: 240px;
-                // span {
-                //     margin-top: 5px;
-                // }
+                
                 .detail_info_title {
                     text-decoration: underline;
                     margin-bottom: 5px;
@@ -89,6 +92,10 @@
                 .detail_info_data {
                     margin-bottom: 15px;
                 }
+            }
+
+            .detail_compass {
+                
             }
             // span {
             //     svg {
