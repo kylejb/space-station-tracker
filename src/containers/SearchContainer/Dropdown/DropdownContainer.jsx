@@ -156,6 +156,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             ...provided,
             borderRadius: "0px 0px 0px 0px",
             color: "#C6C6C5",
+            background: state.isFocused ? "#4287f5" : "rgba(27,29,33,0.75)",
         }),
     }
     
