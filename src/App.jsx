@@ -50,11 +50,11 @@ const App = () => {
       let data = await response.json();
 
       // when nothing is found, data is an empty array
-      if (data[0]) {
+      if (data[0].display_name.split(", ").length < 2) {
+        setSearchResult({ value: [], status: FETCH_FAIL });
+      } else if (data[0]) {
         // Globe's dependencies expects searchResults to be iterable
         setSearchResult({ value: [data[0]], status: FETCH_SUCCESS });
-      } else if (data[0].display_name.display_name.split(", ").length < 2) {
-        setSearchResult({ value: [], status: FETCH_FAIL });
       } else {
         setSearchResult({ value: [], status: FETCH_FAIL });
       }
