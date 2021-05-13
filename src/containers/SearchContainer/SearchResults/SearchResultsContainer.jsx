@@ -14,7 +14,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
 
-    const { error, setErrorHelper } = useErrorContext();
+    const { error, addError, removeError } = useErrorContext();
 
     const cleanTableData = rawData => {
         const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);
@@ -125,13 +125,13 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
             // TODO - Improve UI based on the following concept:
             if (distanceFromSpot > 50) {
-                setErrorHelper(SIGHTINGRESULTS_DISTANCE_MESSAGE);
+                addError(SIGHTINGRESULTS_DISTANCE_MESSAGE.message, SIGHTINGRESULTS_DISTANCE_MESSAGE.type);
             } else {
-                setErrorHelper({type: "OK", message: ""});
+                removeError();
                 fetchSightingData(cityName);
             }
         }
-    }, [searchResult, cityList, country, state, setErrorHelper]);
+    }, [searchResult, cityList, country, state, addError, removeError]);
 
     const tempConditionalRender = () => {
         if (error && error.type !== "OK") {
@@ -148,7 +148,13 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
     return (
         <>
-            {tempConditionalRender()}
+            <Error />
+
+            { !error?.type
+                && sightingChart.status === FETCH_SUCCESS
+                && searchResult.status === FETCH_SUCCESS
+                && <SightingTable tableData={sightingChart} />
+            }
         </>
     );
 }

@@ -5,7 +5,7 @@ import { useErrorContext } from 'common/hooks';
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
   const [userInput, setUserInput] = useState("");
 
-  const { setErrorHelper } = useErrorContext();
+  const { addError, removeError } = useErrorContext();
 
   const searchValueHandler = (event) => {
     setUserInput(event.target.value);
@@ -31,13 +31,13 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
           value="Find Sightings"
           onClick={(e) => {
             if (userInput.length <= 2) {
-                setErrorHelper({
-                    type: ZIPLENGTH_ERROR_MESSAGE.type,
-                    message: ZIPLENGTH_ERROR_MESSAGE.message
-                });
+                addError(
+                    ZIPLENGTH_ERROR_MESSAGE.message,
+                    ZIPLENGTH_ERROR_MESSAGE.type,
+                );
             } else {
                 fetchGeoDataFromZip(userInput);
-                setErrorHelper({type: "OK", message: ""});
+                removeError();
             }
           }}
           id="zipsearchsubmit"

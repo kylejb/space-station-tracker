@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import SightingCard from './SightingCard';
 import { useErrorContext } from 'common/hooks';
 import { SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
@@ -17,33 +18,44 @@ const filterSightingCardsByDate = (numOfDays=1) => {
 }
 
 const SightingTable = ({ tableData }) => {
+
+    const { error, addError, removeError } = useErrorContext();
+
+    useEffect(() => {
+        const _filteredSightingCards = () => {
+            return tableData.value.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+                && parseInt(rowObj.maxElevation) >= 90
+                && parseInt(rowObj.duration[0])
+            ));
+        }
+
+        const cardValidation = () => {
+            const filteredCards = _filteredSightingCards();
+            if (filteredCards.length) {
+                removeError();
+
+            } else {
+                addError(
+                    SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
+                    SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
+                );
+            }
+        }
+        cardValidation();
+    },[addError, removeError, tableData.value]);
+
+    console.log("what is error in table");
+
+
     const filteredSightingCards = () => {
         return tableData.value.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
-            && parseInt(rowObj.maxElevation) >= 30
+            && parseInt(rowObj.maxElevation) >= 90
             && parseInt(rowObj.duration[0])
         ));
     }
 
-    const { error, setErrorHelper } = useErrorContext();
-    console.log("what is error in table");
-
-    // const cardValidation = () => {
-    //     const filteredCards = filteredSightingCards();
-    //     if (filteredCards.length) {
-    //         setErrorHelper({
-    //             type: "TABLE_OK",
-    //             message: "",
-    //         });
-
-    //     } else {
-    //         setErrorHelper({
-    //             type: SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
-    //             message: SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
-    //         });
-    //     }
-    // }
-
     const renderSightingCards = () => {
+
         let count = -1;
         const filteredCards = filteredSightingCards()?.map( rowObj => (
             <SightingCard
@@ -55,10 +67,10 @@ const SightingTable = ({ tableData }) => {
         if (filteredCards.length) {
             return filteredCards;
         } else {
-            setErrorHelper({
-                type: SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
-                message: SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
-            });
+            addError(
+                SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
+                SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
+            );
         }
     }
 
@@ -71,7 +83,7 @@ const SightingTable = ({ tableData }) => {
         <>
             <div className="sightingresults">
                 <SightingCard header sightingData={headerData}/>
-                {error.type === "OK" && renderSightingCards()}
+                {renderSightingCards()}
             </div>
         </>
     );
