@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/constants';
-import useViewport from 'common/hooks/useViewport';
+import { useViewport } from 'common/hooks';
 import * as solar from 'solar-calculator';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';

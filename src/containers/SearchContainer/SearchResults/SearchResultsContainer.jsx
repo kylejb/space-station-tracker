@@ -6,7 +6,7 @@ import geoMap from 'data/geoMap.json';
 import './style.scss';
 import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
 import Error from 'components/error'
-import { useErrorContext } from 'common/contexts/errors';
+import { useErrorContext } from 'common/hooks';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
@@ -134,7 +134,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     }, [searchResult, cityList, country, state, setErrorHelper]);
 
     const tempConditionalRender = () => {
-        if (error.type !== "OK") {
+        if (error && error.type !== "OK") {
             return <Error errormessage={error} />;
         } else if (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) {
             return <Error errormessage={FETCH_FAIL_MESSAGE} />;

@@ -1,5 +1,5 @@
 import SightingCard from './SightingCard';
-import { useErrorContext } from 'common/contexts/errors';
+import { useErrorContext } from 'common/hooks';
 import { SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
 
 /**
