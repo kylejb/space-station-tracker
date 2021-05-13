@@ -50,6 +50,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
     useEffect(() => {
         const searchResultObject = searchResult.value[0];
+        console.log("search result container", searchResult)
         const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
         const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
         const _country = currentUser.country;
@@ -136,7 +137,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             { (searchResult.status === FETCH_SUCCESS && sightingChart.value?.length) && <SightingTable tableData={sightingChart} /> }
             { (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) && <Error errormessage={FETCH_FAIL_MESSAGE} /> }
             { (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) && <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />}
-            <h1>supsssssss</h1>
+
         </>
     );
 }
