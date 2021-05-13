@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { INITIAL_LOAD, ZIPLENGTH_ERROR_MESSAGE } from 'utils/constants';
-import Error from 'components/error'
+import { ZIPLENGTH_ERROR_MESSAGE } from 'utils/constants';
+import { useErrorContext } from 'ErrorContext';
 
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
   const [userInput, setUserInput] = useState("");
-  const [inputError, setInputError] = useState(INITIAL_LOAD)
+
+  const { setErrorHelper } = useErrorContext();
 
   const searchValueHandler = (event) => {
     setUserInput(event.target.value);
@@ -16,7 +17,6 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
 
 
   return (
-    <>
       <div className='searchbar-input'>
         <input
           name="searchZipCode"
@@ -31,18 +31,19 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
           value="Find Sightings"
           onClick={(e) => {
             if (userInput.length <= 2) {
-              setInputError(ZIPLENGTH_ERROR_MESSAGE.message)
+                setErrorHelper({
+                    type: ZIPLENGTH_ERROR_MESSAGE.type,
+                    message: ZIPLENGTH_ERROR_MESSAGE.message
+                });
             } else {
-              fetchGeoDataFromZip(userInput)
-              setInputError("OK")
+                fetchGeoDataFromZip(userInput);
+                setErrorHelper({type: "OK", message: ""});
             }
           }}
           id="zipsearchsubmit"
           />
       </div>
-      {inputError === ZIPLENGTH_ERROR_MESSAGE.message && <Error errormessage={ZIPLENGTH_ERROR_MESSAGE}/>}
-    </>
-  );
+    );
 };
 
 export default SearchBar;
