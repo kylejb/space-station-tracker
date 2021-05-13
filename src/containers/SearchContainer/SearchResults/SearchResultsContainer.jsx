@@ -6,7 +6,7 @@ import geoMap from 'data/geoMap.json';
 import './style.scss';
 import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
 import Error from 'components/error'
-import { useErrorContext } from 'ErrorContext';
+import { useErrorContext } from 'common/contexts/errors';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),

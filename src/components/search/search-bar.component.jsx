@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ZIPLENGTH_ERROR_MESSAGE } from 'utils/constants';
-import { useErrorContext } from 'ErrorContext';
+import { useErrorContext } from 'common/contexts/errors';
 
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
   const [userInput, setUserInput] = useState("");
