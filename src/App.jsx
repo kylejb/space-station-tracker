@@ -19,7 +19,7 @@ const App = () => {
       const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
       const response = await fetch(`${proxyURL}https://freegeoip.app/json`);
       const data = await response.json();
-      
+
       // TODO - refactor 'data' condition based success/fail types (e.g., HTTP Error codes)
       if (data && data.country_name) {
         const userCountry = data.country_name;
@@ -53,6 +53,8 @@ const App = () => {
       if (data[0]) {
         // Globe's dependencies expects searchResults to be iterable
         setSearchResult({ value: [data[0]], status: FETCH_SUCCESS });
+      } else if (data[0].display_name.display_name.split(", ").length < 2) {
+        setSearchResult({ value: [], status: FETCH_FAIL });
       } else {
         setSearchResult({ value: [], status: FETCH_FAIL });
       }
