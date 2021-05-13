@@ -6,7 +6,7 @@ import geoMap from 'data/geoMap.json';
 import './style.scss';
 import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
 import Error from 'components/error'
-import { useErrorContext } from 'common/hooks';
+import { useErrorContext, useSearchContext } from 'common/hooks';
 
 
 /**
@@ -24,14 +24,16 @@ import { useErrorContext } from 'common/hooks';
 }
 
 
-const SearchResultsContainer = ({ searchResult, currentUser }) => {
+const SearchResultsContainer = ({ currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
         [cityList, setCityList] = useState(null),
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
 
+    const { searchResult } = useSearchContext();
+
     const { error, addError, removeError } = useErrorContext();
-    console.log("Search Result Container: Error", error);
+
 
     const cleanTableData = rawData => {
         const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);

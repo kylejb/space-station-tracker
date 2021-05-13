@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/constants';
-import { useViewport } from 'common/hooks';
+import { FETCH_SUCCESS } from 'utils/constants';
+import { useViewport, useSearchContext } from 'common/hooks';
 import * as solar from 'solar-calculator';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import './style.scss';
 
-const Earth = (props) => {
+const Earth = () => {
     const globeEl = useRef();
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+    const { searchResult } = useSearchContext();
 
     // Camera follows ISS on state change
     useEffect(() => {
@@ -22,26 +24,26 @@ const Earth = (props) => {
                 lng: satelliteCollection[0].longitude,
                 altitude: 2
             });
-        } else if (props.searchResult.status === FETCH_SUCCESS) {
+        } else if (searchResult.status === FETCH_SUCCESS) {
             globeEl.current.controls().autoRotate = false;
         } else {
             globeEl.current.controls().autoRotate = true;
         }
 
-    }, [followISS, satelliteCollection, props.searchResult]);
+    }, [followISS, satelliteCollection, searchResult]);
 
 
     useEffect(() => {
-        if (props.searchResult.status === FETCH_SUCCESS) {
+        if (searchResult.status === FETCH_SUCCESS) {
             setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
             globeEl.current.pointOfView({
-                lat: props.searchResult.value[0].lat,
-                lng: props.searchResult.value[0].lon,
+                lat: searchResult.value[0].lat,
+                lng: searchResult.value[0].lon,
                 altitude: 2
             });
         }
-    }, [props.searchResult]);
+    }, [searchResult]);
 
     //! Fix behavior during re-render
     // const globeMaterial = new THREE.MeshPhongMaterial();
@@ -164,7 +166,7 @@ const Earth = (props) => {
                     Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
                 }}
 
-                labelsData={props.searchResult.value}
+                labelsData={searchResult.value}
                 labelLat={d => d.lat}
                 labelLng={d => d.lon}
                 labelText={d => ""}
