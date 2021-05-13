@@ -1,3 +1,5 @@
+import ErrorProvider from './ErrorProvider';
 import ErrorContext from './ErrorContext';
 
-export default ErrorContext;
+export { ErrorContext };
+export default ErrorProvider;
