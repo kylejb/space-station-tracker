@@ -9,8 +9,13 @@ const ErrorContext = createContext();
 
 const ErrorProvider = ({ children }) => {
     const [error, setError] = useState(initialState);
+
+    const setErrorHelper = (arg) => {
+        setError(arg);
+    }
+
     return (
-        <ErrorContext.Provider value={{error, setError}}>
+        <ErrorContext.Provider value={{error, setErrorHelper}}>
             {children}
         </ErrorContext.Provider>
     );
