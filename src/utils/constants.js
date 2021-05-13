@@ -2,7 +2,7 @@ export const INITIAL_LOAD = "INITIAL_LOAD";
 
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 //currently used for two fetches:
-// 1. Get country from IP address 2. fetchGetData from Zipcode (passed to earth and ) 
+// 1. Get country from IP address 2. fetchGetData from Zipcode (passed to earth and )
 //NOT being used in searchresults container to fetch sightingdata yet
 
 export const FETCH_FAIL = "FETCH_FAIL";
@@ -26,3 +26,5 @@ export const FETCH_FAIL_MESSAGE = {type: "fetchfail", message: "Oops, your reque
 export const ZIPRESULTS_NONE_MESSAGE = {type: "nozipresults", message: "No results found with this zip"}
 
 export const SIGHTINGRESULTS_NONE_MESSAGE = {type: "nosightingresults", message: "No sighting opportunities at your location at this time. :( Check back later!"}
+
+export const SIGHTINGRESULTS_DISTANCE_MESSAGE = {type: "sightingtoofar", message: "Out of bounds; no visibility near you."}
