@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 
 const initialState = {
     type: null,
@@ -10,9 +10,9 @@ const ErrorContext = createContext();
 const ErrorProvider = ({ children }) => {
     const [error, setError] = useState(initialState);
 
-    const setErrorHelper = (arg) => {
+    const setErrorHelper = useCallback((arg) => {
         setError(arg);
-    }
+    }, []);
 
     return (
         <ErrorContext.Provider value={{error, setErrorHelper}}>
