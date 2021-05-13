@@ -1,23 +1,24 @@
 import { useState, useCallback } from 'react';
 import SearchContext from './SearchContext';
+import { SEARCH_RESET, INITIAL_LOAD } from 'utils/constants';
 
 const initialState = {
-    status: null,
-    searchResult: [],
+    status: INITIAL_LOAD,
+    value: [],
 };
 
 
 const SearchProvider = ({ children }) => {
-    const [searchValues, setSearchValues] = useState(initialState);
+    const [searchResult, setSearchResult] = useState(initialState);
 
-    const removeSearchValues = () => setSearchValues({ status: false, searchResult: [] });
+    const removeSearchResult = () => setSearchResult({ status: SEARCH_RESET, value: [] });
 
-    const addSearchValues = (searchResult, status) => setSearchValues({ searchResult, status });
+    const addSearchResult = (value, status) => setSearchResult({ value, status });
 
     const contextValue = {
-        searchValues,
-        addError: useCallback((searchResult, status) => addSearchValues(searchResult, status), []),
-        removeError: useCallback(() => removeSearchValues(), [])
+        searchResult,
+        addSearchResult: useCallback((value, status) => addSearchResult(value, status), []),
+        removeSearchResult: useCallback(() => removeSearchResult(), [])
     };
 
     return (
