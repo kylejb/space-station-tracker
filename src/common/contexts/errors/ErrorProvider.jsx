@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import ErrorContext from './ErrorContext';
 
 const initialState = {
     type: null,
     message: null,
 };
 
-const ErrorContext = createContext();
 
 const ErrorProvider = ({ children }) => {
     const [error, setError] = useState(initialState);
@@ -21,6 +21,5 @@ const ErrorProvider = ({ children }) => {
     );
 }
 
-export const useErrorContext = () => useContext(ErrorContext);
 
 export default ErrorProvider;
