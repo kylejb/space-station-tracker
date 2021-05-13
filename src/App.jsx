@@ -1,13 +1,17 @@
 import './app.scss';
 import { useCallback, useEffect, useState } from 'react';
+
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
+
+import Instructions from 'components/instructions';
 import SplashPage from 'components/splashpage';
+import Credits from 'components/credits';
+import Faq from 'components/faq';
+
 import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL } from 'utils/constants';
-import Instructions from 'components/instructions'
-import Faq from 'components/faq'
-import Credits from 'components/credits'
 import { useSearchContext } from 'common/hooks';
+
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({ country: "", status: INITIAL_LOAD });
