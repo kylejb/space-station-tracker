@@ -1,5 +1,6 @@
 import SightingCard from './SightingCard';
-
+import { useErrorContext } from 'ErrorContext';
+import { SIGHTINGRESULTS_NONE_MESSAGE } from 'utils/constants';
 
 /**
  * Create a historic Date object.
@@ -23,9 +24,27 @@ const SightingTable = ({ tableData }) => {
         ));
     }
 
+    const { setErrorHelper } = useErrorContext();
+
+    const cardValidation = () => {
+        const filteredCards = filteredSightingCards();
+        if (filteredCards.length) {
+            setErrorHelper({
+                type: "OK",
+                message: "",
+            });
+            return filteredCards;
+        } else {
+            setErrorHelper({
+                type: SIGHTINGRESULTS_NONE_MESSAGE.type,
+                message: SIGHTINGRESULTS_NONE_MESSAGE.message,
+            });
+        }
+    }
     const renderSightingCards = () => {
+        const filteredCards = cardValidation();
         let count = -1;
-        return filteredSightingCards().map( rowObj => (
+        return filteredCards?.map( rowObj => (
             <SightingCard
                 key={++count}
                 sightingData={rowObj}
@@ -41,12 +60,12 @@ const SightingTable = ({ tableData }) => {
 
     return (
         <>
-            
+
                     <div className="sightingresults">
                         <SightingCard header sightingData={headerData}/>
                         {renderSightingCards()}
                     </div>
-            
+
         </>
     );
 }
