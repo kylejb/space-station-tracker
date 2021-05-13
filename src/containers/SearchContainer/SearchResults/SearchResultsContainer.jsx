@@ -124,11 +124,11 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
             if (distanceFromSpot > 50) {
                 setErrorHelper(SIGHTINGRESULTS_DISTANCE_MESSAGE);
             } else {
-                setErrorHelper({type: "OK", message: ""}); //! make callback fn
+                setErrorHelper({type: "OK", message: ""});
                 fetchSightingData(cityName);
             }
         }
-    }, [searchResult, cityList, country, state]);
+    }, [searchResult, cityList, country, state, setErrorHelper]);
 
     const tempConditionalRender = () => {
         if (error.type !== "OK") {
