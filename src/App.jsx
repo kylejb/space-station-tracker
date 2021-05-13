@@ -46,16 +46,19 @@ const App = () => {
     };
 
     if (zip !== "" && zip.length > 2) {
-      const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
-      let data = await response.json();
-
-      // when nothing is found, data is an empty array
-      if (data[0].display_name.split(", ").length < 2) {
-        setSearchResult({ value: [], status: FETCH_FAIL });
-      } else if (data[0]) {
-        // Globe's dependencies expects searchResults to be iterable
-        setSearchResult({ value: [data[0]], status: FETCH_SUCCESS });
-      } else {
+      try{
+        const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
+        let data = await response.json();
+        //when nothing is found, data is an empty array
+        if (data[0].display_name.split(", ").length < 2) {
+          setSearchResult({ value: [], status: FETCH_FAIL });
+        } else if (data[0]) {
+          // Globe's dependencies expects searchResults to be iterable
+          setSearchResult({ value: [data[0]], status: FETCH_SUCCESS });
+        } else {
+          setSearchResult({ value: [], status: FETCH_FAIL });
+        }
+      } catch (error) {
         setSearchResult({ value: [], status: FETCH_FAIL });
       }
     }
