@@ -100,11 +100,12 @@ const Earth = (props) => {
             setDt(dt => dt + VELOCITY * 60 * 1000);
             globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
         }
+        const globeIterate = globeEl.current.iterateTime
 
-        globeEl.current = requestAnimationFrame(iterateTime);
+        globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
 
         return () => {
-            cancelAnimationFrame(globeEl.current.iterateTime);
+            cancelAnimationFrame(globeIterate);
             clearInterval(interval);
         }
     }, [isFirstLoad]);

@@ -40,7 +40,7 @@ const Faq = () => {
                 </div>
                 <div className="faqanswer">
                     <p>Assume you are at the center of the compass. Face direction that the station will enter the sky. At the sighting time, the ISS will move across the sky in the direction of the blue arrow.</p>
-                    <p>To figure out degrees above the horizon, hold your arm out straight and make a fist. The height of your fist is about 10° above the hotizon.</p> 
+                    <p>To figure out degrees above the horizon, hold your arm out straight and make a fist. The height of your fist is about 10° above the horizon.</p> 
                 </div>
 
                 <span onClick={faqHelper}>«</span>    

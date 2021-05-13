@@ -17,7 +17,7 @@ const filterSightingCardsByDate = (numOfDays=1) => {
 
 const SightingTable = ({ tableData }) => {
     const filteredSightingCards = () => {
-        return tableData.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+        return tableData.value.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
             && parseInt(rowObj.maxElevation) >= 30
             && parseInt(rowObj.duration[0])
         ));
@@ -41,15 +41,12 @@ const SightingTable = ({ tableData }) => {
 
     return (
         <>
-            {!tableData
-                ?
-                    <p>No results yet, please search above</p>
-                :
+            
                     <div className="sightingresults">
                         <SightingCard header sightingData={headerData}/>
                         {renderSightingCards()}
                     </div>
-            }
+            
         </>
     );
 }

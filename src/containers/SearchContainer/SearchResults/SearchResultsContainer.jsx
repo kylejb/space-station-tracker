@@ -4,10 +4,11 @@ import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
 import './style.scss';
-import { FETCH_SUCCESS, FETCH_FAIL } from 'utils/constants';
+import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD } from 'utils/constants';
+import Error from 'components/error'
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
-    const [sightingChart, setSightingChart] = useState(null),
+    const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
         [cityList, setCityList] = useState(null),
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
@@ -49,6 +50,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
     useEffect(() => {
         const searchResultObject = searchResult.value[0];
+        console.log("search result container", searchResult)
         const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
         const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
         const _country = currentUser.country;
@@ -90,7 +92,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
                     const itemData = xml.getElementsByTagName('item');
                     const cleanedData = cleanTableData(itemData);
 
-                    setSightingChart(cleanedData);
+                    setSightingChart({value: cleanedData, status: FETCH_SUCCESS});
                 });
         }
         if (searchResult.value[0] && country && state) {
@@ -128,10 +130,14 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     }, [searchResult, cityList, country, state]);
 
 
+
     return (
         <>
-            { searchResult.status === FETCH_SUCCESS && <SightingTable tableData={sightingChart} />}
-            { searchResult.status === FETCH_FAIL && <h1 style={{color: "red"}}>Oops I did it again...</h1>}
+            
+            { (searchResult.status === FETCH_SUCCESS && sightingChart.value?.length) && <SightingTable tableData={sightingChart} /> }
+            { (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) && <Error errormessage={FETCH_FAIL_MESSAGE} /> }
+            { (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) && <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />}
+
         </>
     );
 }
