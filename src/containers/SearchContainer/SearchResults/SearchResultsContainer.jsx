@@ -1,12 +1,28 @@
 import { useState, useEffect } from 'react';
 import { findNearest, getDistance, convertDistance } from 'geolib';
 import XMLParser from 'react-xml-parser';
-import SightingTable from 'components/sightingtable';
+import SightingCardList from 'components/sightingcard';
 import geoMap from 'data/geoMap.json';
 import './style.scss';
 import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
 import Error from 'components/error'
 import { useErrorContext } from 'common/hooks';
+
+
+/**
+ * Create a historic Date object.
+ *
+ * Helper function to set a baseline for items to return.
+ *
+ * @param {number}  numOfDays=1     Set the number of days from present to return with default of 1.
+ *
+ * @yield {Date}    Returns past date for filtering purposes.
+ */
+ const filterSightingCardsByDate = (numOfDays=1) => {
+    const dateThreshold = new Date();
+    return new Date(dateThreshold.setDate(dateThreshold.getDate() - numOfDays));
+}
+
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
@@ -15,6 +31,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         [state, setState] = useState(null);
 
     const { error, addError, removeError } = useErrorContext();
+    console.log("Search Result Container: Error", error);
 
     const cleanTableData = rawData => {
         const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);
@@ -133,13 +150,39 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         }
     }, [searchResult, cityList, country, state, addError, removeError]);
 
+    useEffect(() => {
+        const _filteredSightingCards = () => {
+            return sightingChart.value?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+                && parseInt(rowObj.maxElevation) >= 30
+                && parseInt(rowObj.duration[0])
+            ));
+        }
+
+        const cardValidation = () => {
+            const filteredCards = _filteredSightingCards();
+            if (filteredCards?.length) {
+                removeError();
+
+            } else {
+                addError(
+                    SIGHTINGRESULTS_NONE_MESSAGE.message,
+                    SIGHTINGRESULTS_NONE_MESSAGE.type,
+                );
+            }
+        }
+        if (sightingChart.status !== INITIAL_LOAD) {
+            cardValidation();
+        }
+
+    }, [sightingChart]);
+
     const tempConditionalRender = () => {
         if (error && error.type !== "OK") {
             return <Error errormessage={error} />;
         } else if (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) {
             return <Error errormessage={FETCH_FAIL_MESSAGE} />;
         } else if (searchResult.status === FETCH_SUCCESS && sightingChart.status === FETCH_SUCCESS && sightingChart.value?.length) {
-            return <SightingTable tableData={sightingChart} />;
+            return <SightingCardList tableData={sightingChart} />;
         } else if (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) {
             return <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />;
         }
@@ -149,12 +192,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     return (
         <>
             <Error />
-
-            { !error?.type
-                && sightingChart.status === FETCH_SUCCESS
-                && searchResult.status === FETCH_SUCCESS
-                && <SightingTable tableData={sightingChart} />
-            }
+           { sightingChart.status !== SEARCH_RESET && sightingChart.status !== INITIAL_LOAD && !error.type && <SightingCardList tableData={sightingChart} /> }
         </>
     );
 }
