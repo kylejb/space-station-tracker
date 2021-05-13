@@ -123,7 +123,6 @@ const Earth = () => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
 
-    // console.log("globeisrendering", globeEl)
 
     return (
         <div className="earth-container">

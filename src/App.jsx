@@ -15,7 +15,7 @@ const App = () => {
   const [firstLoad, setFirstLoad] = useState(true)
   //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
   const { searchResult, addSearchResult, removeSearchResult } = useSearchContext();
-    console.log("SearchContext", searchResult, addSearchResult)
+
   useEffect(() => {
     const getUserCountry = async () => {
       const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
@@ -75,7 +75,6 @@ const App = () => {
   const splashHider = () => {
     setFirstLoad(false)
     // currently causes the error from setallete API call
-    // console.log("Splash HIDDEN")
   }
 
   return (
