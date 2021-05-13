@@ -14,7 +14,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
 
-    const { error, setError } = useErrorContext();
+    const { error, setErrorHelper } = useErrorContext();
 
     const cleanTableData = rawData => {
         const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);
@@ -130,15 +130,22 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         }
     }, [searchResult, cityList, country, state]);
 
+    const tempConditionalRender = () => {
+        if (error.type !== "OK") {
+            return <Error errormessage={error} />;
+        } else if (searchResult.status === FETCH_SUCCESS && sightingChart.value?.length) {
+            return <SightingTable tableData={sightingChart} />;
+        } else if (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) {
+            return <Error errormessage={FETCH_FAIL_MESSAGE} />;
+        } else if (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) {
+            return <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />;
+        }
+    }
 
 
     return (
         <>
-
-            { (searchResult.status === FETCH_SUCCESS && sightingChart.value?.length) && <SightingTable tableData={sightingChart} /> }
-            { (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) && <Error errormessage={FETCH_FAIL_MESSAGE} /> }
-            { (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) && <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />}
-
+            {tempConditionalRender()}
         </>
     );
 }
