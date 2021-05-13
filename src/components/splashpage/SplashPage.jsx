@@ -1,9 +1,9 @@
 import './style.scss';
-import useViewport from 'hooks/useViewport';
+import useViewport from 'common/hooks/useViewport';
 
 
 const SplashPage = ({splashHider}) => {
-    
+
     const { width, height } = useViewport();
 
     return (
