@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import ErrorContext from './ErrorContext';
 
-// TODO - refactor logic to flatten error to contain only msg
 const initialState = {
     type: null,
     message: null,
@@ -13,11 +12,11 @@ const ErrorProvider = ({ children }) => {
 
     const removeError = () => setError({ type: false, message: false });
 
-    const addError = (message, status) => setError({ message, status });
+    const addError = (message, type) => setError({ message, type });
 
     const contextValue = {
         error,
-        addError: useCallback((message, status) => addError(message, status), []),
+        addError: useCallback((message, type) => addError(message, type), []),
         removeError: useCallback(() => removeError(), [])
     };
 
