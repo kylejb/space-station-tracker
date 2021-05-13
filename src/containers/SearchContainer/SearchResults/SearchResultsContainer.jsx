@@ -4,7 +4,7 @@ import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
 import './style.scss';
-import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD } from 'utils/constants';
+import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
 import Error from 'components/error'
 import { useErrorContext } from 'ErrorContext';
 
@@ -122,9 +122,9 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
 
             // TODO - Improve UI based on the following concept:
             if (distanceFromSpot > 50) {
-                console.log("TODO - User is not close enough to station", distanceFromSpot);
+                setErrorHelper(SIGHTINGRESULTS_DISTANCE_MESSAGE);
             } else {
-                console.log("Distance is", distanceFromSpot);
+                setErrorHelper({type: "OK", message: ""}); //! make callback fn
                 fetchSightingData(cityName);
             }
         }
