@@ -159,7 +159,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             background: state.isFocused ? "#4287f5" : "rgba(27,29,33,0.75)",
         }),
     }
-    
+
     useEffect(() => {
         if (currentUser.country === "") {
             setEmojiValue("🇺🇸 ▼" );
