@@ -7,6 +7,7 @@ import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL, SEARCH_RESET } from 'utils/con
 import Instructions from 'components/instructions'
 import Faq from 'components/faq'
 import Credits from 'components/credits'
+import ErrorProvider from 'ErrorContext';
 
 const App = () => {
   const [searchResult, setSearchResult] = useState({ value: [], status: INITIAL_LOAD });
@@ -79,13 +80,14 @@ const App = () => {
   return (
     <div className="app">
       {/* {firstLoad ? <SplashPage splashHider={splashHider} /> : null} */}
-      <SearchContainer
-        currentUser={currentUser}
-        searchResult={searchResult}
-        fetchGeoDataFromZip={fetchGeoDataFromZip}
-        setCurrentUser={resetSearchResultOnCountryChange}
-
-      />
+      <ErrorProvider>
+        <SearchContainer
+            currentUser={currentUser}
+            searchResult={searchResult}
+            fetchGeoDataFromZip={fetchGeoDataFromZip}
+            setCurrentUser={resetSearchResultOnCountryChange}
+        />
+      </ErrorProvider>
       <Earth searchResult={searchResult} />
       <Faq/>
       <Instructions/>
