@@ -6,6 +6,7 @@ import geoMap from 'data/geoMap.json';
 import './style.scss';
 import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD } from 'utils/constants';
 import Error from 'components/error'
+import { useErrorContext } from 'ErrorContext';
 
 const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
@@ -13,6 +14,7 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
 
+    const { error, setError } = useErrorContext();
 
     const cleanTableData = rawData => {
         const arrayOfHTMLStrings = rawData.map(item => item.children[2].value);
