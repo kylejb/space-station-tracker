@@ -1,6 +1,6 @@
 import SightingCard from './SightingCard';
 import { useErrorContext } from 'ErrorContext';
-import { SIGHTINGRESULTS_NONE_MESSAGE } from 'utils/constants';
+import { SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
 
 /**
  * Create a historic Date object.
@@ -24,32 +24,42 @@ const SightingTable = ({ tableData }) => {
         ));
     }
 
-    const { setErrorHelper } = useErrorContext();
+    const { error, setErrorHelper } = useErrorContext();
+    console.log("what is error in table");
 
-    const cardValidation = () => {
-        const filteredCards = filteredSightingCards();
-        if (filteredCards.length) {
-            setErrorHelper({
-                type: "OK",
-                message: "",
-            });
-            return filteredCards;
-        } else {
-            setErrorHelper({
-                type: SIGHTINGRESULTS_NONE_MESSAGE.type,
-                message: SIGHTINGRESULTS_NONE_MESSAGE.message,
-            });
-        }
-    }
+    // const cardValidation = () => {
+    //     const filteredCards = filteredSightingCards();
+    //     if (filteredCards.length) {
+    //         setErrorHelper({
+    //             type: "TABLE_OK",
+    //             message: "",
+    //         });
+
+    //     } else {
+    //         setErrorHelper({
+    //             type: SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
+    //             message: SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
+    //         });
+    //     }
+    // }
+
     const renderSightingCards = () => {
-        const filteredCards = cardValidation();
         let count = -1;
-        return filteredCards?.map( rowObj => (
+        const filteredCards = filteredSightingCards()?.map( rowObj => (
             <SightingCard
                 key={++count}
                 sightingData={rowObj}
             />
         ));
+
+        if (filteredCards.length) {
+            return filteredCards;
+        } else {
+            setErrorHelper({
+                type: SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
+                message: SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
+            });
+        }
     }
 
     const headerData = {
@@ -57,15 +67,12 @@ const SightingTable = ({ tableData }) => {
         time: "TIME",
         duration: "DURATION"
     };
-
     return (
         <>
-
-                    <div className="sightingresults">
-                        <SightingCard header sightingData={headerData}/>
-                        {renderSightingCards()}
-                    </div>
-
+            <div className="sightingresults">
+                <SightingCard header sightingData={headerData}/>
+                {error.type === "OK" && renderSightingCards()}
+            </div>
         </>
     );
 }
