@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Select from 'react-select';
 import { flag } from 'country-emoji';
-import { countryOptions } from 'data/countryOptions';
+import { countryOptions } from 'common/data/countryOptions';
 import './style.scss';
 
 // TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627

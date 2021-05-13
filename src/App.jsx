@@ -7,14 +7,13 @@ import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL } from 'utils/constants';
 import Instructions from 'components/instructions'
 import Faq from 'components/faq'
 import Credits from 'components/credits'
-import ErrorProvider from 'common/contexts/errors';
 import { useSearchContext } from 'common/hooks';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({ country: "", status: INITIAL_LOAD });
   const [firstLoad, setFirstLoad] = useState(true)
   //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
-  const { searchResult, addSearchResult, removeSearchResult } = useSearchContext();
+  const { addSearchResult, removeSearchResult } = useSearchContext();
 
   useEffect(() => {
     const getUserCountry = async () => {

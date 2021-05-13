@@ -1,12 +1,24 @@
 import { useState, useEffect } from 'react';
 import { findNearest, getDistance, convertDistance } from 'geolib';
 import XMLParser from 'react-xml-parser';
+
 import SightingCardList from 'components/sightingcard';
-import geoMap from 'data/geoMap.json';
-import './style.scss';
-import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
-import Error from 'components/error'
+import Error from 'components/notification';
+
 import { useErrorContext, useSearchContext } from 'common/hooks';
+import geoMap from 'common/data/geoMap.json';
+
+import {
+    FETCH_SUCCESS,
+    FETCH_FAIL,
+    FETCH_FAIL_MESSAGE,
+    SIGHTINGRESULTS_NONE_MESSAGE,
+    INITIAL_LOAD,
+    SIGHTINGRESULTS_DISTANCE_MESSAGE,
+    SEARCH_RESET
+} from 'utils/constants';
+
+import './style.scss';
 
 
 /**
