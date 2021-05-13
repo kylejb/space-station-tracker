@@ -4,7 +4,7 @@ import XMLParser from 'react-xml-parser';
 import SightingTable from 'components/sightingtable';
 import geoMap from 'data/geoMap.json';
 import './style.scss';
-import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
+import { FETCH_SUCCESS, FETCH_FAIL, FETCH_FAIL_MESSAGE, ZIPRESULTS_NONE_MESSAGE, SIGHTINGRESULTS_NONE_MESSAGE, ZIPLENGTH_ERROR_MESSAGE, INITIAL_LOAD, SIGHTINGRESULTS_DISTANCE_MESSAGE, SEARCH_RESET } from 'utils/constants';
 import Error from 'components/error'
 import { useErrorContext } from 'ErrorContext';
 
@@ -51,20 +51,23 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     }
 
     useEffect(() => {
-        const searchResultObject = searchResult.value[0];
-        const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
-        const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
-        const _country = currentUser.country;
-        // Regions - the key after countries - are "None" for all countries except the below
-        const _state = searchResultDisplayNameArray && countriesWithRegions.includes(_country)
-            ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ", "_")
-            : "None";
-
-        if (searchResultObject) {
-            setCountry(_country);
-            setState(_state);
-            // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
-            setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
+        if (searchResult.status === FETCH_SUCCESS) {
+            const searchResultObject = searchResult.value[0];
+            const countriesWithRegions = ["United_States", "Great_Britian", "Australia", "Canada"];
+            const searchResultDisplayNameArray = searchResultObject?.display_name.split(", ");
+            const _country = currentUser.country;
+            // Regions - the key after countries - are "None" for all countries except the below
+            const _state = searchResultDisplayNameArray && countriesWithRegions.includes(_country)
+                ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(" ", "_")
+                : "None";
+            if (searchResultObject) {
+                setCountry(_country);
+                setState(_state);
+                // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
+                setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
+            }
+        } else if (searchResult.status === FETCH_FAIL) {
+            setSightingChart({ value: [], status: SEARCH_RESET })
         }
         // eslint-disable-next-line
     }, [searchResult, currentUser]);
@@ -133,10 +136,10 @@ const SearchResultsContainer = ({ searchResult, currentUser }) => {
     const tempConditionalRender = () => {
         if (error.type !== "OK") {
             return <Error errormessage={error} />;
-        } else if (searchResult.status === FETCH_SUCCESS && sightingChart.value?.length) {
-            return <SightingTable tableData={sightingChart} />;
         } else if (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) {
             return <Error errormessage={FETCH_FAIL_MESSAGE} />;
+        } else if (searchResult.status === FETCH_SUCCESS && sightingChart.status === FETCH_SUCCESS && sightingChart.value?.length) {
+            return <SightingTable tableData={sightingChart} />;
         } else if (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) {
             return <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />;
         }
