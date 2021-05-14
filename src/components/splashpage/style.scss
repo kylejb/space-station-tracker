@@ -1,0 +1,94 @@
+#splashwrapper {
+    z-index: 6;
+    
+    @keyframes fadein {
+        from {
+            opacity: 0%
+        }
+        to {
+            opacity: 100%
+        }
+    }
+    
+    h1 {
+        color: white;
+        font-size: 2em;
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        z-index: 8;
+        font-family: 'Woodchuck-Bold';
+        animation-name: fadein;
+        animation-duration: 2s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+    
+    p {
+        color: white;
+        font-size: 1em;
+        line-height: 125%;
+        width: 475px;
+        font-family: "Basier";
+        position: fixed;
+        top: 125px;
+        left: 50px;
+        z-index: 8;
+        opacity: 0%;
+        animation-name: fadein;
+        animation-delay: 1.2s;
+        animation-duration: 1.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+    
+    @keyframes blink {
+        from {
+            opacity: 100%
+        }
+        to {
+            opacity: 0%
+        }
+    }
+
+    h2 {
+        color: white;
+        font-size: 1em;
+        font-family: "Basier";
+        position: fixed;
+        top: 4%;
+        // Screen is fof center somehow
+        // text-align: center;
+        right: 2%;
+        z-index: 8;
+        opacity: 0%;
+        animation-name: fadein, blink;
+        animation-iteration-count: 1, infinite;
+        animation-direction: normal, alternate;
+        animation-delay: 2.2s, 3.7s;
+        animation-duration: 1.5s, 2.5s;
+        animation-timing-function: linear, linear;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes slideup {
+        from {
+            top: 0%;
+        }
+
+        to {
+            top: -100%;
+        }
+    }
+    
+    img {
+        z-index: 7;
+        position: fixed;
+        left: -35%;
+        animation-name: slideup;
+        animation-duration: 1.5s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+}

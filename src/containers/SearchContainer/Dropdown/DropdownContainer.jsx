@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Select from 'react-select';
-import { flag } from 'country-emoji';
-import { countryOptions } from 'data/countryOptions';
+import { countryEmojis } from 'common/data/countryEmojis';
+import { countryOptions } from 'common/data/countryOptions';
 import './style.scss';
 
 // TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627
@@ -51,8 +51,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     const dropdownSelectHelper = (e) => {
         setUserInput(e.value);
-        const emoji = flag(e.value.replace("_", " "));
-        setEmojiValue(`${emoji}  ▼`);
+        setEmojiValue(`${countryEmojis[e.value]}  ▼`);
     }
 
     // selectRef.current should be accessed after state is changed
@@ -97,22 +96,74 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         }),
         control: (provided, state) => ({
             ...provided,
-            width: 180,
+            width: 170,
             minHeight: 25,
+            borderRadius: "5px 0px 0px 5px",
+            background: "rgba(27,29,33,0.75)",
+            border: "1px solid rgba(198,198,197,0.84)",
+            boxShadow: "inset 0px 0px 3px 2px #4287f5",
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            width: 170,
+            minHeight: 48,
+            color: "#C6C6C5",
+            opacity: "1",
+        }),
+        singleValue: (provided, state) => ({
+            ...provided,
+            color: "#C6C6C5",
+            opacity: "1",
+            fontFamily: "Basier",
+            paddingLeft: "10px",
+            letterSpacing: ".05em",
+            fontSize: ".8em",
+        }),
+        input: (provided, state) => ({
+            ...provided,
+            color: "#C6C6C5",
+            opacity: "1",
+            fontFamily: "Basier",
+            paddingLeft: "10px",
+            letterSpacing: ".05em",
+            fontSize: ".8em",
         }),
         menu: (provided, state) => ({
             ...provided,
-            width: 180,
+            width: 170,
             minHeight: 25,
+            marginTop: "3px",
+            background: "rgba(27,29,33,0.95)",
+            color: "#C6C6C5",
+            border: "1px solid rgba(198,198,197,0.84)",
+        }),
+        menuList: (provided, state) => ({
+            ...provided,
+            borderRadius: "5px 0px 0px 5px",
+            background: "rgba(27,29,33,0.75)",
+            color: "#C6C6C5",
+            fontFamily: "Basier",
+            fontSize: ".9em",
+        }),
+        menuItem: (provided, state) => ({
+            ...provided,
+            borderRadius: "5px 0px 0px 5px",
+            background: "rgba(27,29,33,0.75)",
+            color: "#C6C6C5",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            borderRadius: "0px 0px 0px 0px",
+            color: "#C6C6C5",
+            background: state.isFocused ? "#4287f5" : "rgba(27,29,33,0.75)",
         }),
     }
 
     useEffect(() => {
         if (currentUser.country === "") {
-            setEmojiValue("🇺🇸  ▼" );
+            setEmojiValue("🇺🇸 ▼" );
         } else {
-            const emoji = flag(currentUser.country.replace("_", " "));
-            setEmojiValue(`${emoji}  ▼`);
+            setEmojiValue(`${countryEmojis[currentUser.country]} ▼`);
         }
     },[currentUser]);
 
@@ -125,6 +176,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     return (
         <div className="dropdown-container">
             <Select
+                className="react-select-component"
                 blurInputOnSelect
                 openMenuOnFocus
                 ref={selectRef}

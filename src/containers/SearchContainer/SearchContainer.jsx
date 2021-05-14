@@ -3,13 +3,14 @@ import DropdownContainer from './Dropdown';
 import Search from 'components/search';
 import "./style.scss"
 
-const SearchContainer = ({ fetchGeoDataFromZip, searchResult, currentUser, setCurrentUser }) => {
+const SearchContainer = ({ fetchGeoDataFromZip, currentUser, setCurrentUser }) => {
+
     return (
         <div className="search-container">
             <Search fetchGeoDataFromZip={fetchGeoDataFromZip} currentUser={currentUser}>
                 <DropdownContainer currentUser={currentUser} setCurrentUser={setCurrentUser} />
             </Search>
-            <SearchResultsContainer currentUser={currentUser} searchResult={searchResult} />
+            <SearchResultsContainer currentUser={currentUser} />
         </div>
     );
 }

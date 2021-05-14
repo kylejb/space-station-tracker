@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import useViewport from 'hooks/useViewport';
+import { FETCH_SUCCESS } from 'utils/constants';
+import { useViewport, useSearchContext } from 'common/hooks';
 import * as solar from 'solar-calculator';
 import * as THREE from 'three';
 import Globe from 'react-globe.gl';
 import './style.scss';
 
-const Earth = ( props ) => {
+const Earth = () => {
     const globeEl = useRef();
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
 
+    const { searchResult } = useSearchContext();
+
     // Camera follows ISS on state change
     useEffect(() => {
-        if ( followISS && satelliteCollection.length ) {
+        if (followISS && satelliteCollection.length) {
             globeEl.current.controls().autoRotate = false;
 
             globeEl.current.pointOfView({
@@ -21,26 +24,26 @@ const Earth = ( props ) => {
                 lng: satelliteCollection[0].longitude,
                 altitude: 2
             });
-        } else if (props.searchResult.length) {
+        } else if (searchResult.status === FETCH_SUCCESS) {
             globeEl.current.controls().autoRotate = false;
         } else {
             globeEl.current.controls().autoRotate = true;
         }
 
-    }, [followISS, satelliteCollection, props.searchResult]);
+    }, [followISS, satelliteCollection, searchResult]);
 
 
     useEffect(() => {
-        if ( props.searchResult.length ) {
+        if (searchResult.status === FETCH_SUCCESS) {
             setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
             globeEl.current.pointOfView({
-                lat: props.searchResult[0].lat,
-                lng: props.searchResult[0].lon,
+                lat: searchResult.value[0].lat,
+                lng: searchResult.value[0].lon,
                 altitude: 2
             });
         }
-    }, [props.searchResult]);
+    }, [searchResult]);
 
     //! Fix behavior during re-render
     // const globeMaterial = new THREE.MeshPhongMaterial();
@@ -78,7 +81,7 @@ const Earth = ( props ) => {
         const findISS = async () => {
             const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
             let data = await response.json();
-            setSatelliteCollection([ data ]);
+            setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
                     lat: data.latitude,
@@ -99,17 +102,19 @@ const Earth = ( props ) => {
             setDt(dt => dt + VELOCITY * 60 * 1000);
             globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
         }
+        const globeIterate = globeEl.current.iterateTime
 
-        globeEl.current = requestAnimationFrame(iterateTime);
+        globeEl.current.iterateTime = requestAnimationFrame(iterateTime);
 
         return () => {
-            cancelAnimationFrame(globeEl.current.iterateTime);
+            cancelAnimationFrame(globeIterate);
             clearInterval(interval);
         }
     }, [isFirstLoad]);
 
-
+    // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
+
     const getAntipodeLat = lat => {
         return lat * -1;
     }
@@ -118,24 +123,24 @@ const Earth = ( props ) => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
 
+
     return (
         <div className="earth-container">
-        <h1>Where iss the ISS?</h1>
-        <span>
-            <input
-                aria-label="Toggle to follow ISS"
-                type="checkbox"
-                value={followISS}
-                checked={followISS}
-                onChange={() => setFollowISS(!followISS)}
-            />
-        <label aria-label="Follow ISS">Follow Station</label>
-        </span>
+            <h1>Where iss the ISS?</h1>
+            <span>
+                <input
+                    aria-label="Toggle to follow ISS"
+                    type="checkbox"
+                    value={followISS}
+                    checked={followISS}
+                    onChange={() => setFollowISS(!followISS)}
+                />
+                <label aria-label="Follow ISS">Follow Station</label>
+            </span>
             <Globe
                 ref={globeEl}
                 width={width}
                 height={height}
-
                 tilesData={[{ pos: sunPosAt(dt) }]}
                 tileLng={d => getAntipodeLng(d.pos[0])}
                 tileLat={d => getAntipodeLat(d.pos[1])}
@@ -160,14 +165,14 @@ const Earth = ( props ) => {
                     Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));
                 }}
 
-                labelsData={props.searchResult}
+                labelsData={searchResult.value}
                 labelLat={d => d.lat}
                 labelLng={d => d.lon}
-                labelText={d => "Postcode"}
+                labelText={d => ""}
                 labelSize={1000 * 4e-4}
-                labelDotRadius={1000 * 4e-4}
-                labelColor={() => 'teal'}
-                labelResolution={2}
+                labelDotRadius={1000 * 5e-4}
+                labelColor={() => '#c43335'}
+                labelResolution={3}
             />
         </div>
     );
