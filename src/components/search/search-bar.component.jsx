@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ZIPLENGTH_ERROR_MESSAGE } from 'utils/constants';
-import { useErrorContext } from 'common/hooks';
+import { useErrorContext, useSearchContext } from 'common/hooks';
 
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
   const [userInput, setUserInput] = useState("");
 
   const { addError, removeError } = useErrorContext();
+//   const { removeSearchResult } = useSearchContext();
 
   const searchValueHandler = (event) => {
     setUserInput(event.target.value);
@@ -30,6 +31,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
           type="submit"
           value="Find Sightings"
           onClick={(e) => {
+            // removeSearchResult();
             if (userInput.length <= 2) {
                 addError(
                     ZIPLENGTH_ERROR_MESSAGE.message,
