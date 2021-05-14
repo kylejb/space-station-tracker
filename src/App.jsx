@@ -49,7 +49,6 @@ const App = () => {
         'User-Agent': 'Student-Project-v0'
       },
     };
-    removeSearchResult();
     if (zip !== "" && zip.length > 2) {
         try{
             const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
