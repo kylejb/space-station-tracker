@@ -1,4 +1,4 @@
-{
+export const countryEmojis = {
     "Afghanistan": "🇦🇫",
     "Albania": "🇦🇱",
     "Algeria": "🇩🇿",
@@ -145,4 +145,4 @@
     "Yemen": "🇾🇪",
     "Zambia": "🇿🇲",
     "Zimbabwe": "🇿🇼"
-}
+};
