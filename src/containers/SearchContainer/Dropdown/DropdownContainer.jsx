@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import Select from 'react-select';
-import { flag } from 'country-emoji';
+import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
 import './style.scss';
 
@@ -51,7 +51,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     const dropdownSelectHelper = (e) => {
         setUserInput(e.value);
-        const emoji = flag(e.value.replace("_", " "));
+        const emoji = countryEmojis(e.value);
         setEmojiValue(`${emoji}  ▼`);
     }
 
@@ -164,7 +164,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         if (currentUser.country === "") {
             setEmojiValue("🇺🇸 ▼" );
         } else {
-            const emoji = flag(currentUser.country.replace("_", " "));
+            const emoji = countryEmojis(currentUser.country);
             setEmojiValue(`${emoji} ▼`);
         }
     },[currentUser]);
