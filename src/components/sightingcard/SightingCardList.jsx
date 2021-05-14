@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import SightingCard from './SightingCard';
-import { useErrorContext } from 'common/hooks';
-import { SIGHTINGRESULTS_DISTANCE_MESSAGE } from 'utils/constants';
+import { FETCH_SUCCESS } from 'utils/constants';
 
 
 const SightingCardList = ({ tableData }) => {
@@ -21,12 +19,15 @@ const SightingCardList = ({ tableData }) => {
         duration: "DURATION"
     };
     return (
-        <>
-            <div className="sightingresults">
-                <SightingCard header sightingData={headerData}/>
-                { tableData.status === "FILTER_SUCCESS" && renderSightingCards()}
-            </div>
-        </>
+        <div className="sightingresults">
+
+            {tableData.status === FETCH_SUCCESS &&
+                <>
+                    <SightingCard header sightingData={headerData}/>
+                    {renderSightingCards()}
+                </>
+            }
+        </div>
     );
 }
 

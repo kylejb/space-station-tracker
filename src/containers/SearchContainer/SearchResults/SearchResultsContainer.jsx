@@ -10,13 +10,12 @@ import geoMap from 'common/data/geoMap.json';
 
 import {
     FETCH_SUCCESS,
-    FETCH_FAIL,
-    FETCH_FAIL_MESSAGE,
-    ZIPRESULTS_NONE_MESSAGE,
     SIGHTINGRESULTS_NONE_MESSAGE,
     INITIAL_LOAD,
     SIGHTINGRESULTS_DISTANCE_MESSAGE,
-    SEARCH_RESET
+    SEARCH_RESET,
+    FETCH_FAIL,
+    FETCH_FAIL_MESSAGE,
 } from 'utils/constants';
 
 import './style.scss';
@@ -39,7 +38,6 @@ import './style.scss';
 
 const SearchResultsContainer = ({ currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
-        [filteredSightingData, setFilteredSightingData] = useState({value: null, status: INITIAL_LOAD}),
         [cityList, setCityList] = useState(null),
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
@@ -117,20 +115,34 @@ const SearchResultsContainer = ({ currentUser }) => {
             };
         }
 
-        const fetchSightingData = (city) => {
+        const filteredSightingCards = (data) => {
+            return data?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+                && parseInt(rowObj.maxElevation) >= 30
+                && parseInt(rowObj.duration[0])
+            ));
+        }
+
+        const fetchSightingData = async (city) => {
             const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
             const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
 
-            fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml")
-                .then(response => response.text())
-                .then(data => {
-                    const xml = new XMLParser().parseFromString(data);
+            try {
+                const response = await fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml");
+                const data = await response.text();
+                const xml = new XMLParser().parseFromString(data);
+                const itemData = xml.getElementsByTagName('item');
+                let cleanedData = cleanTableData(itemData);
+                cleanedData = filteredSightingCards(cleanedData);
 
-                    const itemData = xml.getElementsByTagName('item');
-                    const cleanedData = cleanTableData(itemData);
-
+                if (cleanedData && cleanedData.length) {
                     setSightingChart({value: cleanedData, status: FETCH_SUCCESS});
-                });
+                } else {
+                    setSightingChart({value: [], status: SIGHTINGRESULTS_NONE_MESSAGE})
+                }
+            } catch (error) {
+                setSightingChart({value: [], status: FETCH_FAIL});
+                addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
+            }
         }
         if (searchResult.value[0] && country && state) {
             let closestLatLon, cityName;
@@ -156,7 +168,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 closestLatLon
             ), 'mi');
 
-            // TODO - Improve UI based on the following concept:
+
             if (distanceFromSpot > 50) {
                 addError(SIGHTINGRESULTS_DISTANCE_MESSAGE.message, SIGHTINGRESULTS_DISTANCE_MESSAGE.type);
             } else {
@@ -166,58 +178,14 @@ const SearchResultsContainer = ({ currentUser }) => {
         }
     }, [searchResult, cityList, country, state, addError, removeError]);
 
-    useEffect(() => {
-        const _filteredSightingCards = () => {
-            const filteredCards = sightingChart.value?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
-                && parseInt(rowObj.maxElevation) >= 30
-                && parseInt(rowObj.duration[0])
-            ));
-
-            if (filteredCards && filteredCards.length) {
-                setFilteredSightingData({value: filteredCards, status: "FILTER_SUCCESS"});
-            } else {
-                setFilteredSightingData({value: [], status: "FILTER_FAIL"});
-            }
-        }
-
-        _filteredSightingCards();
-
-    }, [sightingChart, setFilteredSightingData]);
-
-    useEffect(() => {
-        const cardValidation = () => {
-            if (filteredSightingData && filteredSightingData.value?.length) {
-                removeError();
-            } else if (searchResult.status === SEARCH_RESET) {
-                addError(
-                    ZIPRESULTS_NONE_MESSAGE.message,
-                    ZIPRESULTS_NONE_MESSAGE.type,
-                );
-            } else {
-                addError(
-                    SIGHTINGRESULTS_NONE_MESSAGE.message,
-                    SIGHTINGRESULTS_NONE_MESSAGE.type,
-                );
-            }
-        }
-
-        cardValidation();
-
-    }, [filteredSightingData, addError, removeError, searchResult.status]);
-    console.log("SRC.. Error", error);
-
     return (
         <>
             <Error />
-           {filteredSightingData.status === "FILTER_SUCCESS" && <SightingCardList tableData={filteredSightingData} />}
+           {(sightingChart.status !== INITIAL_LOAD || sightingChart.status !== SEARCH_RESET)
+                && !error.type
+                && <SightingCardList tableData={sightingChart} />}
         </>
     );
 }
 
 export default SearchResultsContainer;
-
-
-/*
-["Date: Monday Mar 29, 2021 &lt;br/&gt; Time: 8:04 P…;br/&gt; Departure: 10&#176; above NE &lt;br/&gt;", "Date: Monday Mar 29, 2021 &lt;br/&gt; Time: 9:41 P…br/&gt; Departure: 22&#176; above NNW &lt;br/&gt;", "Date: Tuesday Mar 30, 2021 &lt;br/&gt; Time: 8:53 …;br/&gt; Departure: 25&#176; above NE &lt;br/&gt;", "Date: Wednesday Mar 31, 2021 &lt;br/&gt; Time: 8:0…br/&gt; Departure: 10&#176; above ENE &lt;br/&gt;", "Date: Wednesday Mar 31, 2021 &lt;br/&gt; Time: 9:4…;br/&gt; Departure: 28&#176; above NW &lt;br/&gt;", "Date: Thursday Apr 1, 2021 &lt;br/&gt; Time: 8:55 …br/&gt; Departure: 50&#176; above ENE &lt;br/&gt;", "Date: Friday Apr 2, 2021 &lt;br/&gt; Time: 8:08 PM…t;br/&gt; Departure: 14&#176; above E &lt;br/&gt;", "Date: Friday Apr 2, 2021 &lt;br/&gt; Time: 9:45 PM…t;br/&gt; Departure: 22&#176; above W &lt;br/&gt;", "Date: Saturday Apr 3, 2021 &lt;br/&gt; Time: 8:57 …t;br/&gt; Departure: 38&#176; above S &lt;br/&gt;", "Date: Sunday Apr 4, 2021 &lt;br/&gt; Time: 8:10 PM…;br/&gt; Departure: 13&#176; above SE &lt;br/&gt;", "Date: Monday Apr 5, 2021 &lt;br/&gt; Time: 9:00 PM…br/&gt; Departure: 11&#176; above SSW &lt;br/&gt;", "Date: Tuesday Apr 6, 2021 &lt;br/&gt; Time: 8:12 P…br/&gt; Departure: 10&#176; above SSE &lt;br/&gt;"]
-
-*/
