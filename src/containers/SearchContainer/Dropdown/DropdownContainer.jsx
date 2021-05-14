@@ -51,7 +51,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     const dropdownSelectHelper = (e) => {
         setUserInput(e.value);
-        setEmojiValue(`${countryEmojis(e.value)}  ▼`);
+        setEmojiValue(`${countryEmojis[e.value]}  ▼`);
     }
 
     // selectRef.current should be accessed after state is changed
@@ -163,7 +163,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         if (currentUser.country === "") {
             setEmojiValue("🇺🇸 ▼" );
         } else {
-            setEmojiValue(`${countryEmojis(currentUser.country)} ▼`);
+            setEmojiValue(`${countryEmojis[currentUser.country]} ▼`);
         }
     },[currentUser]);
 
