@@ -12,6 +12,7 @@ import {
     FETCH_SUCCESS,
     FETCH_FAIL,
     FETCH_FAIL_MESSAGE,
+    ZIPRESULTS_NONE_MESSAGE,
     SIGHTINGRESULTS_NONE_MESSAGE,
     INITIAL_LOAD,
     SIGHTINGRESULTS_DISTANCE_MESSAGE,
@@ -38,6 +39,7 @@ import './style.scss';
 
 const SearchResultsContainer = ({ currentUser }) => {
     const [sightingChart, setSightingChart] = useState({value: null, status: INITIAL_LOAD}),
+        [filteredSightingData, setFilteredSightingData] = useState({value: null, status: INITIAL_LOAD}),
         [cityList, setCityList] = useState(null),
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
@@ -97,7 +99,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
                 setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
             }
-        } else if (searchResult.status === FETCH_FAIL) {
+        } else if (searchResult.status === INITIAL_LOAD || searchResult.status === SEARCH_RESET) {
             setSightingChart({ value: [], status: SEARCH_RESET })
         }
         // eslint-disable-next-line
@@ -166,17 +168,31 @@ const SearchResultsContainer = ({ currentUser }) => {
 
     useEffect(() => {
         const _filteredSightingCards = () => {
-            return sightingChart.value?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
+            const filteredCards = sightingChart.value?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
                 && parseInt(rowObj.maxElevation) >= 30
                 && parseInt(rowObj.duration[0])
             ));
+
+            if (filteredCards && filteredCards.length) {
+                setFilteredSightingData({value: filteredCards, status: "FILTER_SUCCESS"});
+            } else {
+                setFilteredSightingData({value: [], status: "FILTER_FAIL"});
+            }
         }
 
-        const cardValidation = () => {
-            const filteredCards = _filteredSightingCards();
-            if (filteredCards?.length) {
-                removeError();
+        _filteredSightingCards();
 
+    }, [sightingChart, setFilteredSightingData]);
+
+    useEffect(() => {
+        const cardValidation = () => {
+            if (filteredSightingData && filteredSightingData.value?.length) {
+                removeError();
+            } else if (searchResult.status === SEARCH_RESET) {
+                addError(
+                    ZIPRESULTS_NONE_MESSAGE.message,
+                    ZIPRESULTS_NONE_MESSAGE.type,
+                );
             } else {
                 addError(
                     SIGHTINGRESULTS_NONE_MESSAGE.message,
@@ -184,29 +200,16 @@ const SearchResultsContainer = ({ currentUser }) => {
                 );
             }
         }
-        if (sightingChart.status !== INITIAL_LOAD) {
-            cardValidation();
-        }
 
-    }, [sightingChart]);
+        cardValidation();
 
-    const tempConditionalRender = () => {
-        if (error && error.type !== "OK") {
-            return <Error errormessage={error} />;
-        } else if (searchResult.status === FETCH_FAIL || sightingChart.status === FETCH_FAIL) {
-            return <Error errormessage={FETCH_FAIL_MESSAGE} />;
-        } else if (searchResult.status === FETCH_SUCCESS && sightingChart.status === FETCH_SUCCESS && sightingChart.value?.length) {
-            return <SightingCardList tableData={sightingChart} />;
-        } else if (sightingChart.status !== INITIAL_LOAD && !sightingChart.value.length) {
-            return <Error errormessage={SIGHTINGRESULTS_NONE_MESSAGE} />;
-        }
-    }
-
+    }, [filteredSightingData, addError, removeError, searchResult.status]);
+    console.log("SRC.. Error", error);
 
     return (
         <>
             <Error />
-           { sightingChart.status !== SEARCH_RESET && sightingChart.status !== INITIAL_LOAD && !error.type && <SightingCardList tableData={sightingChart} /> }
+           {filteredSightingData.status === "FILTER_SUCCESS" && <SightingCardList tableData={filteredSightingData} />}
         </>
     );
 }

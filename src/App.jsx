@@ -10,7 +10,7 @@ import Credits from 'components/credits';
 import Faq from 'components/faq';
 
 import { INITIAL_LOAD, FETCH_SUCCESS, FETCH_FAIL } from 'utils/constants';
-import { useSearchContext } from 'common/hooks';
+import { useSearchContext, useErrorContext } from 'common/hooks';
 
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
   const [firstLoad, setFirstLoad] = useState(true)
   //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
   const { addSearchResult, removeSearchResult } = useSearchContext();
+  const { error, addError, removeError } = useErrorContext();
 
   useEffect(() => {
     const getUserCountry = async () => {
@@ -65,6 +66,12 @@ const App = () => {
         } catch (error) {
             removeSearchResult();
         }
+    //! WORK-IN-PROGRESS
+    // Need to refactor to control the error flow; should not allow any leaks
+    } else if (zip.length > 0) {
+        addError([], FETCH_FAIL);
+    } else {
+        removeError();
     }
   };
 
@@ -78,7 +85,7 @@ const App = () => {
     setFirstLoad(false)
     // currently causes the error from setallete API call
   }
-
+  console.log("what is error", error)
   return (
     <div className="app">
         {/* {firstLoad ? <SplashPage splashHider={splashHider} /> : null} */}
