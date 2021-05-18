@@ -21,7 +21,7 @@ import {
 import './style.scss';
 
 const root =
-    process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+    process.env.NODE_ENV === "production" ? "" : "http://localhost:5000";
 
 /**
  * Create a historic Date object.
@@ -142,9 +142,9 @@ const SearchResultsContainer = ({ currentUser }) => {
                 const itemData = xml.getElementsByTagName('item');
                 let cleanedData = cleanTableData(itemData);
                 cleanedData = filteredSightingCards(cleanedData);
-                
+
                 if (cleanedData && cleanedData.length) {
-                    
+
                     setSightingChart({value: cleanedData, status: FETCH_SUCCESS});
                 } else {
                     setSightingChart({value: [], status: SIGHTINGRESULTS_NONE_MESSAGE})
