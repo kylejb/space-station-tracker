@@ -1,0 +1,13 @@
+{
+    "name": "server_space-station-tracker",
+    "version": "0.1.0",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "express": "^4.17.1"
+    }
+}
