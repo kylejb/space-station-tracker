@@ -1,29 +1,39 @@
 const express = require('express');
+const { json } = require('body-parser');
 const request = require('request');
 const path = require('path');
 
 const port = process.env.PORT || 5000 // Heroku needs PORT var
 
 const app = express();
+
 const buildPath = path.join(__dirname, '..', 'build'); // consider renaming
 app.use(express.static(buildPath));
 
+app.use(json());
 app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type,Accept,X-Access-Token,X-Key');
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
 
-app.get('/api/v1/spotthestation', (req, res) => {
-
+app.post('/api/v1/spotthestation', (req, res) => {
+    const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files";
+    const spotTheStationObj = {
+        country: req.body.country,
+        state: req.body.state,
+        city: req.body.city
+    };
     request(
-        { url: "https://freegeoip.app/json" },
+        { url: `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml` },
         (error, response, body) => {
             if (error || response.statusCode !== 200) {
-                return res.status(500).json({ type: 'error', message: error.message });
+                return res.status(500).json({ type: 'error', message: error });
             }
-            res.json(JSON.parse(body));
+            res.send(body);
         }
-    )
+    );
 });
 
 app.listen(port, () => {
