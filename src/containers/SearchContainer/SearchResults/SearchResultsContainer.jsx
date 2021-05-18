@@ -123,11 +123,18 @@ const SearchResultsContainer = ({ currentUser }) => {
         }
 
         const fetchSightingData = async (city) => {
-            const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
-            const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files/";
+            const spotTheStationObj = {country, state, city};
+            const fetchOptions = {
+                method: "POST",
+                headers: {
+                    "Accept": "application/text,application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(spotTheStationObj)
+            };
 
             try {
-                const response = await fetch(proxyURL + baseURL + country + "_" + state + "_" + city + ".xml");
+                const response = await fetch("http://localhost:5000/api/v1/spotthestation", fetchOptions);
                 const data = await response.text();
                 const xml = new XMLParser().parseFromString(data);
                 const itemData = xml.getElementsByTagName('item');
@@ -140,6 +147,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                     setSightingChart({value: [], status: SIGHTINGRESULTS_NONE_MESSAGE})
                 }
             } catch (error) {
+                console.log("error", error)
                 setSightingChart({value: [], status: FETCH_FAIL});
                 addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
             }
