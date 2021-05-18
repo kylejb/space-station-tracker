@@ -21,7 +21,7 @@ import {
 import './style.scss';
 
 const root =
-    process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/";
+    process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
 
 /**
  * Create a historic Date object.
