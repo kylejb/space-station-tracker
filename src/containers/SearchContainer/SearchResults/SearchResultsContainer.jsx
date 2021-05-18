@@ -20,6 +20,8 @@ import {
 
 import './style.scss';
 
+const root =
+    process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/";
 
 /**
  * Create a historic Date object.
@@ -134,7 +136,7 @@ const SearchResultsContainer = ({ currentUser }) => {
             };
 
             try {
-                const response = await fetch("http://localhost:5000/api/v1/spotthestation", fetchOptions);
+                const response = await fetch(root + "/api/v1/spotthestation", fetchOptions);
                 const data = await response.text();
                 const xml = new XMLParser().parseFromString(data);
                 const itemData = xml.getElementsByTagName('item');
