@@ -8,16 +8,19 @@
         left: 50px;
         z-index: 5;
         font-family: 'Woodchuck-Bold';
+        text-shadow: 2px 2px #4287f5;
     }
 
     span {
         position: fixed;
-        bottom: 50px;
-        left: 46%;
+        bottom: 25px;
+        left: 45%;
         z-index: 1;
         label {
             color: white;
             font-family: 'Basier';
+            margin-left: 5px;
+            font-size: .9em;
         }
 
     }
