@@ -23,28 +23,11 @@ import {
 
 
 const App = () => {
-    const [currentUser, setCurrentUser] = useState({ country: "", status: INITIAL_LOAD });
+    const [currentUser, setCurrentUser] = useState({ country: "United_States", status: INITIAL_LOAD });
     const [firstLoad, setFirstLoad] = useState(true)
     //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
     const { searchResult, addSearchResult, removeSearchResult } = useSearchContext();
     const { addError } = useErrorContext();
-
-    useEffect(() => {
-        const getUserCountry = async () => {
-        const proxyURL = `https://cors-anywhere.herokuapp.com/`; //! temporary PROXY_URL
-        const response = await fetch(`${proxyURL}https://freegeoip.app/json`);
-        const data = await response.json();
-
-        // TODO - refactor 'data' condition based success/fail types (e.g., HTTP Error codes)
-        if (data && data.country_name) {
-            const userCountry = data.country_name;
-            setCurrentUser({ country: userCountry.replace(" ", "_"), status: FETCH_SUCCESS });
-        } else {
-            // currently defaulting users to United_States
-            setCurrentUser({ country: "United_States", status: FETCH_FAIL });
-        }}
-        getUserCountry();
-    }, []);
 
     const fetchGeoDataFromZip = async (zip) => {
         const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
