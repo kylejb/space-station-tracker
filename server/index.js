@@ -18,6 +18,13 @@ app.use((req, res, next) => {
     next();
 });
 
+//! for development - REMOVE block before deployment
+if (process.env.NODE_ENV !== "production") {
+    app.options("*", function(req, res) {
+        res.sendStatus(200);
+    });
+}
+
 app.post('/api/v1/spotthestation', (req, res) => {
     const baseURL = "https://spotthestation.nasa.gov/sightings/xml_files";
     const spotTheStationObj = {
