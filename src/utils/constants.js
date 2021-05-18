@@ -19,12 +19,12 @@ Errors we need to ccount for:
     3b. no sightings (including what we filter) - is filteredSightingCards.length === 0 -- Message: "No sighting opportunities :( check back later gator"
 */
 
-export const ZIPLENGTH_ERROR_MESSAGE = {type: "ziplength", message: "Please enter valid zipcode"}
+export const ZIPLENGTH_ERROR_MESSAGE = {type: "ziplength", message: "Please enter a valid zipcode."}
 
-export const FETCH_FAIL_MESSAGE = {type: "fetchfail", message: "Oops, your request lost in the mail, our bad"}
+export const FETCH_FAIL_MESSAGE = {type: "fetchfail", message: "Oops, something went wrong..."}
 
-export const ZIPRESULTS_NONE_MESSAGE = {type: "nozipresults", message: "No results found with this zip"}
+export const ZIPRESULTS_NONE_MESSAGE = {type: "nozipresults", message: "No results found with this zipcode"}
 
-export const SIGHTINGRESULTS_NONE_MESSAGE = {type: "nosightingresults", message: "No sighting opportunities at your location at this time. :( Check back later!"}
+export const SIGHTINGRESULTS_NONE_MESSAGE = {type: "nosightingresults", message: "No sighting opportunities at your location at this time. Check back later!"}
 
 export const SIGHTINGRESULTS_DISTANCE_MESSAGE = {type: "sightingtoofar", message: "Out of bounds; no visibility near you."}
