@@ -19,13 +19,13 @@ const SightingCardList = ({ tableData }) => {
         duration: "DURATION"
     };
     return (
-        <div className="sightingresults">
+        <div className="sightingresults-wrapper">
 
             {tableData.status === FETCH_SUCCESS &&
-                <>
+                <div className="sightingresults">
                     <SightingCard header sightingData={headerData}/>
                     {renderSightingCards()}
-                </>
+                </div>
             }
         </div>
     );

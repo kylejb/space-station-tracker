@@ -1,25 +1,106 @@
-
 .error-ziplength {
-    color: red;
+    text-align: left;
+    margin-top: 15px;
+    span{
+        background: rgba(27,29,33,0.75);
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 15px 5px 15px;
+        font-family: "Basier";
+        color: rgba(217, 81, 72, .9);
+        border: 1px solid rgba(217, 81, 72, .9);
+        text-align: center;
+        font-size: .9em;
+        line-height: 1.4em;
+        opacity: 100%;
+        
+    }
+    
 
 }
 
 .error-fetchfail {
-    color: blue;
+    text-align: left;
+    margin-top: 15px;
+
+    span{
+        background: rgba(27,29,33,0.75);
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 15px 5px 15px;
+        font-family: "Basier";
+        color: rgba(217, 81, 72, .9);
+        border: 1px solid rgba(217, 81, 72, .9);
+        text-align: center;
+        font-size: .9em;
+        line-height: 1.4em;
+        opacity: 100%;
+        
+    }
+    
 
 }
 
 .error-nozipresults {
-    color: green;
+    text-align: left;
+    margin-top: 15px;
+
+    span{
+        background: rgba(27,29,33,0.75);
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 15px 5px 15px;
+        font-family: "Basier";
+        color: rgba(217, 81, 72, .9);
+        border: 1px solid rgba(217, 81, 72, .9);
+        text-align: center;
+        font-size: .9em;
+        line-height: 1.4em;
+        opacity: 100%;
+        
+    }
+    
 
 }
 
 .error-sightingtoofar {
-    color: green;
+    text-align: left;
+    margin-top: 15px;
+
+    span{
+        background: rgba(27,29,33,0.75);
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 15px 5px 15px;
+        font-family: "Basier";
+        color: rgba(217, 81, 72, .9);
+        border: 1px solid rgba(217, 81, 72, .9);
+        text-align: center;
+        font-size: .9em;
+        line-height: 1.4em;
+        opacity: 100%;
+        
+    }
+    
 
 }
 
 .error-nosightingresults {
-    color: yellow;
+    text-align: left;
+    margin-top: 15px;
+
+    span{
+        background: rgba(27,29,33,0.75);
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 15px 5px 15px;
+        font-family: "Basier";
+        color: rgba(217, 81, 72, .9);
+        border: 1px solid rgba(217, 81, 72, .9);
+        text-align: left;
+        word-wrap: normal;
+        display:block;
+        font-size: .9em;
+        width: 392px;
+        line-height: 1.4em;
+        opacity: 100%;
+        
+    }
+    
 
 }

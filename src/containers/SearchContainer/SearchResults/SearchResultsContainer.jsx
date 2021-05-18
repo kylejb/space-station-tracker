@@ -133,11 +133,13 @@ const SearchResultsContainer = ({ currentUser }) => {
                 const itemData = xml.getElementsByTagName('item');
                 let cleanedData = cleanTableData(itemData);
                 cleanedData = filteredSightingCards(cleanedData);
-
+                
                 if (cleanedData && cleanedData.length) {
+                    
                     setSightingChart({value: cleanedData, status: FETCH_SUCCESS});
                 } else {
                     setSightingChart({value: [], status: SIGHTINGRESULTS_NONE_MESSAGE})
+                    addError(SIGHTINGRESULTS_NONE_MESSAGE.message, SIGHTINGRESULTS_NONE_MESSAGE.type);
                 }
             } catch (error) {
                 setSightingChart({value: [], status: FETCH_FAIL});

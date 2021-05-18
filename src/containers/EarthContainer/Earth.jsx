@@ -126,7 +126,7 @@ const Earth = () => {
 
     return (
         <div className="earth-container">
-            <h1>Where iss the ISS?</h1>
+            <h1>Where is the ISS?</h1>
             <span>
                 <input
                     aria-label="Toggle to follow ISS"
