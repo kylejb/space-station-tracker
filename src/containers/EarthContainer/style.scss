@@ -2,13 +2,15 @@
     position: absolute;
     h1 {
         color: white;
-        font-size: 2em;
         position: fixed;
         top: 50px;
         left: 50px;
         z-index: 5;
-        font-family: 'Woodchuck-Bold';
-        text-shadow: 2px 2px #4287f5;
+        // font-family: 'Woodchuck-Bold';
+        // text-shadow: 2px 2px #4287f5;
+        // font-size: 2em;
+        font-size: 1.6em;
+        font-family: "North";
     }
 
     span {
