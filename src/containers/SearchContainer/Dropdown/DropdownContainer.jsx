@@ -44,7 +44,7 @@ import './style.scss';
 
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
-    const [userInput, setUserInput] = useState("");
+    const [userInput, setUserInput] = useState("United_States");
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [emojiValue, setEmojiValue] = useState("🇺🇸  ▼");
     const selectRef = useRef(null);
