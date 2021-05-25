@@ -34,13 +34,16 @@
     // overflow-y: auto;
 
     .sightingheader {
-        color: #C6C6C5;
+        // color: #C6C6C5;
+        color: #dedede;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         padding: 1px 0px 1px 0px;
         border-bottom: 1px solid #393939;
-        // width: 123%;
+        font-size: 1.1em;
+        font-weight: bold;
+
     }
 
     .sightingcard {
@@ -54,6 +57,32 @@
         width: 362px;
         //NOTE: width formerly 377 - 2 extra, subrtacted 30 to account for the padding on .sightingresults above - 15 and 15
         // width: 100%;
+
+        #datespan {
+            width: 130px;
+        }
+        #timespan {
+            width: 80px;
+        }
+        #durationspan {
+            width: 60px;
+        }
+
+        #headerdatespan {
+            display: flex;
+            justify-content: start;
+            width: 130px;
+        }
+        #headertimespan {
+            display: flex;
+            justify-content: start;
+            width: 80px;
+        }
+        #headerdurationspan {
+            display: flex;
+            justify-content: start;
+            // width: 60px;
+        }
 
         &:hover {
             // transform: scale(1.000005, 1);
@@ -107,9 +136,9 @@
         }
 
 
-        #headerspacingspan {
-            width: 10%;
-        }
+        // #headerspacingspan {
+        //     width: 10%;
+        // }
 
     }
 

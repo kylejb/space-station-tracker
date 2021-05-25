@@ -158,8 +158,9 @@ const Earth = () => {
 
                 customLayerData={satelliteCollection}
                 customThreeObject={d => new THREE.Mesh(
-                    new THREE.SphereBufferGeometry(4000 * 4e-4),
-                    new THREE.MeshLambertMaterial({ color: "white" }),
+                    new THREE.SphereBufferGeometry(6000 * 4e-4),
+                    new THREE.MeshLambertMaterial({ color: "white", emissive: "red", emissiveIntensity: 200 }),
+                    // new THREE.PointLight( {color: 0xff0000, intensity: 1, distance: 100 }),
                 )}
                 customThreeObjectUpdate={(obj, d) => {
                     Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.4));

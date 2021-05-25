@@ -17,9 +17,9 @@ const SightingCard = ({ sightingData, header }) => {
     return (
         <div className="sightingcard" onClick={renderDetailsHelper}>
             <div className={header ? "sightingheader" : "card_overview"}>
-                <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
-                <span>{sightingData.time}</span>
-                <span>{sightingData.duration}</span>
+                <span id={header? "headerdatespan" : "datespan"}>{header ? sightingData.date : sightingData.date.toDateString()}</span>
+                <span id={header? "headertimespan" : "timespan"}>{sightingData.time}</span>
+                <span id={header? "headerdurationspan" : "durationspan"}>{sightingData.duration}</span>
                 {!header ? <span id="sightingdownarrow" style={renderDetails ? {transform: "rotate(180deg)"} : null}>▼</span> : <span id="headerspacingspan"></span>}
             </div>
 
