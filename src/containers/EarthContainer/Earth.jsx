@@ -123,8 +123,18 @@ const Earth = () => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
     
+    const handleCursorStyle = (e) => {
+        if (e.type === "mousedown") {
+            console.log("mousedown")
+        } else if (e.type === "mouseup") {
+            console.log("mouseup")
+        } else {
+            return null
+        }
+    }
+
     return (
-        <div className="earth-container">
+        <div className="earth-container" onMouseDown={() => {console.log("mousedown")}} onMouseUp={() => {console.log("mouseup")}}>
             <h1>Where is the ISS?</h1>
             <span>
                 <input

@@ -46,12 +46,12 @@ import './style.scss';
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState("United_States");
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
-    const [emojiValue, setEmojiValue] = useState("🇺🇸  ▼");
+    const [emojiValue, setEmojiValue] = useState("🇺🇸   ");
     const selectRef = useRef(null);
 
     const dropdownSelectHelper = (e) => {
         setUserInput(e.value);
-        setEmojiValue(`${countryEmojis[e.value]}  ▼`);
+        setEmojiValue(`${countryEmojis[e.value]}   `);
     }
 
     // selectRef.current should be accessed after state is changed
@@ -161,9 +161,9 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
 
     useEffect(() => {
         if (currentUser.country === "") {
-            setEmojiValue("🇺🇸 ▼" );
+            setEmojiValue("🇺🇸  " );
         } else {
-            setEmojiValue(`${countryEmojis[currentUser.country]} ▼`);
+            setEmojiValue(`${countryEmojis[currentUser.country]}  `);
         }
     },[currentUser]);
 
@@ -193,14 +193,16 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                     (country.value === userInput) || (country.value === currentUser.country)
                 ))}
             />
-
-            <input
-                type="button"
-                style={{display: isDropdownOpen ? "none" : "block"}}
-                id="emojidropdown"
-                value={emojiValue}
-                onClick={emojiClickHandler}
-            />
+            <div id="emojidropdownwrapper" onClick={emojiClickHandler}>
+                <input
+                    type="button"
+                    style={{display: isDropdownOpen ? "none" : "block"}}
+                    id="emojidropdown"
+                    value={emojiValue}
+                    
+                    />
+                <span id="emojidownarrow" style={{display: isDropdownOpen ? "none" : "block"}}>▼</span>
+            </div>
         </div>
     );
 }

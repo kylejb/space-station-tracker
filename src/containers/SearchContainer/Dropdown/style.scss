@@ -1,27 +1,45 @@
 .dropdown-container {
-    
-    
+    #emojidropdownwrapper {
+        // border-radius: 5px 0px 0px 5px;
+        cursor: pointer;
+        background: transparent;
+        color: transparent;
 
-
-    #emojidropdown {
-        // There's some weirdness with padding and inputs - might need to change default styling
-        // padding: 10px, 41px, 10px, 41px;
-        width: 88px;
-        height: 50px;
-        font-size: 1.2em;
-        border-radius: 5px 0px 0px 5px;
-        background: rgba(198,198,197,0.84);
-        color: rgba(27,29,33, 0.94);
-        border: none;
-        // border: 1px solid rgba(198,198,197,0.86);
-        
-        // padding: 0px, 25px, 0px, 25px;
-        // background: rgba(125, 125, 124, 0.25);
-        // border-radius: 5%;
-        // color: white;
         &:hover {
             background: #737373;
             color: rgba(27,29,33, 0.90); 
+        }
+        //replaces the arrow in the value as we originally created it
+        #emojidownarrow {
+            color: rgba(27,29,33, 0.94);
+            // z-index: 1;
+            position: relative;
+            left: 56px;
+            bottom: 31px;
+            height: 0px;
+            font-size: .7em;
+            // display: inline-block;
+        }
+    
+    
+        #emojidropdown {
+            // There's some weirdness with padding and inputs - might need to change default styling
+            // padding: 10px, 41px, 10px, 41px;
+            width: 88px;
+            height: 50px;
+            font-size: 1.4em;
+            border-radius: 5px 0px 0px 5px;
+            background: rgba(198,198,197,0.84);
+            color: rgba(27,29,33, 0.94);
+            padding-right: 15px;
+            border: none;
+            cursor: pointer;
+
+            
+            &:hover {
+                background: #737373;
+                color: rgba(27,29,33, 0.90); 
+            }
         }
     }
 }

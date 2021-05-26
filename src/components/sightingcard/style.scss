@@ -108,6 +108,7 @@
             display: flex;
             justify-content: space-between;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .card_detail {
@@ -116,6 +117,7 @@
             flex-direction: row;
             margin-top: 4%;
             font-size: .88em;
+            cursor: pointer;
             
             .detail_info {
                 display: flex;
