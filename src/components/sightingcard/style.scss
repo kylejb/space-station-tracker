@@ -41,7 +41,7 @@
         justify-content: space-between;
         padding: 1px 0px 1px 0px;
         border-bottom: 1px solid #393939;
-        font-size: 1.1em;
+        // font-size: 1.1em;
         font-weight: bold;
 
     }
@@ -59,7 +59,7 @@
         // width: 100%;
 
         #datespan {
-            width: 130px;
+            width: 142px;
         }
         #timespan {
             width: 80px;
@@ -68,19 +68,28 @@
             width: 60px;
         }
 
+        #sightingdownarrow {
+            font-size: .7em;
+            width: 15px;
+            margin-top: 3px;
+        }   
+
         #headerdatespan {
             display: flex;
-            justify-content: start;
-            width: 130px;
+            // justify-content: flex-start;
+            justify-content: center;
+            padding-right: 50px;
+            width: 145px;
         }
         #headertimespan {
             display: flex;
-            justify-content: start;
-            width: 80px;
+            justify-content: flex-start;
+
+            width: 85px;
         }
         #headerdurationspan {
             display: flex;
-            justify-content: start;
+            justify-content: flex-start;
             // width: 60px;
         }
 

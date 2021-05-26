@@ -34,16 +34,16 @@ const Compass = ({ entersSky, leavesSky }) => {
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(117.6, 175.6)">NW</text>
 
                 {/* Arrow head - find better solution later */}
-                <defs>
+                {/* <defs>
                     <marker id="arrowhead" fill="#4287f5" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto-start-reverse">
                         <polygon points="0 0, 2.5 3.5, 0 7" />
                     </marker>
-                    {/* <marker id='head' orient="auto"
+                    <marker id='head' orient="auto"
                         markerWidth='2' markerHeight='4'
                         refX='0.1' refY='2'>
                          <path d='M0,0 V4 L2,2 Z' fill="red"/>
-                    </marker> */}
-                </defs>
+                    </marker>
+                </defs> */}
 
                 {/* Curve that we'll need to render dynamically */}
                 <path

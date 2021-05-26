@@ -122,8 +122,7 @@ const Earth = () => {
     const getAntipodeLng = lng => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
-
-
+    
     return (
         <div className="earth-container">
             <h1>Where is the ISS?</h1>
