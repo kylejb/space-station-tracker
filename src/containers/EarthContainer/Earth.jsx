@@ -155,7 +155,7 @@ const Earth = () => {
 
     return (
         <div className="earth-container"     >
-            <h1>Where is the ISS?</h1>
+            <h1>Space Station Sighter</h1>
             <span>
                 <input
                     aria-label="Toggle to follow ISS"
@@ -187,9 +187,11 @@ const Earth = () => {
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
                 customLayerData={satelliteCollection}
+
                 customThreeObject={d => new THREE.Mesh(
                     new THREE.SphereBufferGeometry(6000 * 4e-4),
-                    new THREE.MeshLambertMaterial({ color: "white", emissive: "red", emissiveIntensity: 200 }),
+                    new THREE.MeshLambertMaterial({ color: "white", emissive: 0x111111, wireframe: false, combine: .5, envMap: new THREE.TextureLoader().load( "//unpkg.com/three-globe/example/img/night-sky.png" ), emissiveIntensity: 1, reflectivity: 1 }),
+                    //new THREE.MeshLambertMaterial({ color: "white", emissive: "white", reflectivity: 100, combine: 1,  }),
                     // new THREE.PointLight( {color: 0xff0000, intensity: 1, distance: 100 }),
                 )}
                 customThreeObjectUpdate={(obj, d) => {

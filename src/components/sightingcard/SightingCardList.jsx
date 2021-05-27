@@ -35,6 +35,7 @@ const SightingCardList = ({ tableData }) => {
 
             {tableData.status === FETCH_SUCCESS &&
                 <div className="sightingresults">
+                    <h1 id="tabletitle">Sighting Opportunities</h1>
                     <SightingCard header sightingData={headerData}/>
                     {renderSightingCards()}
                 </div>

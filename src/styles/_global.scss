@@ -88,4 +88,60 @@ a {
     src: local('North'), url('../fonts/North.otf') format('woff');
     }
 
+//new fonts to try
+
+@font-face {
+    font-family: 'Garet-Heavy';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Garet-Heavy'), url('../fonts/Garet-Heavy.otf') format('woff');
+    }
     
+@font-face {
+    font-family: 'Indigo-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Indigo-Regular'), url('../fonts/Indigo-Regular.otf') format('woff');
+    }
+
+@font-face {
+    font-family: 'Indigo-Outline';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Indigo-Outline'), url('../fonts/Indigo-Outline.otf') format('woff');
+    }
+
+@font-face {
+    font-family: 'Kollektif-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Kollektif-Bold'), url('../fonts/Kollektif-Bold.ttf') format('woff');
+    }
+
+@font-face {
+    font-family: 'Magiel-Black';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Magiel-Black'), url('../fonts/Magiel-Black.otf') format('woff');
+    }
+
+@font-face {
+    font-family: 'Polsku';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Polsku'), url('../fonts/Polsku.ttf') format('woff');
+    }
+    
+@font-face {
+    font-family: 'Sora-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Sora-Bold'), url('../fonts/Sora-Bold.ttf') format('woff');
+    }
+
+@font-face {
+    font-family: 'Sora-ExtraBold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Sora-ExtraBold'), url('../fonts/Sora-ExtraBold.ttf') format('woff');
+    }
