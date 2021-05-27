@@ -4,13 +4,25 @@ import { FETCH_SUCCESS } from 'utils/constants';
 
 const SightingCardList = ({ tableData }) => {
     const renderSightingCards = () => {
-        let count = -1;
-        return tableData.value.map( rowObj => (
-            <SightingCard
-                key={++count}
-                sightingData={rowObj}
-            />
-        ));
+        
+        if(tableData.value.length > 10){
+            let count = -1;
+            return tableData.value.slice(0,9).map( rowObj => (
+                <SightingCard
+                    key={++count}
+                    sightingData={rowObj}
+                />
+            ));
+        } else {
+            let count = -1;
+            return tableData.value.map( rowObj => (
+                <SightingCard
+                    key={++count}
+                    sightingData={rowObj}
+                />
+            ));
+        }
+    
     }
 
     const headerData = {

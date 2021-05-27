@@ -181,7 +181,8 @@ const Earth = () => {
                 tilesTransitionDuration={0}
 
                 // globeMaterial={globeMaterial}
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+                globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+                // globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
@@ -200,7 +201,7 @@ const Earth = () => {
                 labelLng={d => d.lon}
                 labelText={d => ""}
                 labelSize={1000 * 4e-4}
-                labelDotRadius={1000 * 5e-4}
+                labelDotRadius={2000 * 4e-4}
                 labelColor={() => '#c43335'}
                 labelResolution={3}
             />
