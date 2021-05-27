@@ -11,6 +11,9 @@ const Earth = () => {
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
+    
+    //was formerlay true or false values
+    const [isMouseDown, setIsMouseDown] = useState("grab")
 
     const { searchResult } = useSearchContext();
 
@@ -123,18 +126,35 @@ const Earth = () => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
     
-    const handleCursorStyle = (e) => {
-        if (e.type === "mousedown") {
-            console.log("mousedown")
-        } else if (e.type === "mouseup") {
-            console.log("mouseup")
-        } else {
-            return null
-        }
-    }
+    //below function and commented style are an attmept to get hand to grab on mouse down and unclick when off
+    // const handleCursorStyle = (e) => {
+    //     if (e.type === "mousedown") {
+    //         console.log("anyvody out there?")
+    //         setIsMouseDown(true)
+    //     } else if (e.type === "mouseup") {
+    //         console.log("anyvody out there?")
+    //         setIsMouseDown(false)
+    //     }
+    // }
+
+    // const handleCursorStyle = (e) => {
+    //     if (e.type === "mousedown") {
+    //         console.log("anyvody out there?")
+    //         setIsMouseDown(true)
+    //     } else if (e.type === "mouseup") {
+    //         console.log("anyvody out there?")
+    //         setIsMouseDown(false)
+    //     }
+    // }
+
+    // style={isMouseDown ? {{cursor: "grabbing"}} : {{cursor: "grab"}} }
+    // ALT make state = grab opr grabbing (not true or false)
+        //style= {{ cursor: isMouseDown  }}
+
+        // onMouseDown={console.log("mouseDOwn")} onMouseUp={(e) => handleCursorStyle}
 
     return (
-        <div className="earth-container" onMouseDown={() => {console.log("mousedown")}} onMouseUp={() => {console.log("mouseup")}}>
+        <div className="earth-container"     >
             <h1>Where is the ISS?</h1>
             <span>
                 <input
