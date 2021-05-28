@@ -11,10 +11,6 @@ const Earth = () => {
     const [satelliteCollection, setSatelliteCollection] = useState([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
-    
-    //was formerlay true or false values
-    const [isMouseDown, setIsMouseDown] = useState("grab")
-
     const { searchResult } = useSearchContext();
 
     // Camera follows ISS on state change
@@ -126,36 +122,9 @@ const Earth = () => {
         return lng > 0 ? lng - 180 : lng + 180;
     }
     
-    //below function and commented style are an attmept to get hand to grab on mouse down and unclick when off
-    // const handleCursorStyle = (e) => {
-    //     if (e.type === "mousedown") {
-    //         console.log("anyvody out there?")
-    //         setIsMouseDown(true)
-    //     } else if (e.type === "mouseup") {
-    //         console.log("anyvody out there?")
-    //         setIsMouseDown(false)
-    //     }
-    // }
-
-    // const handleCursorStyle = (e) => {
-    //     if (e.type === "mousedown") {
-    //         console.log("anyvody out there?")
-    //         setIsMouseDown(true)
-    //     } else if (e.type === "mouseup") {
-    //         console.log("anyvody out there?")
-    //         setIsMouseDown(false)
-    //     }
-    // }
-
-    // style={isMouseDown ? {{cursor: "grabbing"}} : {{cursor: "grab"}} }
-    // ALT make state = grab opr grabbing (not true or false)
-        //style= {{ cursor: isMouseDown  }}
-
-        // onMouseDown={console.log("mouseDOwn")} onMouseUp={(e) => handleCursorStyle}
-
     return (
-        <div className="earth-container"     >
-            <h1>Space Station Sighter</h1>
+        <div className="earth-container" >
+            <h1>Space Station Finder</h1>
             <span>
                 <input
                     aria-label="Toggle to follow ISS"

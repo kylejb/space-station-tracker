@@ -2,6 +2,10 @@
     position: absolute;
     cursor: grab;
 
+    &:active {
+        cursor: grabbing;
+    }
+
     h1 {
         color: white;
         position: fixed;
