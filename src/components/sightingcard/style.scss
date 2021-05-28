@@ -34,15 +34,16 @@
     // overflow-y: auto;
 
     #tabletitle {
-        font-family: "Basier";
-        color: #dedede;
+        // font-family: "Basier";
+        font-family: "Garet-Heavy";
+        //color: #dedede;
+        color: #b4caed;
         text-align: center;
-        padding: 9px 0px 5px 0px!important;
-        // text-decoration: underline;
+        padding: 19px 0px 15px 0px!important;
+        text-decoration: underline;
     }
 
     .sightingheader {
-        // color: #C6C6C5;
         color: #dedede;
         display: flex;
         flex-direction: row;
@@ -103,7 +104,7 @@
 
         &:hover {
             // transform: scale(1.000005, 1);
-            color: #ebebeb;
+            color: #ebebeb; 
             // -webkit-transform: scale(1.1, 1.1);
             // box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             // -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
