@@ -88,16 +88,21 @@ const App = () => {
     return (
         
             <div className="app">
-                {firstLoad ? <SplashPage splashHider={splashHider} /> : null}
-                <SearchContainer
-                    currentUser={currentUser}
-                    fetchGeoDataFromZip={fetchGeoDataFromZip}
-                    setCurrentUser={resetSearchResultOnCountryChange}
-                />
-                <Earth />
-                <Faq/>
-                <Instructions/>
-                <Credits/>
+                {firstLoad 
+                    ? <SplashPage splashHider={splashHider} /> 
+                    : <>
+                        <SearchContainer
+                            currentUser={currentUser}
+                            fetchGeoDataFromZip={fetchGeoDataFromZip}
+                            setCurrentUser={resetSearchResultOnCountryChange}
+                        />
+                        <Earth />
+                        <Faq/>
+                        <Instructions/>
+                        <Credits/>
+                    </>
+                }
+                
             </div>
     );
 };

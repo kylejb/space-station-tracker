@@ -72,24 +72,35 @@
         animation-fill-mode: forwards;
     }
 
-    @keyframes slideup {
-        from {
-            top: 0%;
-        }
-
-        to {
-            top: -100%;
-        }
-    }
+    #splashimagewrapper {
+        @keyframes slideup {
+            from {
+                top: 0%;
+            }
     
+            to {
+                top: -125%;
+            }
+        }
+    
+    //left: -500px;
+    //left: 900px;
+    //text-align: center;
+    //display: flex;
+    //justify-content: center;
     img {
-        z-index: 7;
+        //z-index: 7;
         position: fixed;
-        left: -35%;
+        //left: -35%;
+        left: -650px;
+        //left: 40px;
+        //align-content: center;
+        
         animation-name: slideup;
         animation-duration: 1.5s;
         animation-timing-function: ease;
         animation-fill-mode: forwards;
+        }
     }
 
 

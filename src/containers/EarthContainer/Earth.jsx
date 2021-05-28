@@ -95,7 +95,9 @@ const Earth = () => {
 
     // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
-    
+    const nightTexture = new THREE.TextureLoader().load( "metal.jpeg" )
+    const nightSky = new THREE.TextureLoader().load( "lensflare0.png" )
+
     return (
         <div className="earth-container" >
             <h1>Space Station Finder</h1>
@@ -113,7 +115,6 @@ const Earth = () => {
                 ref={globeEl}
                 width={width}
                 height={height}
-                
 
                 // globeMaterial={globeMaterial}
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -122,10 +123,10 @@ const Earth = () => {
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
                 customLayerData={satelliteCollection}
-
+                customLayerLabel="ISS"
                 customThreeObject={d => new THREE.Mesh(
                     new THREE.SphereBufferGeometry(6000 * 4e-4),
-                    new THREE.MeshLambertMaterial({ color: "white", emissive: 0x111111, wireframe: false, combine: .5, envMap: new THREE.TextureLoader().load( "//unpkg.com/three-globe/example/img/night-sky.png" ), emissiveIntensity: 1, reflectivity: 1 }),
+                    new THREE.MeshLambertMaterial({ metalness: 1, roughness: 0, wireframe: true, combine: THREE.MultiplyOperation, envMap: nightSky, reflectivity: .3 }),
                     //new THREE.MeshLambertMaterial({ color: "white", emissive: "white", reflectivity: 100, combine: 1,  }),
                     // new THREE.PointLight( {color: 0xff0000, intensity: 1, distance: 100 }),
                 )}
