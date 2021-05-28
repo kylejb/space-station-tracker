@@ -193,7 +193,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                     (country.value === userInput) || (country.value === currentUser.country)
                 ))}
             />
-            <div id="emojidropdownwrapper" onClick={emojiClickHandler}>
+            <span id="emojidropdownwrapper" onClick={emojiClickHandler}>
                 <input
                     type="button"
                     style={{display: isDropdownOpen ? "none" : "block"}}
@@ -202,7 +202,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                     
                     />
                 <span id="emojidownarrow" style={{display: isDropdownOpen ? "none" : "block"}}>▼</span>
-            </div>
+            </span>
         </div>
     );
 }
