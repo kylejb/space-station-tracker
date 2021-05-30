@@ -100,7 +100,7 @@ const Earth = () => {
 
     return (
         <div className="earth-container" >
-            <h1>Space Station Finder</h1>
+            <h1>Space Station Tracker</h1>
             <span>
                 <input
                     aria-label="Toggle to follow ISS"
