@@ -14,13 +14,21 @@ const SightingCard = ({ sightingData, header }) => {
         !header && setrenderDetails(!renderDetails);
     }
 
+    // const svgArrow = () => {
+    //     return (
+    //         <svg>
+    //             <path d="M12 8.914l7.293 7.293a1 1 0 1 0 1.414-1.414l-8-8a1 1 0 0 0-1.414 0l-8 8a1 1 0 1 0 1.414 1.414L12 8.914z"></path>
+    //         </svg>
+    //     )
+    // }
+
     return (
         <div className="sightingcard" onClick={renderDetailsHelper}>
             <div className={header ? "sightingheader" : "card_overview"}>
-                <span>{header ? sightingData.date : sightingData.date.toDateString()}</span>
-                <span>{sightingData.time}</span>
-                <span>{sightingData.duration}</span>
-                {!header ? <span id="sightingdownarrow" style={renderDetails ? {transform: "rotate(180deg)"} : null}>▼</span> : <span id="headerspacingspan"></span>}
+                <span id={header? "headerdatespan" : "datespan"}>{header ? sightingData.date : sightingData.date.toDateString()}</span>
+                <span id={header? "headertimespan" : "timespan"}>{sightingData.time}</span>
+                <span id={header? "headerdurationspan" : "durationspan"}>{sightingData.duration}</span>
+                {!header ? <span id="sightingdownarrow" style={renderDetails ? {transform: "rotate(180deg)", paddingTop: "3px", paddingLeft: "2px"} : null}>▼</span> : <span id="headerspacingspan"></span>}
             </div>
 
             {renderDetails

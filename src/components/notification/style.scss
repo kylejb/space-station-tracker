@@ -1,5 +1,5 @@
 .error-ziplength {
-    text-align: left;
+    text-align: right;
     margin-top: 15px;
     span{
         background: rgba(27,29,33,0.75);
@@ -19,7 +19,7 @@
 }
 
 .error-fetchfail {
-    text-align: left;
+    text-align: right;
     margin-top: 15px;
 
     span{
@@ -40,7 +40,7 @@
 }
 
 .error-nozipresults {
-    text-align: left;
+    text-align: right;
     margin-top: 15px;
 
     span{
@@ -61,7 +61,7 @@
 }
 
 .error-sightingtoofar {
-    text-align: left;
+    text-align: right;
     margin-top: 15px;
 
     span{
@@ -82,8 +82,9 @@
 }
 
 .error-nosightingresults {
-    text-align: left;
+    text-align: right;
     margin-top: 15px;
+    // justify-content: right;
 
     span{
         background: rgba(27,29,33,0.75);
@@ -94,7 +95,7 @@
         border: 1px solid rgba(217, 81, 72, .9);
         text-align: left;
         word-wrap: normal;
-        display:block;
+        display:inline-block;
         font-size: .9em;
         width: 392px;
         line-height: 1.4em;

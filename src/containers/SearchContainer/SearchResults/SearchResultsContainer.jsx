@@ -119,7 +119,7 @@ const SearchResultsContainer = ({ currentUser }) => {
 
         const filteredSightingCards = (data) => {
             return data?.filter(rowObj => (rowObj.date > filterSightingCardsByDate()
-                && parseInt(rowObj.maxElevation) >= 30
+                && parseInt(rowObj.maxElevation) >= 35
                 && parseInt(rowObj.duration[0])
             ));
         }

@@ -28,7 +28,16 @@ const getArcPathObj = (entryDir, exitDir) => {
     switch (entryDeg > exitDeg) {
         case true:
             const startEndDelta = entryDeg - exitDeg;
-
+            if (startEndDelta === 180) {
+                return {
+                    x: 304,
+                    y: 304,
+                    R: 180,
+                    r: 180,
+                    start: entryDeg,
+                    end: exitDeg,
+                };
+            }
             if (startEndDelta > 180) {
                 return {
                     x: 304,

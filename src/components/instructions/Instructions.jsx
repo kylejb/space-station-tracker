@@ -1,6 +1,5 @@
 import './style.scss'
 import {useState} from 'react'
-import info from 'images/info.png'
 
 const Instructions = () => {
     

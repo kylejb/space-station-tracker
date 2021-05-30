@@ -1,16 +1,21 @@
 .earth-container {
     position: absolute;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+
     h1 {
-        color: white;
+        color: #dedede;
         position: fixed;
         top: 50px;
         left: 50px;
         z-index: 5;
-        // font-family: 'Woodchuck-Bold';
-        // text-shadow: 2px 2px #4287f5;
-        // font-size: 2em;
-        font-size: 1.6em;
-        font-family: "North";
+        font-size: 1.7em;
+        font-family:  "Garet-heavy";
+
+        letter-spacing: .1rem;
     }
 
     span {

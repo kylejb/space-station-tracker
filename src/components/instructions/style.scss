@@ -2,7 +2,7 @@
 .instructionshidden {
     z-index: 5;
     position: fixed;
-    top: 68%;
+    top: 71%;
     left: 30px;
     color: white;
     background: rgba(27,29,33,0.75);
@@ -16,7 +16,7 @@
 .instructionscontainer {
     z-index: 5;
     position: fixed;
-    top: 68%;
+    top: 71%;
     left: 30px;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@
 
     .instructionsheader {
         text-align: center;
-        padding: 9px 0px 12px 0px!important;
+        padding: 9px 0px 5px 0px!important;
         text-decoration: underline;
         h1 {
             text-align: center;
@@ -44,7 +44,7 @@
     }
 
     .instructionsstep {
-        padding: 10px 0px 10px 7px;
+        padding: 8px 0px 8px 7px;
         font-size: .8em;
     }
     

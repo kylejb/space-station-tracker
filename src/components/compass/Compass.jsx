@@ -4,6 +4,14 @@ import './style.scss';
 
 const Compass = ({ entersSky, leavesSky }) => {
 
+    const pathHelper = () => {
+        let path = arc(drawViewingArea(entersSky, leavesSky))
+        let straightPath = path.replace(/A 180/g, "A 0")
+        if(Math.abs(entersSky - leavesSky) === 180){
+            return straightPath
+        }
+        return path
+    }
 
     return (
         <svg width="100%" viewBox="0 0 608 608">
@@ -17,29 +25,49 @@ const Compass = ({ entersSky, leavesSky }) => {
 
                 {/* Directions */}
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 60)">N</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(433.6, 175.6)">NE</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(439.6, 175.6)">NE</text>
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="start" alignmentBaseline="middle" transform="translate(548, 307)">E</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(443.6, 443.6)">SE</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(441.6, 443.6)">SE</text>
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="middle" transform="translate(304, 572)">S</text>
                 <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 443.6)">SW</text>
                 <text fontSize="35" fontWeight="bold" fill="#ffffff" textAnchor="end" alignmentBaseline="middle" transform="translate(62, 307)">W</text>
-                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(113.6, 180.6)">NW</text>
+                <text fontSize="30" fontWeight="bold" fill="#ffffff" transform="translate(117.6, 175.6)">NW</text>
 
                 {/* Arrow head - find better solution later */}
                 {/* <defs>
-                    <marker id="arrowhead" fill="#4287f5" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                    <marker id="arrowhead" fill="#4287f5" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto-start-reverse">
                         <polygon points="0 0, 2.5 3.5, 0 7" />
+                    </marker>
+                    <marker id='head' orient="auto"
+                        markerWidth='2' markerHeight='4'
+                        refX='0.1' refY='2'>
+                         <path d='M0,0 V4 L2,2 Z' fill="red"/>
                     </marker>
                 </defs> */}
 
                 {/* Curve that we'll need to render dynamically */}
                 <path
-                    d={arc(drawViewingArea(entersSky, leavesSky))}
+                    d={pathHelper()}
                     fill="transparent"
                     strokeWidth="6"
                     stroke="#4287f5"
                     markerStart="url(#arrowhead)"
+                    
                 />
+
+                {/* const part = (x, y, R, r, start, end) => {
+                const [s, e] = [(start / 360) * 2 * Math.PI, (end / 360) * 2 * Math.PI];
+                const P = [
+                    point(x, y, r, s),
+                    point(x, y, R, s),
+                    point(x, y, R, e),
+                    point(x, y, r, e),
+                ];
+                const flag = e - s > Math.PI ? '1' : '0';
+                return `M ${P[0][0]} ${P[0][1]} L ${P[1][0]} ${P[1][1]} A ${R} ${R} 0 ${flag} 1 ${P[2][0]} ${P[2][1]} L ${P[3][0]} ${P[3][1]} A ${r} ${r}  0 ${flag} 0 ${P[0][0]} ${P[0][1]} Z`;
+                }; */}
+
+
                 {/* <path fill="transparent" strokeWidth="8" stroke="#ff0000" d={arcMidpoint} /> */}
 
             </g>

@@ -38,41 +38,6 @@ a {
 
 // - - - FONTS - - -
 
-@font-face {
-    font-family: 'Woodchuck-Heavy';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Woodchuck-Heavy'), url('../fonts/Woodchuck-Heavy.woff2') format('woff2');
-    }
-
-@font-face {
-    font-family: 'Woodchuck-Bold';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Woodchuck-Bold'), url('../fonts/Woodchuck-Bold.woff2') format('woff2');
-    }
-
-@font-face {
-    font-family: 'Woodchuck-Light';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Woodchuck-Light'), url('../fonts/Woodchuck-Light.woff2') format('woff2');
-    }
-
-@font-face {
-    font-family: 'Woodchuck-Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Woodchuck-Regular'), url('../fonts/Woodchuck-Regular.woff2') format('woff2');
-    }
-
-@font-face {
-    font-family: 'Woodchuck-Thin';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Woodchuck-Thin'), url('../fonts/Woodchuck-Thin.woff2') format('woff2');
-    }
-
 
 @font-face {
     font-family: 'Basier';
@@ -82,10 +47,8 @@ a {
     }
 
 @font-face {
-    font-family: 'North';
+    font-family: 'Garet-Heavy';
     font-style: normal;
     font-weight: normal;
-    src: local('North'), url('../fonts/North.otf') format('woff');
+    src: local('Garet-Heavy'), url('../fonts/Garet-Heavy.otf') format('woff');
     }
-
-    
