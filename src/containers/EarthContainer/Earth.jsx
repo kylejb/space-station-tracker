@@ -95,8 +95,6 @@ const Earth = () => {
 
     // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
-    const nightTexture = new THREE.TextureLoader().load( "metal.jpeg" )
-    const nightSky = new THREE.TextureLoader().load( "lensflare0.png" )
 
     return (
         <div className="earth-container" >
@@ -126,7 +124,7 @@ const Earth = () => {
                 customLayerLabel="ISS"
                 customThreeObject={d => new THREE.Mesh(
                     new THREE.SphereBufferGeometry(6000 * 4e-4),
-                    new THREE.MeshLambertMaterial({ metalness: 1, roughness: 0, wireframe: true, combine: THREE.MultiplyOperation, envMap: nightSky, reflectivity: .3 }),
+                    new THREE.MeshLambertMaterial({ wireframe: true, combine: THREE.MultiplyOperation, reflectivity: .3 }),
                     //new THREE.MeshLambertMaterial({ color: "white", emissive: "white", reflectivity: 100, combine: 1,  }),
                     // new THREE.PointLight( {color: 0xff0000, intensity: 1, distance: 100 }),
                 )}

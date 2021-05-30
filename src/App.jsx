@@ -1,5 +1,5 @@
 import './app.scss';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import SearchContainer from 'containers/SearchContainer';
 import Earth from 'containers/EarthContainer';
@@ -14,7 +14,6 @@ import { useSearchContext, useErrorContext } from 'common/hooks';
 import {
     INITIAL_LOAD,
     FETCH_SUCCESS,
-    FETCH_FAIL,
     ZIPLENGTH_ERROR_MESSAGE,
     FETCH_FAIL_MESSAGE,
     ZIPRESULTS_NONE_MESSAGE
