@@ -1,7 +1,7 @@
 .error-ziplength {
     text-align: right;
     margin-top: 15px;
-    span{
+    span {
         background: rgba(27,29,33,0.75);
         border-radius: 5px 5px 5px 5px;
         padding: 5px 15px 5px 15px;
@@ -12,17 +12,14 @@
         font-size: .9em;
         line-height: 1.4em;
         opacity: 100%;
-        
     }
-    
-
 }
 
 .error-fetchfail {
     text-align: right;
     margin-top: 15px;
 
-    span{
+    span {
         background: rgba(27,29,33,0.75);
         border-radius: 5px 5px 5px 5px;
         padding: 5px 15px 5px 15px;
@@ -33,17 +30,14 @@
         font-size: .9em;
         line-height: 1.4em;
         opacity: 100%;
-        
     }
-    
-
 }
 
 .error-nozipresults {
     text-align: right;
     margin-top: 15px;
 
-    span{
+    span {
         background: rgba(27,29,33,0.75);
         border-radius: 5px 5px 5px 5px;
         padding: 5px 15px 5px 15px;
@@ -54,17 +48,14 @@
         font-size: .9em;
         line-height: 1.4em;
         opacity: 100%;
-        
     }
-    
-
 }
 
 .error-sightingtoofar {
     text-align: right;
     margin-top: 15px;
 
-    span{
+    span {
         background: rgba(27,29,33,0.75);
         border-radius: 5px 5px 5px 5px;
         padding: 5px 15px 5px 15px;
@@ -75,18 +66,14 @@
         font-size: .9em;
         line-height: 1.4em;
         opacity: 100%;
-        
     }
-    
-
 }
 
 .error-nosightingresults {
     text-align: right;
     margin-top: 15px;
-    // justify-content: right;
 
-    span{
+    span {
         background: rgba(27,29,33,0.75);
         border-radius: 5px 5px 5px 5px;
         padding: 5px 15px 5px 15px;
@@ -95,13 +82,10 @@
         border: 1px solid rgba(217, 81, 72, .9);
         text-align: left;
         word-wrap: normal;
-        display:inline-block;
+        display: inline-block;
         font-size: .9em;
         width: 392px;
         line-height: 1.4em;
         opacity: 100%;
-        
     }
-    
-
 }

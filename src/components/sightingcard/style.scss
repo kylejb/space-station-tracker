@@ -4,7 +4,7 @@
     }
     to {
         opacity: 100%;
-    }   
+    }
 }
 
 .sightingresults {
@@ -38,7 +38,6 @@
         padding: 1px 0px 1px 0px;
         border-bottom: 1px solid #393939;
         font-weight: bold;
-
     }
 
     .sightingcard {
@@ -59,13 +58,11 @@
         #durationspan {
             width: 60px;
         }
-
         #sightingdownarrow {
             font-size: .7em;
             width: 15px;
             margin-top: 3px;
-        }   
-
+        }
         #headerdatespan {
             display: flex;
             justify-content: center;
@@ -75,7 +72,6 @@
         #headertimespan {
             display: flex;
             justify-content: flex-start;
-
             width: 85px;
         }
         #headerdurationspan {
@@ -84,7 +80,7 @@
         }
 
         &:hover {
-            color: #ebebeb; 
+            color: #ebebeb;
         }
 
         .card_overview {
@@ -101,13 +97,13 @@
             margin-top: 4%;
             font-size: .88em;
             cursor: pointer;
-            
+
             .detail_info {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 width: 240px;
-                
+
                 .detail_info_title {
                     text-decoration: underline;
                     margin-bottom: 5px;
@@ -116,12 +112,7 @@
                     margin-bottom: 15px;
                 }
             }
-
-            .detail_compass {
-                
-            }
         }
-
     }
 
     :last-child {
@@ -131,5 +122,4 @@
     :first-child:hover {
         transform: scale(1, 1);
     }
-
 }
