@@ -1,3 +1,3 @@
 import Compass from './Compass';
 
-export default Compass
+export default Compass;

@@ -1,47 +1,36 @@
 .search {
     display: flex;
-    // border: 1px solid #C6C6C5;
-    // border-radius: 5px 5px 5px 5px;
-    
 
     .searchbar-input {
         input {
             height: 50px;
         }
 
-        
         #zipsearchsubmit {
             // padding: 0px, 5px, 0px, 5px;
             width: 132px;
             font-family: "Basier";
             background: rgba(198,198,197,0.84);
             color: rgb(27,29,33);
-            //alt colors:
-            // background: rgba(27,29,33,0.95);
-            // color: #C6C6C5;  
             border-radius: 0px 5px 5px 0px;
             border: none;
             cursor: pointer;
 
             &:hover {
                 background: #737373;
-                color: black; 
+                color: black;
             }
-            
-            
         }
         #zipinput {
             width: 172px;
             font-family: "Basier";
             background: rgba(27,29,33,0.75);
             color: #C6C6C5;
-            opacity: 1;            
+            opacity: 1;
             border: 1px solid rgba(198,198,197,0.84);
             padding-left: 25px;
             letter-spacing: .13em;
-            // font-size: 1.2em;
             &:focus {
-                // border: 1px solid #C6C6C5!important;
                 outline: none;
                 box-shadow: inset 0px 0px 3px 2px #4287f5;
             }
@@ -59,8 +48,7 @@
                 cursor: pointer;
             }
             }
-        
-            //Resets color of placeholder text from defailt grey to our grey
+
             ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                 color: #C6C6C5;
                 opacity: 1; /* Firefox */

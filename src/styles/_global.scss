@@ -29,26 +29,23 @@ html {
 }
 
 ::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
-
-// - - - FONTS - - -
-
 
 @font-face {
     font-family: 'Basier';
     font-style: normal;
     font-weight: normal;
     src: local('Basier'), url('../fonts/basiercircle-regular-webfont.woff') format('woff');
-    }
+}
 
 @font-face {
     font-family: 'Garet-Heavy';
     font-style: normal;
     font-weight: normal;
     src: local('Garet-Heavy'), url('../fonts/Garet-Heavy.otf') format('woff');
-    }
+}

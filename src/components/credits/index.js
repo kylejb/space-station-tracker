@@ -1,3 +1,3 @@
 import Credits from './Credits'
 
-export default Credits
+export default Credits;

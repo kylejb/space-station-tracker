@@ -33,7 +33,7 @@
     }
     .faqheader {
         text-align: center;
-        padding: 5px 0px 6px 0px!important;
+        padding: 5px 0px 6px 0px;
         text-decoration: underline;
         h1 {
             text-align: center;
@@ -46,7 +46,7 @@
         font-weight: bold;
         line-height: 1.25em;
     }
-    
+
     .faqanswer {
         padding: 0px 0px 0px 13px;
         font-size: .8em;
@@ -55,5 +55,4 @@
             padding: 1px 0px 5px 0px;
         }
     }
-
 }

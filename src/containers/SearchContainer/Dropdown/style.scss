@@ -3,37 +3,23 @@
         border-radius: 5px 0px 0px 5px;
         cursor: pointer;
         pointer-events: none;
-        //background: none;
-        //color:inherit;
         background-color: rgba(198,198,197,0.84);
-        //background: rgba(198,198,197,0.84);
         color: rgb(27,29,33);
         font-family: "Basier";
 
         &:hover {
             background: #737373;
-            color: rgba(27,29,33, 0.90); 
+            color: rgba(27,29,33, 0.90);
         }
-        //replaces the arrow in the value as we originally created it
+
         #emojidownarrow {
-            //color: rgba(27,29,33, 0.94);
-            //color:inherit;
-            // z-index: 1;
             position: relative;
             left: 56px;
             bottom: 31px;
             height: 0px;
             font-size: .7em;
-            // display: inline-block;
             pointer-events: auto;
         }
-    
-        // #emojidropdownwrapper > #emojidownarrow {
-        //     // &:hover {
-        //     //     background: #737373;
-        //     //     color: rgba(27,29,33, 0.10); 
-        //     // }
-        // }
 
         #emojidropdown {
             // There's some weirdness with padding and inputs - might need to change default styling
@@ -42,19 +28,12 @@
             height: 50px;
             font-size: 1.4em;
             border-radius: 5px 0px 0px 5px;
-            // background: rgba(198,198,197,0.84);
-            // color: rgba(27,29,33, 0.94);
             color:inherit;
             background:inherit;
             padding-right: 15px;
             border: none;
             cursor: pointer;
             pointer-events: auto;
-            // &:hover {
-            //     background: #737373;
-            //     //color: rgb(27,29,33); 
-            // }
         }
     }
 }
-

@@ -24,7 +24,6 @@ import {
 const App = () => {
     const [currentUser, setCurrentUser] = useState({ country: "United_States", status: INITIAL_LOAD });
     const [firstLoad, setFirstLoad] = useState(true)
-    //NOTE: very similar state in Earth "isfirstload" could be causing the issue with the API call?
     const { searchResult, addSearchResult, removeSearchResult } = useSearchContext();
     const { addError } = useErrorContext();
 
@@ -46,10 +45,10 @@ const App = () => {
         }
 
         if (zip !== "" && zip.length > 2) {
-            try{
+            try {
                 const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
                 let data = await response.json();
-                //when nothing is found, data is an empty array
+                // when nothing is found, data is an empty array
                 if (data[0].display_name.split(", ").length < 2) {
                     addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
                     removeSearchResult();
@@ -79,30 +78,26 @@ const App = () => {
 
 
     const splashHider = () => {
-        setFirstLoad(false)
-        // currently causes the error from setallete API call
+        setFirstLoad(false);
     }
 
-
     return (
-        
-            <div className="app">
-                {firstLoad 
-                    ? <SplashPage splashHider={splashHider} /> 
-                    : <>
-                        <SearchContainer
-                            currentUser={currentUser}
-                            fetchGeoDataFromZip={fetchGeoDataFromZip}
-                            setCurrentUser={resetSearchResultOnCountryChange}
-                        />
-                        <Earth />
-                        <Faq/>
-                        <Instructions/>
-                        <Credits/>
-                    </>
-                }
-                
-            </div>
+        <div className="app">
+            {firstLoad
+                ? <SplashPage splashHider={splashHider} />
+                : <>
+                    <SearchContainer
+                        currentUser={currentUser}
+                        fetchGeoDataFromZip={fetchGeoDataFromZip}
+                        setCurrentUser={resetSearchResultOnCountryChange}
+                    />
+                    <Earth />
+                    <Faq/>
+                    <Instructions/>
+                    <Credits/>
+                </>
+            }
+        </div>
     );
 };
 
