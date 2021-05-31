@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { FETCH_SUCCESS } from 'utils/constants';
-import { useViewport, useSearchContext } from 'common/hooks';
-import * as THREE from 'three';
 import Globe from 'react-globe.gl';
+import * as THREE from 'three';
+import { useViewport, useSearchContext } from 'common/hooks';
+import { FETCH_SUCCESS } from 'utils/constants';
 import './style.scss';
 
 const Earth = () => {
@@ -27,9 +27,7 @@ const Earth = () => {
         } else {
             globeEl.current.controls().autoRotate = true;
         }
-
     }, [followISS, satelliteCollection, searchResult]);
-
 
     useEffect(() => {
         if (searchResult.status === FETCH_SUCCESS) {
@@ -43,29 +41,7 @@ const Earth = () => {
         }
     }, [searchResult]);
 
-
-
-
-    // const globeMaterial = new THREE.MeshPhongMaterial();
-    // globeMaterial.bumpScale = 10;
-    // new THREE.TextureLoader().load(
-    //     '//unpkg.com/three-globe/example/img/earth-water.png',
-    //     texture => {
-    //         globeMaterial.specularMap = texture;
-    //         globeMaterial.specular = new THREE.Color('grey');
-    //         globeMaterial.shininess = 15;
-    //     }
-    // );
-
-    //const solarMaterial = new THREE.MeshLambertMaterial({ color: '#2e2e29', opacity: 0.3, transparent: true });
-
-
     useEffect(() => {
-        setTimeout(() => { // wait for scene to be populated (asynchronously)
-            const directionalLight = globeEl.current.scene().children.find(obj3d => obj3d.type === 'DirectionalLight');
-            directionalLight && directionalLight.position.set(0, 1, 0); // change light position to see the specularMap's effect
-        });
-
         // ISS Satellite ID is 25544 at this endpoint
         const findISS = async () => {
             const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
@@ -86,14 +62,12 @@ const Earth = () => {
 
         const interval = setInterval(() => {
             findISS();
-        }, 2000);
-        
-        return () => {
-            clearInterval(interval);
-        }
+        }, 3000);
+
+        return () => clearInterval(interval);
+
     }, [isFirstLoad]);
 
-    // Resets width and height of earth component based on size of viewport
     const { width, height } = useViewport();
 
     return (
@@ -114,9 +88,7 @@ const Earth = () => {
                 width={width}
                 height={height}
 
-                // globeMaterial={globeMaterial}
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-                // globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
 
@@ -124,12 +96,17 @@ const Earth = () => {
                 customLayerLabel="ISS"
                 customThreeObject={d => new THREE.Mesh(
                     new THREE.SphereBufferGeometry(6000 * 4e-4),
-                    new THREE.MeshLambertMaterial({ wireframe: true, combine: THREE.MultiplyOperation, reflectivity: .3 }),
-                    //new THREE.MeshLambertMaterial({ color: "white", emissive: "white", reflectivity: 100, combine: 1,  }),
-                    // new THREE.PointLight( {color: 0xff0000, intensity: 1, distance: 100 }),
+                    new THREE.MeshLambertMaterial({
+                        wireframe: true,
+                        combine: THREE.MultiplyOperation,
+                        reflectivity: .3
+                    }),
                 )}
                 customThreeObjectUpdate={(obj, d) => {
-                    Object.assign(obj.position, globeEl.current.getCoords(d.latitude, d.longitude, 0.3));
+                    Object.assign(
+                        obj.position,
+                        globeEl.current.getCoords(d.latitude, d.longitude, 0.3)
+                    );
                 }}
 
                 labelsData={searchResult.value}
