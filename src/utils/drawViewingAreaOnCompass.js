@@ -17,10 +17,6 @@ const cardinalToDeg = {
     NNW: 337.5,
 };
 
-/*
-    ! TEMP - Missing edge case: entersSky + leavesSky === 180
-        ? take into account maxElev, if drawing line when maxElev !== 90
-*/
 const getArcPathObj = (entryDir, exitDir) => {
     const entryDeg = cardinalToDeg[entryDir];
     const exitDeg = cardinalToDeg[exitDir];
