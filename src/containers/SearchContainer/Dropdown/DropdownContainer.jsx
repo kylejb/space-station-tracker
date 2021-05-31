@@ -4,45 +4,6 @@ import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
 import './style.scss';
 
-// TODO - Possible Refactor: https://github.com/JedWatson/react-select/issues/4279#issuecomment-740081627
-// const Option = ({ data, ...otherProps }) => {
-//     return (
-//         <components.Option {...otherProps}>
-//             <div>{data.label}</div>
-//         </components.Option>
-//     );
-// }
-
-// const Control = ({ children, ...props }) => {
-//     const { emoji, getCountryEmoji } = props.selectProps;
-
-//     const onClick = () => console.log('controlledClick', document.activeElement);
-//     const getClickFocus = (e) => {
-//         e.target.focus();
-//         getCountryEmoji(e);
-//         onClick();
-//     };
-
-//     return (
-//         <components.Control {...props}>
-//             <span onMouseDown={getClickFocus}>
-
-//             {/* <input
-//                 id="emojidropdown"
-//                 // style={{display: isDropdownOpen ? "none" : "block"}}
-//                 type="button"
-//                 value={emoji}
-//                 onClick={getClickFocus}
-//             /> */}
-//                 {emoji}
-//             </span>
-//             {children}
-//             {/* <button onClick={getClickFocus}>Focused</button> */}
-//         </components.Control>
-//     );
-// }
-
-
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState("United_States");
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
@@ -54,11 +15,8 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         setEmojiValue(`${countryEmojis[e.value]}   `);
     }
 
-    // selectRef.current should be accessed after state is changed
     const emojiClickHandler = () => {
-        //! await seems to have the desired effect despite object not being a Promise
         setIsDropdownOpen(!isDropdownOpen);
-        // selectRef.current.focus();
     }
 
     useEffect(() => {
@@ -87,7 +45,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         setCurrentUser({country: userInput.replace(" ", "_")});
         setIsDropdownOpen(false);
     }, [userInput, setCurrentUser]);
-
 
     const customStyles = {
         container: (provided, state) => ({
@@ -199,9 +156,11 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                     style={{display: isDropdownOpen ? "none" : "block"}}
                     id="emojidropdown"
                     value={emojiValue}
-                    
-                    />
-                <span id="emojidownarrow" style={{display: isDropdownOpen ? "none" : "block"}}>▼</span>
+                />
+                <span
+                    id="emojidownarrow"
+                    style={{display: isDropdownOpen ? "none" : "block"}}
+                >▼</span>
             </span>
         </div>
     );

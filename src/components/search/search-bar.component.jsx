@@ -38,6 +38,6 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
             />
         </div>
     );
-};
+}
 
 export default SearchBar;

@@ -102,7 +102,6 @@ const SearchResultsContainer = ({ currentUser }) => {
         } else if (searchResult.status === INITIAL_LOAD || searchResult.status === SEARCH_RESET) {
             setSightingChart({ value: [], status: SEARCH_RESET })
         }
-        // eslint-disable-next-line
     }, [searchResult, currentUser]);
 
 
@@ -144,7 +143,6 @@ const SearchResultsContainer = ({ currentUser }) => {
                 cleanedData = filteredSightingCards(cleanedData);
 
                 if (cleanedData && cleanedData.length) {
-
                     setSightingChart({value: cleanedData, status: FETCH_SUCCESS});
                 } else {
                     setSightingChart({value: [], status: SIGHTINGRESULTS_NONE_MESSAGE})
@@ -169,7 +167,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 );
                 cityName = cityList.find((city) => city["latitude"] === closestLatLon.latitude && city["longitude"] === closestLatLon.longitude).city;
             } else {
-                cityName = cityList[0].city
+                cityName = cityList[0].city;
             }
 
             const distanceFromSpot = convertDistance(getDistance(
@@ -182,7 +180,10 @@ const SearchResultsContainer = ({ currentUser }) => {
 
 
             if (distanceFromSpot > 50) {
-                addError(SIGHTINGRESULTS_DISTANCE_MESSAGE.message, SIGHTINGRESULTS_DISTANCE_MESSAGE.type);
+                addError(
+                    SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
+                    SIGHTINGRESULTS_DISTANCE_MESSAGE.type
+                );
             } else {
                 removeError();
                 fetchSightingData(cityName);
@@ -193,9 +194,10 @@ const SearchResultsContainer = ({ currentUser }) => {
     return (
         <>
             <Error />
-           {(sightingChart.status !== INITIAL_LOAD || sightingChart.status !== SEARCH_RESET)
+            {(sightingChart.status !== INITIAL_LOAD || sightingChart.status !== SEARCH_RESET)
                 && !error.type
-                && <SightingCardList tableData={sightingChart} />}
+                && <SightingCardList tableData={sightingChart} />
+            }
         </>
     );
 }

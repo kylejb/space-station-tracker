@@ -1,3 +1,3 @@
 import Faq from './Faq'
 
-export default Faq
+export default Faq;
