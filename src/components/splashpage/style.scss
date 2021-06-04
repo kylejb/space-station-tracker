@@ -19,7 +19,7 @@
         top: 50px;
         left: 50px;
         z-index: 8;
-        font-family:  "Garet-heavy";
+        font-family: 'Garet-heavy';
         animation-name: fadein;
         animation-duration: 2s;
         animation-timing-function: ease;
@@ -31,7 +31,7 @@
         font-size: 1em;
         line-height: 125%;
         width: 475px;
-        font-family: "Basier";
+        font-family: 'Basier';
         position: fixed;
         top: 125px;
         left: 50px;
@@ -56,7 +56,7 @@
     h2 {
         color: white;
         font-size: 1em;
-        font-family: "Basier";
+        font-family: 'Basier';
         position: fixed;
         top: 6%;
         right: 4%;
@@ -116,7 +116,7 @@
             //z-index: 7;
             position: fixed;
             left: -650px;
-            transform: scale(.75);
+            transform: scale(0.75);
 
             //defaults set for large only
             animation-name: slideup-xlarge-only;
@@ -125,7 +125,7 @@
             animation-fill-mode: forwards;
 
             @include breakpoint-large-down {
-                transform: scale(.8) translate(-3%, -2%);
+                transform: scale(0.8) translate(-3%, -2%);
             }
 
             @include breakpoint-xlarge-only {

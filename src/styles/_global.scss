@@ -9,7 +9,7 @@ body {
 html {
     width: 100%;
     height: 100%;
-	font-size: 12px;
+    font-size: 12px;
 
     @include breakpoint-small-up {
         font-size: 14px;

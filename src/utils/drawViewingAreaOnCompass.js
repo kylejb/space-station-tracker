@@ -85,9 +85,8 @@ const getArcPathObj = (entryDir, exitDir) => {
                 end: exitDeg,
             };
     }
-}
-
+};
 
 export const drawViewingArea = (entryDir, exitDir) => {
     return getArcPathObj(entryDir, exitDir);
-}
+};

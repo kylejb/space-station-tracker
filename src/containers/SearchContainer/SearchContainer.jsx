@@ -4,7 +4,7 @@ import Search from 'components/search';
 import './style.scss';
 
 const SearchContainer = ({ fetchGeoDataFromZip, currentUser, setCurrentUser }) => (
-    <div className="search-container">
+    <div className='search-container'>
         <Search fetchGeoDataFromZip={fetchGeoDataFromZip} currentUser={currentUser}>
             <DropdownContainer currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Search>
