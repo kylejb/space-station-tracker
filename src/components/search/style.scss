@@ -9,9 +9,9 @@
         #zipsearchsubmit {
             // padding: 0px, 5px, 0px, 5px;
             width: 132px;
-            font-family: "Basier";
-            background: rgba(198,198,197,0.84);
-            color: rgb(27,29,33);
+            font-family: 'Basier';
+            background: rgba(198, 198, 197, 0.84);
+            color: rgb(27, 29, 33);
             border-radius: 0px 5px 5px 0px;
             border: none;
             cursor: pointer;
@@ -23,13 +23,13 @@
         }
         #zipinput {
             width: 172px;
-            font-family: "Basier";
-            background: rgba(27,29,33,0.75);
-            color: #C6C6C5;
+            font-family: 'Basier';
+            background: rgba(27, 29, 33, 0.75);
+            color: #c6c6c5;
             opacity: 1;
-            border: 1px solid rgba(198,198,197,0.84);
+            border: 1px solid rgba(198, 198, 197, 0.84);
             padding-left: 25px;
-            letter-spacing: .13em;
+            letter-spacing: 0.13em;
             &:focus {
                 outline: none;
                 box-shadow: inset 0px 0px 3px 2px #4287f5;
@@ -39,19 +39,21 @@
                 height: 1.1em;
                 width: 1.1em;
                 border-radius: 50em;
-                background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+                background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg)
+                    no-repeat 50% 50%;
                 background-size: contain;
-                opacity: .5;
+                opacity: 0.5;
                 margin-right: 10px;
                 pointer-events: all;
                 filter: invert(1);
                 cursor: pointer;
             }
-            }
+        }
 
-            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                color: #C6C6C5;
-                opacity: 1; /* Firefox */
-            }
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #c6c6c5;
+            opacity: 1; /* Firefox */
+        }
     }
 }

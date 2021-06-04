@@ -4,12 +4,12 @@
     bottom: 30%;
     left: 30px;
     color: white;
-    background: rgba(27,29,33,0.75);
+    background: rgba(27, 29, 33, 0.75);
     border-radius: 15px 15px 15px 15px;
     padding: 15px 15px 15px 15px;
     cursor: pointer;
-    font-family: "Basier";
-    font-size: .8em;
+    font-family: 'Basier';
+    font-size: 0.8em;
 }
 
 .faqcontainer {
@@ -19,14 +19,14 @@
     left: 30px;
     display: flex;
     flex-direction: column;
-    background: rgba(27,29,33,0.75);
+    background: rgba(27, 29, 33, 0.75);
     border-radius: 15px 15px 15px 15px;
     padding: 10px 10px 10px 10px;
     color: white;
     flex-wrap: wrap;
     width: 310px;
-    font-family: "Basier";
-    font-size: .9em;
+    font-family: 'Basier';
+    font-size: 0.9em;
     span {
         margin-left: 270px;
         cursor: pointer;
@@ -42,14 +42,14 @@
 
     .faqquestion {
         padding: 5px 0px 8px 7px;
-        font-size: .9em;
+        font-size: 0.9em;
         font-weight: bold;
         line-height: 1.25em;
     }
 
     .faqanswer {
         padding: 0px 0px 0px 13px;
-        font-size: .8em;
+        font-size: 0.8em;
         line-height: 1.2em;
         p {
             padding: 1px 0px 5px 0px;

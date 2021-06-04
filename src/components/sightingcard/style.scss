@@ -11,19 +11,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: rgba(27,29,33,0.75);
+    background: rgba(27, 29, 33, 0.75);
     border-radius: 5px 5px 15px 15px;
     padding: 5px 15px 5px 15px;
 
-    font-family: "Basier";
+    font-family: 'Basier';
     opacity: 0;
     animation-name: fadein;
-    animation-duration: .6s;
+    animation-duration: 0.6s;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
 
     #tabletitle {
-        font-family: "Garet-Heavy";
+        font-family: 'Garet-Heavy';
         color: #dedede;
         text-align: center;
         padding: 15px 0px 9px 0px;
@@ -46,7 +46,7 @@
         flex-direction: column;
         padding: 17px 0px 17px 0px;
         border-bottom: 1px solid #393939;
-        font-size: .85em;
+        font-size: 0.85em;
         width: 362px;
 
         #datespan {
@@ -59,7 +59,7 @@
             width: 60px;
         }
         #sightingdownarrow {
-            font-size: .7em;
+            font-size: 0.7em;
             width: 15px;
             margin-top: 3px;
         }
@@ -95,7 +95,7 @@
             justify-content: space-evenly;
             flex-direction: row;
             margin-top: 4%;
-            font-size: .88em;
+            font-size: 0.88em;
             cursor: pointer;
 
             .detail_info {
