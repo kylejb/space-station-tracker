@@ -124,7 +124,7 @@ const SearchResultsContainer = ({ currentUser }) => {
             return data?.filter(
                 (rowObj) =>
                     rowObj.date > filterSightingCardsByDate() &&
-                    parseInt(rowObj.maxElevation) >= 35 &&
+                    parseInt(rowObj.maxElevation) >= 25 &&
                     parseInt(rowObj.duration[0]),
             );
         };
