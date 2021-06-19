@@ -20,7 +20,7 @@ const Faq = () => {
                         <p>Do I need a telescope?</p>
                     </div>
                     <div className='faqanswer'>
-                        <p>No, just your eyes!</p>
+                        <p>No, just your eyes! The station will look like a bright, fast-moving star, but unlike an airplane, will not blink.</p>
                     </div>
 
                     <div className='faqquestion'>
@@ -43,8 +43,8 @@ const Faq = () => {
                             sky along the blue arc.
                         </p>
                         <p>
-                            To find angle above horizon, hold your arm out straight and make a fist.
-                            The height of your fist is about 10° above horizon.
+                            To find angle above horizon, hold your arm out straight, and place the bottom of your fist on the horizon.
+                            The height of one fist is about 10° above horizon.
                         </p>
                     </div>
 
