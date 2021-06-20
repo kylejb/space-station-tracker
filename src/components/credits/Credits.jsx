@@ -10,7 +10,7 @@ const Credits = () => (
         </span>
         &
         <span>
-            <a href='https://github.com/matt-green1' rel='noopener noreferrer' target='_blank'>
+            <a href='https://mattgreen.io/' rel='noopener noreferrer' target='_blank'>
                 MG
             </a>
         </span>
