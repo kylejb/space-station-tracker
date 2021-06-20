@@ -1,3 +1,8 @@
+.sightingresults-wrapper {
+
+    display: flex;
+    justify-content: flex-end;
+
 @keyframes fadein {
     from {
         opacity: 0;
@@ -95,7 +100,8 @@
             justify-content: space-evenly;
             flex-direction: row;
             margin-top: 4%;
-            font-size: 0.88em;
+            // font-size: 0.88em;
+            font-size: 14px;
             cursor: pointer;
 
             .detail_info {
@@ -122,4 +128,6 @@
     :first-child:hover {
         transform: scale(1, 1);
     }
+}
+
 }

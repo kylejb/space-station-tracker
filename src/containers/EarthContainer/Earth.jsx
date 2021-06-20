@@ -46,6 +46,7 @@ const Earth = () => {
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             let data = await response.json();
+            data.name = "ISS"
             setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
@@ -90,14 +91,15 @@ const Earth = () => {
                 bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
                 customLayerData={satelliteCollection}
-                customLayerLabel='ISS'
+                // customLayerLabel='ISS'
                 customThreeObject={(d) =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
                         new THREE.MeshLambertMaterial({
-                            wireframe: true,
+                            wireframe: false,
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
+                            color: "#ff9603",
                         }),
                     )
                 }
