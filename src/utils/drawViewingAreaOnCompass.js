@@ -1,4 +1,4 @@
-const cardinalToDeg = {
+export const cardinalToDeg = {
     N: 0.0,
     NNE: 22.5,
     NE: 45.0,

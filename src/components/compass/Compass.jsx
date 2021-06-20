@@ -1,12 +1,14 @@
-import { drawViewingArea } from 'utils/drawViewingAreaOnCompass';
+import { drawViewingArea, cardinalToDeg } from 'utils/drawViewingAreaOnCompass';
 import arc from 'svg-arc';
 import './style.scss';
 
 const Compass = ({ entersSky, leavesSky }) => {
+    
     const pathHelper = () => {
         const path = arc(drawViewingArea(entersSky, leavesSky));
         const straightPath = path.replace(/A 180/g, 'A 0');
-        if (Math.abs(entersSky - leavesSky) === 180) {
+
+        if (Math.abs(cardinalToDeg[entersSky] - cardinalToDeg[leavesSky]) === 180) {
             return straightPath;
         }
         return path;
