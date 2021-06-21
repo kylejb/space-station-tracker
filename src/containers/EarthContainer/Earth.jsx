@@ -91,7 +91,7 @@ const Earth = () => {
                 bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
                 customLayerData={satelliteCollection}
-                // customLayerLabel='ISS'
+                // customLayerLabel='ISS' -- Enabling this removes ISS hover label
                 customThreeObject={(d) =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
@@ -100,7 +100,6 @@ const Earth = () => {
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
                             color: "#c43335",
-                            // color: "#636363",
                         }),
                     )
                 }

@@ -93,27 +93,7 @@
     }
 
     #splashimagewrapper {
-        // @keyframes slideup {
-        //     from {
-        //         top: 0%;
-        //     }
-
-        //     to {
-        //         top: -110%;
-        //     }
-        // }
-
-        // @keyframes slideup-large-only {
-        //     from {
-        //         top: 0%;
-        //     }
-
-        //     to {
-        //         top: -110%;
-        //     }
-        // }
-
-        @keyframes slideup-xlarge-only {
+        @keyframes slideup {
             from {
                 top: 0%;
             }
@@ -123,35 +103,11 @@
             }
         }
 
-        // @keyframes slideup-heightgap-only {
-        //     from {
-        //         top: 0%;
-        //     }
-
-        //     to {
-        //         top: -158%;
-        //     }
-        // }
-
-        // @keyframes slideup-xxlarge-up {
-        //     from {
-        //         top: 0%;
-        //     }
-
-        //     to {
-        //         top: -110%;
-        //     }
-        // }
-
         img {
-            //z-index: 7;
             position: fixed;
-            //left: -650px;
             left: -850px;
             transform: scale(0.75);
-
-            //defaults set for large only
-            animation-name: slideup-xlarge-only;
+            animation-name: slideup;
             animation-duration: 1.5s;
             animation-timing-function: ease;
             animation-fill-mode: forwards;
