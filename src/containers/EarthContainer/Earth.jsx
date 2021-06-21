@@ -96,10 +96,11 @@ const Earth = () => {
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
                         new THREE.MeshLambertMaterial({
-                            wireframe: false,
+                            wireframe: true,
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
-                            color: "#ff9603",
+                            color: "#c43335",
+                            // color: "#636363",
                         }),
                     )
                 }
@@ -114,7 +115,7 @@ const Earth = () => {
                 labelLng={(d) => d.lon}
                 labelText={(d) => ''}
                 labelSize={1000 * 4e-4}
-                labelDotRadius={2000 * 4e-4}
+                labelDotRadius={1500 * 4e-4}
                 labelColor={() => '#c43335'}
                 labelResolution={3}
             />

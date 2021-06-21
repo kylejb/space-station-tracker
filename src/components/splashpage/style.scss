@@ -13,7 +13,7 @@
     }
 
     h1 {
-        color: white;
+        color: #dedede;
         font-size: 2em;
         position: fixed;
         top: 50px;
@@ -27,7 +27,7 @@
     }
 
     p {
-        color: white;
+        color: #dedede;
         font-size: 1em;
         line-height: 125%;
         width: 475px;
@@ -37,6 +37,27 @@
         left: 50px;
         z-index: 8;
         opacity: 0;
+        // text-shadow: 2px 2px 3px #4287f5;
+        background: rgba(27, 29, 33, 0.75);
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px 15px 10px 15px;
+        animation-name: fadein;
+        animation-delay: 1.2s;
+        animation-duration: 1.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+
+    span {
+        font-size: 0.75em;
+        z-index: 8;
+        opacity: 0;
+        color: #dedede;
+        text-shadow: 2px 2px 3px black;
+        font-family: 'Basier';
+        position: fixed;
+        bottom: 40px;
+        left: 40px;
         animation-name: fadein;
         animation-delay: 1.2s;
         animation-duration: 1.5s;
@@ -54,7 +75,7 @@
     }
 
     h2 {
-        color: white;
+        color: #dedede;
         font-size: 1em;
         font-family: 'Basier';
         position: fixed;
@@ -62,12 +83,17 @@
         right: 4%;
         z-index: 8;
         opacity: 0;
+
+        background: rgba(27, 29, 33, 0.75);
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px 15px 10px 15px;
+
         animation-name: fadein, blink;
         animation-iteration-count: 1, infinite;
         animation-direction: normal, alternate;
         animation-delay: 2.2s, 3.7s;
-        animation-duration: 1.5s, 2.5s;
-        animation-timing-function: linear, linear;
+        animation-duration: 1.5s, 2s;
+        animation-timing-function: linear, ease-in-out;
         animation-fill-mode: forwards;
     }
 
