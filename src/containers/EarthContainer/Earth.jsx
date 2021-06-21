@@ -46,6 +46,7 @@ const Earth = () => {
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             let data = await response.json();
+            data.name = "ISS"
             setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
@@ -90,7 +91,7 @@ const Earth = () => {
                 bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
                 customLayerData={satelliteCollection}
-                customLayerLabel='ISS'
+                // customLayerLabel='ISS' -- Enabling this removes ISS hover label
                 customThreeObject={(d) =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
@@ -98,6 +99,7 @@ const Earth = () => {
                             wireframe: true,
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
+                            color: "#c43335",
                         }),
                     )
                 }
@@ -112,7 +114,7 @@ const Earth = () => {
                 labelLng={(d) => d.lon}
                 labelText={(d) => ''}
                 labelSize={1000 * 4e-4}
-                labelDotRadius={2000 * 4e-4}
+                labelDotRadius={1500 * 4e-4}
                 labelColor={() => '#c43335'}
                 labelResolution={3}
             />

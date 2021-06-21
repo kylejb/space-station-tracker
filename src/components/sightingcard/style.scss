@@ -1,125 +1,131 @@
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 100;
-    }
-}
-
-.sightingresults {
+.sightingresults-wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background: rgba(27, 29, 33, 0.75);
-    border-radius: 5px 5px 15px 15px;
-    padding: 5px 15px 5px 15px;
+    justify-content: flex-end;
 
-    font-family: 'Basier';
-    opacity: 0;
-    animation-name: fadein;
-    animation-duration: 0.6s;
-    animation-fill-mode: forwards;
-    animation-timing-function: linear;
-
-    #tabletitle {
-        font-family: 'Garet-Heavy';
-        color: #dedede;
-        text-align: center;
-        padding: 15px 0px 9px 0px;
-        text-decoration: underline;
+    @keyframes fadein {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 100;
+        }
     }
 
-    .sightingheader {
-        color: #dedede;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 1px 0px 1px 0px;
-        border-bottom: 1px solid #393939;
-        font-weight: bold;
-    }
-
-    .sightingcard {
-        color: #bdbdbd;
+    .sightingresults {
         display: flex;
         flex-direction: column;
-        padding: 17px 0px 17px 0px;
-        border-bottom: 1px solid #393939;
-        font-size: 0.85em;
-        width: 362px;
+        justify-content: space-around;
+        background: rgba(27, 29, 33, 0.75);
+        border-radius: 5px 5px 15px 15px;
+        padding: 5px 15px 5px 15px;
 
-        #datespan {
-            width: 142px;
-        }
-        #timespan {
-            width: 80px;
-        }
-        #durationspan {
-            width: 60px;
-        }
-        #sightingdownarrow {
-            font-size: 0.7em;
-            width: 15px;
-            margin-top: 3px;
-        }
-        #headerdatespan {
-            display: flex;
-            justify-content: center;
-            padding-right: 50px;
-            width: 145px;
-        }
-        #headertimespan {
-            display: flex;
-            justify-content: flex-start;
-            width: 85px;
-        }
-        #headerdurationspan {
-            display: flex;
-            justify-content: flex-start;
+        font-family: 'Basier';
+        opacity: 0;
+        animation-name: fadein;
+        animation-duration: 0.6s;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+
+        #tabletitle {
+            font-family: 'Garet-Heavy';
+            color: #dedede;
+            text-align: center;
+            padding: 15px 0px 9px 0px;
+            text-decoration: underline;
         }
 
-        &:hover {
-            color: #ebebeb;
-        }
-
-        .card_overview {
+        .sightingheader {
+            color: #dedede;
             display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .card_detail {
-            display: flex;
-            justify-content: space-evenly;
             flex-direction: row;
-            margin-top: 4%;
-            font-size: 0.88em;
-            cursor: pointer;
+            justify-content: space-between;
+            padding: 1px 0px 1px 0px;
+            border-bottom: 1px solid #393939;
+            font-weight: bold;
+        }
 
-            .detail_info {
+        .sightingcard {
+            color: #bdbdbd;
+            display: flex;
+            flex-direction: column;
+            padding: 17px 0px 17px 0px;
+            border-bottom: 1px solid #393939;
+            font-size: 0.85em;
+            width: 362px;
+
+            #datespan {
+                width: 142px;
+            }
+            #timespan {
+                width: 80px;
+            }
+            #durationspan {
+                width: 60px;
+            }
+            #sightingdownarrow {
+                font-size: 0.7em;
+                width: 15px;
+                margin-top: 3px;
+            }
+            #headerdatespan {
                 display: flex;
-                flex-direction: column;
                 justify-content: center;
-                width: 240px;
+                padding-right: 50px;
+                width: 145px;
+            }
+            #headertimespan {
+                display: flex;
+                justify-content: flex-start;
+                width: 85px;
+            }
+            #headerdurationspan {
+                display: flex;
+                justify-content: flex-start;
+            }
 
-                .detail_info_title {
-                    text-decoration: underline;
-                    margin-bottom: 5px;
-                }
-                .detail_info_data {
-                    margin-bottom: 15px;
+            &:hover {
+                color: #ebebeb;
+            }
+
+            .card_overview {
+                display: flex;
+                justify-content: space-between;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .card_detail {
+                display: flex;
+                justify-content: space-evenly;
+                flex-direction: row;
+                margin-top: 4%;
+                // font-size: 0.88em;
+                font-size: 14px;
+                cursor: pointer;
+
+                .detail_info {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 240px;
+
+                    .detail_info_title {
+                        text-decoration: underline;
+                        margin-bottom: 5px;
+                    }
+                    .detail_info_data {
+                        margin-bottom: 15px;
+                    }
                 }
             }
         }
-    }
 
-    :last-child {
-        border-bottom: none;
-    }
+        :last-child {
+            border-bottom: none;
+        }
 
-    :first-child:hover {
-        transform: scale(1, 1);
+        :first-child:hover {
+            transform: scale(1, 1);
+        }
     }
 }

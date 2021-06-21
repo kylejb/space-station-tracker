@@ -43,7 +43,7 @@ const Faq = () => {
                             sky along the blue arc.
                         </p>
                         <p>
-                            To find angle above horizon, hold your arm out straight, and place the bottom of your fist on the horizon.
+                            To find angle above horizon, hold your arm out straight and place the bottom of your fist on the horizon.
                             The height of one fist is about 10° above horizon.
                         </p>
                     </div>

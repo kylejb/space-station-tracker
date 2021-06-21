@@ -2,6 +2,7 @@
 
 #splashwrapper {
     z-index: 6;
+    cursor: pointer;
 
     @keyframes fadein {
         from {
@@ -13,7 +14,8 @@
     }
 
     h1 {
-        color: white;
+        color: #dedede;
+        text-shadow: 2px 2px 1px black;
         font-size: 2em;
         position: fixed;
         top: 50px;
@@ -27,16 +29,34 @@
     }
 
     p {
-        color: white;
+        color: #dedede;
         font-size: 1em;
-        line-height: 125%;
+        line-height: 122%;
         width: 475px;
         font-family: 'Basier';
         position: fixed;
-        top: 125px;
+        top: 110px;
         left: 50px;
         z-index: 8;
         opacity: 0;
+        text-shadow: 2px 2px 1px black;
+        animation-name: fadein;
+        animation-delay: 1.2s;
+        animation-duration: 1.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+
+    span {
+        font-size: 0.75em;
+        z-index: 8;
+        opacity: 0;
+        color: #dedede;
+        text-shadow: 2px 2px 2px black;
+        font-family: 'Basier';
+        position: fixed;
+        bottom: 40px;
+        left: 40px;
         animation-name: fadein;
         animation-delay: 1.2s;
         animation-duration: 1.5s;
@@ -54,11 +74,12 @@
     }
 
     h2 {
-        color: white;
+        color: #d9d9d9;
+        text-shadow: 2px 2px 2px black;
         font-size: 1em;
         font-family: 'Basier';
         position: fixed;
-        top: 6%;
+        bottom: 5%;
         right: 4%;
         z-index: 8;
         opacity: 0;
@@ -66,7 +87,7 @@
         animation-iteration-count: 1, infinite;
         animation-direction: normal, alternate;
         animation-delay: 2.2s, 3.7s;
-        animation-duration: 1.5s, 2.5s;
+        animation-duration: 1.5s, 2s;
         animation-timing-function: linear, linear;
         animation-fill-mode: forwards;
     }
@@ -78,62 +99,48 @@
             }
 
             to {
-                top: -110%;
-            }
-        }
-
-        @keyframes slideup-large-only {
-            from {
-                top: 0%;
-            }
-
-            to {
-                top: -110%;
-            }
-        }
-
-        @keyframes slideup-xlarge-only {
-            from {
-                top: 0%;
-            }
-
-            to {
                 top: -158%;
             }
         }
 
-        @keyframes slideup-xxlarge-up {
-            from {
-                top: 0%;
-            }
-
-            to {
-                top: -110%;
-            }
-        }
-
         img {
-            //z-index: 7;
             position: fixed;
-            left: -650px;
+            left: -850px;
             transform: scale(0.75);
-
-            //defaults set for large only
-            animation-name: slideup-xlarge-only;
+            animation-name: slideup;
             animation-duration: 1.5s;
             animation-timing-function: ease;
             animation-fill-mode: forwards;
 
             @include breakpoint-large-down {
-                transform: scale(0.8) translate(-3%, -2%);
+                transform: scale(0.7) translate(-15%, -2%);
             }
 
-            @include breakpoint-xlarge-only {
+            @include breakpoint-xlarge-only-tall {
+                left: -870px;
+                transform: scale(0.8) translate(2%, 19%);
+            }
+
+            @include breakpoint-xlarge-only-medium {
+                left: -860px;
+                transform: scale(0.8) translate(3%, 13%);
+            }
+
+            @include breakpoint-xlarge-only-short {
                 left: -850px;
+                transform: scale(0.8) translate(3%, 8%);
             }
 
-            @include breakpoint-xxlarge-up {
-                transform: translate(5%, 16%);
+            @include breakpoint-xxlarge-up-tall {
+                transform: translate(9%, 17%);
+            }
+
+            @include breakpoint-xxlarge-up-medium {
+                transform: translate(7%, 12%);
+            }
+
+            @include breakpoint-xxlarge-up-short {
+                transform: translate(6%, 8%);
             }
         }
     }

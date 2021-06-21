@@ -84,6 +84,14 @@ $breakpoints: (
 @mixin breakpoint-large-down {
     $max-value: map-get($breakpoints, xlarge) - 1;
 
+    @media (max-width: $max-value), (max-height: 700px) {
+        @content;
+    }
+}
+
+@mixin breakpoint-large-down {
+    $max-value: map-get($breakpoints, xlarge) - 1;
+
     @media (max-width: $max-value), (max-height: 620px) {
         @content;
     }
@@ -97,11 +105,29 @@ $breakpoints: (
     }
 }
 
-@mixin breakpoint-xlarge-only {
+@mixin breakpoint-xlarge-only-tall {
     $min-value: map-get($breakpoints, xlarge);
     $max-value: map-get($breakpoints, xxlarge) - 1;
 
-    @media (min-width: $min-value) and (max-width: $max-value) {
+    @media (min-width: $min-value) and (max-width: $max-value) and (min-height: 901px) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xlarge-only-medium {
+    $min-value: map-get($breakpoints, xlarge);
+    $max-value: map-get($breakpoints, xxlarge) - 1;
+
+    @media (min-width: $min-value) and (max-width: $max-value) and (min-height: 821px) and (max-height: 900px) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xlarge-only-short {
+    $min-value: map-get($breakpoints, xlarge);
+    $max-value: map-get($breakpoints, xxlarge) - 1;
+
+    @media (min-width: $min-value) and (max-width: $max-value) and (min-height: 701px) and (max-height: 820px) {
         @content;
     }
 }
@@ -138,6 +164,31 @@ $breakpoints: (
         @content;
     }
 }
+
+@mixin breakpoint-xxlarge-up-tall {
+    $min-value: map-get($breakpoints, xxlarge);
+
+    @media (min-width: $min-value) and (min-height: 901px) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xxlarge-up-medium {
+    $min-value: map-get($breakpoints, xxlarge);
+
+    @media (min-width: $min-value) and (min-height: 821px) and (max-height: 900px) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xxlarge-up-short {
+    $min-value: map-get($breakpoints, xxlarge);
+
+    @media (min-width: $min-value) and (min-height: 701px) and (max-height: 820px) {
+        @content;
+    }
+}
+
 
 @mixin breakpoint-xxlarge-up {
     $min-value: map-get($breakpoints, xxlarge);

@@ -9,9 +9,10 @@ const SplashPage = ({ splashHider }) => {
             <h1>Where is the ISS?</h1>
             <p>
                 Track the position of the International Space Station in real time and search for
-                when you can see it in the sky next! For best experience, use on desktop.
+                when you can see it in the sky!
             </p>
             <h2>Click to enter</h2>
+            <span>*For best experience, use on desktop.</span>
             <div id='splashimagewrapper' style={{ width: width, height: height }}>
                 <img
                     src='https://images-assets.nasa.gov/image/0201587/0201587~orig.jpg'
