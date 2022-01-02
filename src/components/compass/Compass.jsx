@@ -3,7 +3,7 @@ import arc from 'svg-arc';
 import './style.scss';
 
 const Compass = ({ entersSky, leavesSky }) => {
-    
+
     const pathHelper = () => {
         const path = arc(drawViewingArea(entersSky, leavesSky));
         const straightPath = path.replace(/A 180/g, 'A 0');
@@ -15,7 +15,7 @@ const Compass = ({ entersSky, leavesSky }) => {
     };
 
     return (
-        <svg width='100%' viewBox='0 0 608 608'>
+        <svg width='200px' viewBox='0 0 608 608'>
             <g>
                 <line
                     x1='304'
