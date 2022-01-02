@@ -1,21 +1,23 @@
 {
-    "name": "server_space-station-tracker",
+    "name": "space-station-tracker",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@testing-library/jest-dom": "^5.11.4",
-        "@testing-library/react": "^11.1.0",
-        "@testing-library/user-event": "^13.1.9",
-        "geolib": "^3.3.1",
-        "node-sass": "^5.0.0",
+        "geolib": "^3.3.3",
+        "node-sass": "^6.0.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-globe.gl": "^2.18.0",
+        "react-globe.gl": "^2.19.0",
         "react-scripts": "^4.0.3",
         "react-select": "^4.3.1",
         "react-xml-parser": "^1.1.8",
         "svg-arc": "^1.0.2",
-        "three": "0.126.1"
+        "three": "0.133.0"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0"
     },
     "scripts": {
         "start-client": "react-scripts start",
