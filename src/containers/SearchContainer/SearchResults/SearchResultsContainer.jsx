@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { DateTime } from 'luxon';
 import { findNearest, getDistance, convertDistance } from 'geolib';
+import { useState, useEffect } from 'react';
 import XMLParser from 'react-xml-parser';
 
 import SightingCardList from 'components/sightingcard';
@@ -20,20 +21,37 @@ import {
 
 import './style.scss';
 
-const root = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+const LIMIT_BY_N_DAYS = 5;
+const FILTER_BY_DEGREES_GREATER_THAN = 20;
 
-/**
- * Create a historic Date object.
- *
- * Helper function to set a baseline for items to return.
- *
- * @param {number}  numOfDays=1     Set the number of days from present to return with default of 1.
- *
- * @yield {Date}    Returns past date for filtering purposes.
- */
-const filterSightingCardsByDate = (numOfDays = 1) => {
-    const dateThreshold = new Date();
-    return new Date(dateThreshold.setDate(dateThreshold.getDate() - numOfDays));
+const bareDate = (dateObject) => {
+    const yearMonthDateArray = dateObject.toISOString().split('T')[0].split('-');
+    const [year, month, day] = yearMonthDateArray;
+    return DateTime.utc(parseInt(year), parseInt(month), parseInt(day));
+};
+
+const shouldIncludeSightingCard = (sightingCardDate, limitByNumOfDays = LIMIT_BY_N_DAYS) => {
+    const fromDate = DateTime.now().toUTC();
+    const toDate = fromDate.plus({ day: limitByNumOfDays });
+    const bareSightingDate = bareDate(sightingCardDate);
+
+    const result =
+        fromDate.toMillis() <= bareSightingDate.toMillis() &&
+        bareSightingDate.toMillis() <= toDate.toMillis();
+
+    // TEMP FIX: NASA API is providing invalid years for 2022 sightings
+    if (!result && bareSightingDate.hasSame(fromDate.minus({ year: 1 }), 'year')) {
+        const diffInDays = toDate.diff(bareSightingDate.plus({ year: 1 }), 'days').toObject();
+        if (
+            diffInDays.days >= 0 &&
+            diffInDays.days <= 365 &&
+            fromDate.toMillis() <= bareSightingDate.plus({ year: 1 }).toMillis() &&
+            bareSightingDate.plus({ year: 1 }).toMillis() <= toDate.toMillis()
+        )
+            return true;
+    }
+    return result;
 };
 
 const SearchResultsContainer = ({ currentUser }) => {
@@ -123,8 +141,8 @@ const SearchResultsContainer = ({ currentUser }) => {
         const filteredSightingCards = (data) => {
             return data?.filter(
                 (rowObj) =>
-                    rowObj.date > filterSightingCardsByDate() &&
-                    parseInt(rowObj.maxElevation) >= 25 &&
+                    shouldIncludeSightingCard(rowObj.date) &&
+                    parseInt(rowObj.maxElevation) >= FILTER_BY_DEGREES_GREATER_THAN &&
                     parseInt(rowObj.duration[0]),
             );
         };
@@ -141,7 +159,7 @@ const SearchResultsContainer = ({ currentUser }) => {
             };
 
             try {
-                const response = await fetch(root + '/api/v1/spotthestation', fetchOptions);
+                const response = await fetch(DOMAIN + '/api/v1/spotthestation', fetchOptions);
                 const data = await response.text();
                 const xml = new XMLParser().parseFromString(data);
                 const itemData = xml.getElementsByTagName('item');
@@ -158,7 +176,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                     );
                 }
             } catch (error) {
-                console.log('error', error);
+                console.error(error);
                 setSightingChart({ value: [], status: FETCH_FAIL });
                 addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
             }

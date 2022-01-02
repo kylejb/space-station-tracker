@@ -14,12 +14,13 @@ app.use(json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type,Accept,X-Access-Token,X-Key');
-    res.header('Access-Control-Allow-Origin', '*'); //! for DEVELOPMENT - remove before deployment
+    if (process.env.NODE_ENV !== 'production') {
+        res.header('Access-Control-Allow-Origin', '*');
+    }
     next();
 });
 
-//! for development - REMOVE block before deployment
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
     app.options("*", function(req, res) {
         res.sendStatus(200);
     });
@@ -44,5 +45,5 @@ app.post('/api/v1/spotthestation', (req, res) => {
 });
 
 app.listen(port, () => {
-	console.log('Now listening on port:', port);
+	console.log(`Now listening on port: ${port}`);
 });
