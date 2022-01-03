@@ -31,23 +31,28 @@ const bareDate = (dateObject) => {
     return DateTime.utc(parseInt(year), parseInt(month), parseInt(day));
 };
 
+// TODO: Refactor
 const shouldIncludeSightingCard = (sightingCardDate, limitByNumOfDays = LIMIT_BY_N_DAYS) => {
     const fromDate = DateTime.now().toUTC();
     const toDate = fromDate.plus({ day: limitByNumOfDays });
+
+    // bareDate scrubs time to simplify consistency when calculating range
     const bareSightingDate = bareDate(sightingCardDate);
+    const bareFromDate = bareDate(fromDate.toJSDate());
+    const bareToDate = bareDate(toDate.toJSDate()).plus({ day: 1 });
 
     const result =
-        fromDate.toMillis() <= bareSightingDate.toMillis() &&
-        bareSightingDate.toMillis() <= toDate.toMillis();
+        bareFromDate.toMillis() <= bareSightingDate.toMillis() &&
+        bareSightingDate.toMillis() <= bareToDate.toMillis();
 
     // TEMP FIX: NASA API is providing invalid years for 2022 sightings
-    if (!result && bareSightingDate.hasSame(fromDate.minus({ year: 1 }), 'year')) {
-        const diffInDays = toDate.diff(bareSightingDate.plus({ year: 1 }), 'days').toObject();
+    if (!result && bareSightingDate.hasSame(bareFromDate.minus({ year: 1 }), 'year')) {
+        const diffInDays = bareToDate.diff(bareSightingDate.plus({ year: 1 }), 'days').toObject();
         if (
             diffInDays.days >= 0 &&
             diffInDays.days <= 365 &&
-            fromDate.toMillis() <= bareSightingDate.plus({ year: 1 }).toMillis() &&
-            bareSightingDate.plus({ year: 1 }).toMillis() <= toDate.toMillis()
+            bareFromDate.toMillis() <= bareSightingDate.plus({ year: 1 }).toMillis() &&
+            bareSightingDate.plus({ year: 1 }).toMillis() <= bareToDate.toMillis()
         )
             return true;
     }
