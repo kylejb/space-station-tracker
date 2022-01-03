@@ -20,6 +20,10 @@
                 background: #737373;
                 color: black;
             }
+            &:disabled {
+                background: #737373;
+                color: black;
+            }
         }
         #zipinput {
             width: 172px;

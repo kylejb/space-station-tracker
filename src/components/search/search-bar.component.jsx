@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
+    const [isUserSearching, setIsUserSearching] = useState(false);
     const [userInput, setUserInput] = useState('');
+
     const submitRef = useRef(null);
 
     const handleChange = (event) => {
@@ -33,7 +35,12 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
                 ref={submitRef}
                 type='submit'
                 value='Find Sightings'
-                onClick={(e) => fetchGeoDataFromZip(userInput)}
+                disabled={isUserSearching}
+                aria-disabled={isUserSearching}
+                onClick={() => {
+                    setIsUserSearching(true);
+                    fetchGeoDataFromZip(userInput, setIsUserSearching); // TODO: refactor w/o second parameter
+                }}
                 id='zipsearchsubmit'
             />
         </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const SpaceStation = () => {
     // react-globe expects stationObj to be iterable
-    const [stationObj, setStationObj] = useState([]);
+    const [, setStationObj] = useState([]);
 
     useEffect(() => {
         // ISS Satellite ID is 25544 at this endpoint
@@ -13,7 +13,7 @@ const SpaceStation = () => {
         };
         const interval = setInterval(() => {
             findISS();
-        }, 5000);
+        }, 10000);
         return () => clearInterval(interval);
     }, []);
 

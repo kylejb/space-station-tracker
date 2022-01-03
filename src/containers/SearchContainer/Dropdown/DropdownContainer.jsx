@@ -1,17 +1,19 @@
 import { useEffect, useState, useRef } from 'react';
 import Select from 'react-select';
+
 import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
+
 import './style.scss';
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
-    const [userInput, setUserInput] = useState('United_States');
+    const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [emojiValue, setEmojiValue] = useState('🇺🇸   ');
     const selectRef = useRef(null);
 
     const dropdownSelectHelper = (e) => {
-        setUserInput(e.value);
+        setUserInput({ country: e.value, countryCode: e.iso2Code });
         setEmojiValue(`${countryEmojis[e.value]}   `);
     };
 
@@ -39,11 +41,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                 break;
         }
     };
-
-    useEffect(() => {
-        setCurrentUser({ country: userInput.replace(' ', '_') });
-        setIsDropdownOpen(false);
-    }, [userInput, setCurrentUser]);
 
     const customStyles = {
         container: (provided, state) => ({
@@ -124,7 +121,11 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     }, [currentUser]);
 
     useEffect(() => {
-        setCurrentUser({ country: userInput.replace(' ', '_') });
+        setCurrentUser({
+            country: userInput.country.replace(' ', '_'),
+            status: 'DROPDOWN_INPUT',
+            countryCode: userInput.countryCode,
+        });
         setIsDropdownOpen(false);
     }, [userInput, setCurrentUser]);
 
