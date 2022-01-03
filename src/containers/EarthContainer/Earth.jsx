@@ -46,7 +46,7 @@ const Earth = () => {
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             let data = await response.json();
-            data.name = "ISS"
+            data.name = 'ISS';
             setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
@@ -61,9 +61,13 @@ const Earth = () => {
         globeEl.current.controls().autoRotate = true;
         globeEl.current.controls().autoRotateSpeed = 0.1;
 
+        if (isFirstLoad) {
+            findISS();
+        }
+
         const interval = setInterval(() => {
             findISS();
-        }, 3000);
+        }, 10000);
 
         return () => clearInterval(interval);
     }, [isFirstLoad]);
@@ -91,7 +95,7 @@ const Earth = () => {
                 bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
                 customLayerData={satelliteCollection}
-                // customLayerLabel='ISS' -- Enabling this removes ISS hover label
+                // customLayerLabel='ISS' // -- Enabling this removes ISS hover label
                 customThreeObject={(d) =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
@@ -99,7 +103,7 @@ const Earth = () => {
                             wireframe: true,
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
-                            color: "#c43335",
+                            color: '#c43335',
                         }),
                     )
                 }
@@ -112,7 +116,7 @@ const Earth = () => {
                 labelsData={searchResult.value}
                 labelLat={(d) => d.lat}
                 labelLng={(d) => d.lon}
-                labelText={(d) => ''}
+                labelText={(d) => ''} // optional label for searched sighting location
                 labelSize={1000 * 4e-4}
                 labelDotRadius={1500 * 4e-4}
                 labelColor={() => '#c43335'}
