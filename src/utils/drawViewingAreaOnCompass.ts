@@ -1,3 +1,5 @@
+import arc from 'svg-arc';
+
 const cardinalToDeg = {
     N: 0.0,
     NNE: 22.5,
@@ -99,7 +101,7 @@ const getArcPathObj = (entryDir, exitDir) => {
 };
 
 export const drawViewingArea = (entryDir, exitDir) => {
-    const spaceStationPath = getArcPathObj(entryDir, exitDir);
+    const spaceStationPath = arc(getArcPathObj(entryDir, exitDir));
     if (Math.abs(cardinalToDeg[entryDir] - cardinalToDeg[exitDir]) === 180) {
         return spaceStationPath.replace(/A 180/g, 'A 0');
     }

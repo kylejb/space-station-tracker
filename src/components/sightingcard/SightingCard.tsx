@@ -2,11 +2,22 @@ import Compass from 'components/compass';
 
 import './style.scss';
 
-const SightingCard = ({ isSelected, selectSightingCard, sightingData, header }) => (
+type SightingCardProps = {
+    header?: boolean;
+    isSelected?: boolean;
+    selectSightingCard?: (sightingCardIndex?: number) => void;
+    sightingData: any;
+};
+const SightingCard = ({
+    isSelected,
+    selectSightingCard,
+    sightingData,
+    header = false,
+}: SightingCardProps) => (
     <div
         className='sightingcard'
         onClick={() => {
-            !header && selectSightingCard();
+            !header && selectSightingCard && selectSightingCard(); // TODO: refactor with appropriate type defs
         }}
     >
         <div className={header ? 'sightingheader' : 'card_overview'}>
@@ -25,7 +36,7 @@ const SightingCard = ({ isSelected, selectSightingCard, sightingData, header }) 
                                   paddingTop: '3px',
                                   paddingLeft: '2px',
                               }
-                            : null
+                            : {}
                     }
                 >
                     ▼
