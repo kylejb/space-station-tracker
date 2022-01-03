@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const SpaceStation = () => {
     // react-globe expects stationObj to be iterable
-    const [stationObj, setStationObj] = useState([]);
+    const [, setStationObj] = useState([] as any); // TODO: Remove type casting
 
     useEffect(() => {
         // ISS Satellite ID is 25544 at this endpoint

@@ -2,7 +2,11 @@ import { useState } from 'react';
 import Compass from 'components/compass';
 import './style.scss';
 
-const SightingCard = ({ sightingData, header }) => {
+type SightingCardProps = {
+    sightingData: any; // TODO: Update with more specific def
+    header?: any; // TODO: Update with more specific def
+};
+const SightingCard = ({ sightingData, header }: SightingCardProps) => {
     const [renderDetails, setrenderDetails] = useState(false);
 
     const renderDetailsHelper = () => {
@@ -29,7 +33,7 @@ const SightingCard = ({ sightingData, header }) => {
                                       paddingTop: '3px',
                                       paddingLeft: '2px',
                                   }
-                                : null
+                                : {}
                         }
                     >
                         ▼

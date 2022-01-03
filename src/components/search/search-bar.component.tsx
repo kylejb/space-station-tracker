@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
     const [userInput, setUserInput] = useState('');
-    const submitRef = useRef(null);
+    const submitRef = useRef(null) as any; // TODO: Remove type casting
 
     const handleChange = (event) => {
         setUserInput(event.target.value);

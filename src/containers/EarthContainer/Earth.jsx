@@ -46,7 +46,7 @@ const Earth = () => {
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             let data = await response.json();
-            data.name = "ISS"
+            data.name = 'ISS';
             setSatelliteCollection([data]);
             if (isFirstLoad) {
                 globeEl.current.pointOfView({
@@ -99,7 +99,7 @@ const Earth = () => {
                             wireframe: true,
                             combine: THREE.MultiplyOperation,
                             reflectivity: 0.3,
-                            color: "#c43335",
+                            color: '#c43335',
                         }),
                     )
                 }
