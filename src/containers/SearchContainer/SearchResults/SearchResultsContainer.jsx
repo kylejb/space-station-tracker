@@ -87,7 +87,7 @@ const SearchResultsContainer = ({ currentUser }) => {
             const rowObj = {
                 date: new Date(rowArray[0].split(': ')[1]), // 'Date: Monday Mar 29, 2021'
                 time: rowArray[1].split(': ')[1],
-                duration: rowArray[2].split(': ')[1].replace('minutes', 'min'),
+                duration: rowArray[2].split(': ')[1].replace(/[minute]+/, 'min'),
                 maxElevation: rowArray[3].split(': ')[1].split('&')[0],
                 approachDir: approachObj.split('above')[1].trim(),
                 approachDeg: approachObj.split(' ')[0].trim(),
@@ -170,7 +170,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 const itemData = xml.getElementsByTagName('item');
                 let cleanedData = cleanTableData(itemData);
                 cleanedData = filteredSightingCards(cleanedData);
-
+                console.log('cleanedData', cleanedData);
                 if (cleanedData && cleanedData.length) {
                     setSightingChart({ value: cleanedData, status: FETCH_SUCCESS });
                 } else {
