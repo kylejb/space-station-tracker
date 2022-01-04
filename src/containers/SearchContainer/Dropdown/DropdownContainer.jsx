@@ -132,19 +132,20 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     return (
         <div className='dropdown-container'>
             <Select
+                ref={selectRef}
                 className='react-select-component'
                 blurInputOnSelect
                 openMenuOnFocus
-                ref={selectRef}
-                menuIsOpen={isDropdownOpen}
+                styles={customStyles}
                 options={countryOptions}
+                menuIsOpen={isDropdownOpen}
+                onChange={dropdownSelectHelper}
+                onKeyDown={keyDownHandler}
+                onBlur={() => setIsDropdownOpen(false)}
                 components={{
                     DropdownIndicator: () => null,
                     IndicatorSeparator: () => null,
                 }}
-                styles={customStyles}
-                onChange={dropdownSelectHelper}
-                onKeyDown={keyDownHandler}
                 value={countryOptions.find(
                     (country) =>
                         country.value === userInput || country.value === currentUser.country,
