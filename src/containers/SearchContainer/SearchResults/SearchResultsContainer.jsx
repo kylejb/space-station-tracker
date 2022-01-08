@@ -3,27 +3,27 @@ import { findNearest, getDistance, convertDistance } from 'geolib';
 import { useState, useEffect } from 'react';
 import XMLParser from 'react-xml-parser';
 
-import SightingCardList from 'components/sightingcard';
 import Error from 'components/notification';
-
-import { useErrorContext, useSearchContext } from 'common/hooks';
-import geoMap from 'common/data/geoMap.json';
+import SightingCardList from 'components/sightingcard';
 
 import {
-    FETCH_SUCCESS,
-    SIGHTINGRESULTS_NONE_MESSAGE,
-    INITIAL_LOAD,
-    SIGHTINGRESULTS_DISTANCE_MESSAGE,
-    SEARCH_RESET,
     FETCH_FAIL,
     FETCH_FAIL_MESSAGE,
+    FETCH_SUCCESS,
+    INITIAL_LOAD,
+    SEARCH_RESET,
+    SIGHTINGRESULTS_DISTANCE_MESSAGE,
+    SIGHTINGRESULTS_NONE_MESSAGE,
 } from 'utils/constants';
+import geoMap from 'common/data/geoMap.json';
+import { useErrorContext, useSearchContext } from 'common/hooks';
 
 import './style.scss';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
-const LIMIT_BY_N_DAYS = 5;
 const FILTER_BY_DEGREES_GREATER_THAN = 20;
+const FILTER_BY_DURATION_GREATER_THAN = 1; // in minutes
+const LIMIT_BY_N_DAYS = 8;
 
 const bareDate = (dateObject) => {
     const yearMonthDateArray = dateObject.toISOString().split('T')[0].split('-');
@@ -45,17 +45,6 @@ const shouldIncludeSightingCard = (sightingCardDate, limitByNumOfDays = LIMIT_BY
         bareFromDate.toMillis() <= bareSightingDate.toMillis() &&
         bareSightingDate.toMillis() <= bareToDate.toMillis();
 
-    // TEMP FIX: NASA API is providing invalid years for 2022 sightings
-    if (!result && bareSightingDate.hasSame(bareFromDate.minus({ year: 1 }), 'year')) {
-        const diffInDays = bareToDate.diff(bareSightingDate.plus({ year: 1 }), 'days').toObject();
-        if (
-            diffInDays.days >= 0 &&
-            diffInDays.days <= 365 &&
-            bareFromDate.toMillis() <= bareSightingDate.plus({ year: 1 }).toMillis() &&
-            bareSightingDate.plus({ year: 1 }).toMillis() <= bareToDate.toMillis()
-        )
-            return true;
-    }
     return result;
 };
 
@@ -87,7 +76,7 @@ const SearchResultsContainer = ({ currentUser }) => {
             const rowObj = {
                 date: new Date(rowArray[0].split(': ')[1]), // 'Date: Monday Mar 29, 2021'
                 time: rowArray[1].split(': ')[1],
-                duration: rowArray[2].split(': ')[1].replace(/[minute]+/, 'min'),
+                duration: rowArray[2].split(': ')[1].replace(/minute/, 'min'),
                 maxElevation: rowArray[3].split(': ')[1].split('&')[0],
                 approachDir: approachObj.split('above')[1].trim(),
                 approachDeg: approachObj.split(' ')[0].trim(),
@@ -98,13 +87,6 @@ const SearchResultsContainer = ({ currentUser }) => {
             cleanData.push(rowObj);
         }
         return cleanData;
-    };
-
-    // helper function for cleanTableData
-    // eslint-disable-next-line
-    const createRowObj = (row) => {
-        const rowArr = row.split(': ');
-        return { [rowArr[0].toLowerCase()]: rowArr[1] };
     };
 
     useEffect(() => {
@@ -148,7 +130,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 (rowObj) =>
                     shouldIncludeSightingCard(rowObj.date) &&
                     parseInt(rowObj.maxElevation) >= FILTER_BY_DEGREES_GREATER_THAN &&
-                    parseInt(rowObj.duration[0]),
+                    parseInt(rowObj.duration[0]) > FILTER_BY_DURATION_GREATER_THAN,
             );
         };
 
@@ -170,7 +152,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 const itemData = xml.getElementsByTagName('item');
                 let cleanedData = cleanTableData(itemData);
                 cleanedData = filteredSightingCards(cleanedData);
-                console.log('cleanedData', cleanedData);
+
                 if (cleanedData && cleanedData.length) {
                     setSightingChart({ value: cleanedData, status: FETCH_SUCCESS });
                 } else {

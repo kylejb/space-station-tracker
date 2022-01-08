@@ -1,12 +1,15 @@
-import SightingCard from './SightingCard';
 import { FETCH_SUCCESS } from 'utils/constants';
+
+import SightingCard from './SightingCard';
+
+const LIMIT = 7;
 
 const SightingCardList = ({ tableData }) => {
     const renderSightingCards = () => {
-        if (tableData.value.length > 10) {
+        if (tableData.value.length > LIMIT) {
             let count = -1;
             return tableData.value
-                .slice(0, 9)
+                .slice(0, LIMIT)
                 .map((rowObj) => <SightingCard key={++count} sightingData={rowObj} />);
         } else {
             let count = -1;
