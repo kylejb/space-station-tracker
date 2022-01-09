@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
-import { useViewport, useSearchContext } from 'common/hooks';
+
 import { FETCH_SUCCESS } from 'utils/constants';
-import './style.scss';
+import { useViewport, useSearchContext } from 'common/hooks';
 
 const Earth = () => {
     const globeEl = useRef();
@@ -75,25 +75,29 @@ const Earth = () => {
     const { width, height } = useViewport();
 
     return (
-        <div className='earth-container'>
-            <h1>Space Station Tracker</h1>
-            <span>
+        <div className="absolute cursor-grab active:cursor-grabbing">
+            <h1 className="fixed z-10 top-12 left-12 font-garet text-stone-50 tracking-widest text-3xl">
+                Space Station Tracker
+            </h1>
+            <span className="fixed bottom-6 left-2/4 z-10">
                 <input
-                    aria-label='Toggle to follow ISS'
-                    type='checkbox'
+                    aria-label="Toggle to follow ISS"
+                    type="checkbox"
                     value={followISS}
                     checked={followISS}
                     onChange={() => setFollowISS(!followISS)}
                 />
-                <label aria-label='Follow ISS'>Follow Station</label>
+                <label className="font-basier text-stone-50 text-sm ml-1" aria-label="Follow ISS">
+                    Follow Station
+                </label>
             </span>
             <Globe
                 ref={globeEl}
                 width={width}
                 height={height}
-                globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-                backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
+                globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+                backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
                 customLayerData={satelliteCollection}
                 // customLayerLabel='ISS' // -- Enabling this removes ISS hover label
                 customThreeObject={(d) =>

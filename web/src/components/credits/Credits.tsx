@@ -1,16 +1,24 @@
-import './style.scss';
-
 const Credits = () => (
-    <div id='credits'>
+    <div className='fixed bottom-6 right-6 z-10 font-basier text-white text-sm opacity-25'>
         Made by
-        <span>
-            <a href='https://github.com/kylejb' rel='noopener noreferrer' target='_blank'>
+        <span className='mx-1.5 my-0'>
+            <a
+                className='border-b-2 border-solid'
+                href='https://github.com/kylejb'
+                rel='noopener noreferrer'
+                target='_blank'
+            >
                 KB
             </a>
         </span>
         &
-        <span>
-            <a href='https://mattgreen.io/' rel='noopener noreferrer' target='_blank'>
+        <span className='mx-1.5 my-0'>
+            <a
+                className='border-b-2 border-solid'
+                href='https://mattgreen.io/'
+                rel='noopener noreferrer'
+                target='_blank'
+            >
                 MG
             </a>
         </span>

@@ -52,18 +52,23 @@ const SightingCardList = ({ tableData }) => {
         time: 'TIME',
         duration: 'DURATION',
     };
+
     return (
-        <div className='sightingresults-wrapper'>
-            {tableData.status === FETCH_SUCCESS && (
-                <div className='sightingresults'>
+        <>
+            {tableData.status === FETCH_SUCCESS ? (
+                <div className='flex flex-col text-white bg-zinc-900 bg-opacity-75 rounded-md animate-fade-in'>
                     <div>
-                        <h1 id='tabletitle'>Sighting Opportunities</h1>
+                        <h2 className='font-garet text-lg text-center text-white underline'>
+                            Sighting Opportunities
+                        </h2>
                     </div>
-                    <SightingCard header sightingData={headerData} />
-                    {renderSightingCards()}
+                    <div className='divide-zinc-700 divide-y-2 last:divide-0'>
+                        <SightingCard header sightingData={headerData} />
+                        {renderSightingCards()}
+                    </div>
                 </div>
-            )}
-        </div>
+            ) : null}
+        </>
     );
 };
 

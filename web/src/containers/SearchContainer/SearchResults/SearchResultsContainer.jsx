@@ -16,8 +16,6 @@ import {
 import geoMap from 'common/data/geoMap.json';
 import { useErrorContext, useSearchContext } from 'common/hooks';
 
-import './style.scss';
-
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
 const SearchResultsContainer = ({ currentUser }) => {
