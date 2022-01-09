@@ -130,7 +130,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 (rowObj) =>
                     shouldIncludeSightingCard(rowObj.date) &&
                     parseInt(rowObj.maxElevation) >= FILTER_BY_DEGREES_GREATER_THAN &&
-                    parseInt(rowObj.duration[0]) > FILTER_BY_DURATION_GREATER_THAN,
+                    parseInt(rowObj.duration[0]) >= FILTER_BY_DURATION_GREATER_THAN,
             );
         };
 
