@@ -1,4 +1,3 @@
-import './app.scss';
 import { useCallback, useState } from 'react';
 
 import SearchContainer from 'containers/SearchContainer';
@@ -130,7 +129,7 @@ const App = () => {
     };
 
     return (
-        <div className='app'>
+        <div className='flex flex-1 justify-center'>
             {firstLoad ? (
                 <SplashPage splashHider={splashHider} />
             ) : (

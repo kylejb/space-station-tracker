@@ -1,10 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
 import Select from 'react-select';
+import { useEffect, useState, useRef } from 'react';
 
 import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
-
-import './style.scss';
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
@@ -67,7 +65,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
-            fontFamily: 'Basier',
+            fontFamily: 'Basier Circular',
             paddingLeft: '10px',
             letterSpacing: '.05em',
             fontSize: '.8em',
@@ -76,7 +74,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
-            fontFamily: 'Basier',
+            fontFamily: 'Basier Circular',
             paddingLeft: '10px',
             letterSpacing: '.05em',
             fontSize: '.8em',
@@ -95,7 +93,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             borderRadius: '5px 0px 0px 5px',
             background: 'rgba(27,29,33,0.75)',
             color: '#C6C6C5',
-            fontFamily: 'Basier',
+            fontFamily: 'Basier Circular',
             fontSize: '.9em',
         }),
         menuItem: (provided, state) => ({
@@ -151,14 +149,20 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                         country.value === userInput || country.value === currentUser.country,
                 )}
             />
-            <span id='emojidropdownwrapper' onClick={emojiClickHandler}>
+            <span
+                className='font-basier cursor-pointer pointer-events-none text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10'
+                onClick={emojiClickHandler}
+            >
                 <input
                     type='button'
                     style={{ display: isDropdownOpen ? 'none' : 'block' }}
-                    id='emojidropdown'
+                    className='h-11 w-20 text-5xl px-2 rounded-l-md border-none bg-inherit text-inherit pointer-events-auto'
                     value={emojiValue}
                 />
-                <span id='emojidownarrow' style={{ display: isDropdownOpen ? 'none' : 'block' }}>
+                <span
+                    className='h-0 w-20 text-base relative left-14 bottom-6 pointer-events-auto'
+                    style={{ display: isDropdownOpen ? 'none' : 'block' }}
+                >
                     ▼
                 </span>
             </span>

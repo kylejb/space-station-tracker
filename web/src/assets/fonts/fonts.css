@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Basier Circular';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: local('Basier Circular Regular'),
+        url('./basier-circle/basiercircle-regular-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Garet Heavy';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: local('Garet Heavy Regular'), url('./garet-heavy/garetheavy-regular.otf') format('woff');
+}

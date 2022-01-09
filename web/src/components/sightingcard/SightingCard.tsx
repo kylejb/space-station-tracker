@@ -1,13 +1,13 @@
 import Compass from 'components/compass';
 
-import './style.scss';
-
 type SightingCardProps = {
     header?: boolean;
     isSelected?: boolean;
     selectSightingCard?: (sightingCardIndex?: number) => void;
     sightingData: any;
 };
+
+// TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
     isSelected,
     selectSightingCard,
@@ -15,7 +15,7 @@ const SightingCard = ({
     header = false,
 }: SightingCardProps) => (
     <div
-        className='sightingcard'
+        className='flex flex-col justify-center content-center text-gray-300 p-4 text-sm hover:text-stone-50'
         onClick={() => {
             !header && selectSightingCard && selectSightingCard(); // TODO: refactor with appropriate type defs
         }}
@@ -30,51 +30,43 @@ const SightingCard = ({
             <span className={header ? 'flex justify-center pr-12 w-36' : 'w-32'}>
                 {header ? sightingData.date : sightingData.date}
             </span>
-            <span id={header ? 'headertimespan' : 'timespan'}>{sightingData.time}</span>
-            <span id={header ? 'headerdurationspan' : 'durationspan'}>{sightingData.duration}</span>
-            {!header ? (
-                <span
-                    id='sightingdownarrow'
-                    style={
-                        isSelected
-                            ? {
-                                  transform: 'rotate(180deg)',
-                                  paddingTop: '3px',
-                                  paddingLeft: '2px',
-                              }
-                            : {}
-                    }
-                >
-                    ▼
-                </span>
+            <span className={header ? 'flex flex-start w-10' : 'w-14'}>{sightingData.time}</span>
+            <span className={header ? 'flex flex-start' : 'w-14'}>{sightingData.duration}</span>
+            {isSelected ? (
+                !header ? (
+                    <span className='text-xs w-3 mt-1'>▲</span>
+                ) : (
+                    <span></span>
+                )
+            ) : !header ? (
+                <span className='text-xs w-3 mt-1'>▼</span>
             ) : (
-                <span id='headerspacingspan'></span>
+                <span></span>
             )}
         </div>
 
         {isSelected ? (
-            <div className='card_detail'>
-                <span className='detail_info'>
-                    <span className='detail_info_title'>Enters Sky</span>
-                    <span className='detail_info_data'>
+            <div className='flex flex-row justify-evenly text-xs cursor-pointer mt-2'>
+                <div className='flex flex-col justify-center w-54'>
+                    <span className='mb-1 underline decoration-1 decoration-solid'>Enters Sky</span>
+                    <span className='mb-3'>
                         {sightingData.approachDir}: {sightingData.approachDeg} above horizon
                     </span>
-                    <span className='detail_info_title'>Max Elevation</span>
-                    <span className='detail_info_data'>
-                        {sightingData.maxElevation}° above horizon
+                    <span className='mb-1 underline decoration-1 decoration-solid'>
+                        Max Elevation
                     </span>
-                    <span className='detail_info_title'>Leaves Sky</span>
-                    <span className='detail_info_data'>
+                    <span className='mb-3'>{sightingData.maxElevation}° above horizon</span>
+                    <span className='mb-1 underline decoration-1 decoration-solid'>Leaves Sky</span>
+                    <span className='mb-3'>
                         {sightingData.departureDir}: {sightingData.departureDeg} above horizon
                     </span>
-                </span>
-
-                <span className='detail_compass'>
+                </div>
+                <div>
                     <Compass
                         entersSky={sightingData.approachDir}
                         leavesSky={sightingData.departureDir}
                     />
-                </span>
+                </div>
             </div>
         ) : null}
     </div>
