@@ -1,20 +1,48 @@
+import { useState } from 'react';
+
 import { FETCH_SUCCESS } from 'utils/constants';
 
 import SightingCard from './SightingCard';
 
-const LIMIT = 7;
+const LIMIT = 10;
 
 const SightingCardList = ({ tableData }) => {
+    const [selectedSightingCardByIndex, setSelectedSightingCardByIndex] = useState(null);
+
+    const selectSightingCard = (sightingCardIndex) => {
+        setSelectedSightingCardByIndex(sightingCardIndex);
+    };
+
+    const toggleSightingCard = (sightingCardIndex) => {
+        if (selectedSightingCardByIndex === sightingCardIndex) {
+            setSelectedSightingCardByIndex(null);
+        } else {
+            selectSightingCard(sightingCardIndex);
+        }
+    };
+
     const renderSightingCards = () => {
         if (tableData.value.length > LIMIT) {
             let count = -1;
             return tableData.value
                 .slice(0, LIMIT)
-                .map((rowObj) => <SightingCard key={++count} sightingData={rowObj} />);
+                .map((rowObj, index) => (
+                    <SightingCard
+                        key={++count}
+                        sightingData={rowObj}
+                        isSelected={selectedSightingCardByIndex === index}
+                        selectSightingCard={() => toggleSightingCard(index)}
+                    />
+                ));
         } else {
             let count = -1;
-            return tableData.value.map((rowObj) => (
-                <SightingCard key={++count} sightingData={rowObj} />
+            return tableData.value.map((rowObj, index) => (
+                <SightingCard
+                    key={++count}
+                    sightingData={rowObj}
+                    isSelected={selectedSightingCardByIndex === index}
+                    selectSightingCard={() => toggleSightingCard(index)}
+                />
             ));
         }
     };
