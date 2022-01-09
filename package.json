@@ -9,7 +9,7 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-globe.gl": "^2.19.0",
-        "react-scripts": "^4.0.3",
+        "react-scripts": "5.0.0",
         "react-select": "^4.3.1",
         "react-xml-parser": "^1.1.8",
         "svg-arc": "^1.0.2",
