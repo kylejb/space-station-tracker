@@ -17,7 +17,8 @@
     },
     "scripts": {
         "start": "npx ts-node index.ts",
-        "build": "npx tsc && (cd web && npm run build)"
+        "build": "npx tsc && (cd web && npm run build)",
+        "test": "cd web && npm test"
     },
     "engines": {
         "node": "16.x"
