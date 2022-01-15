@@ -1,0 +1,52 @@
+{
+    "name": "web",
+    "version": "1.1.0",
+    "private": true,
+    "dependencies": {
+        "geolib": "^3.3.3",
+        "luxon": "^2.3.0",
+        "node-sass": "^6.0.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-globe.gl": "^2.19.0",
+        "react-scripts": "5.0.0",
+        "react-select": "^4.3.1",
+        "react-xml-parser": "^1.1.8",
+        "svg-arc": "^1.0.2",
+        "three": "0.133.0"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/react": "^17.0.38",
+        "@types/react-dom": "^17.0.11",
+        "typescript": "^4.5.4"
+    },
+    "overrides": {
+        "mini-css-extract-plugin": "2.4.5"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build && mv ./build ../build/web",
+        "test": "react-scripts test"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
