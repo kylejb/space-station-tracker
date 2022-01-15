@@ -1,8 +1,11 @@
 import { Express, Request, Response } from 'express';
+import { XMLParser } from 'fast-xml-parser';
 import axios from 'axios';
 import express from 'express';
-const { json } = require('body-parser');
+import { json } from 'body-parser';
 import path from 'path';
+
+import { cleanTableData } from './cleanTableData';
 
 export class Server {
     private app: Express;
@@ -10,11 +13,11 @@ export class Server {
     constructor(app: Express) {
         this.app = app;
 
-        this.app.use(express.static(path.resolve('./') + '/build/frontend'));
+        this.app.use(express.static(path.resolve('./') + '/build/web'));
 
         this.app.use(json());
 
-        app.use((req, res, next) => {
+        app.use((req: Request, res: Response, next) => {
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
             res.header(
                 'Access-Control-Allow-Headers',
@@ -27,7 +30,7 @@ export class Server {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            app.options('*', function (req, res) {
+            app.options('*', function (req: Request, res: Response) {
                 res.sendStatus(200);
             });
         }
@@ -51,7 +54,11 @@ export class Server {
                 const data = await response.data;
                 // TODO: Parse data here to offload client-side work
                 // console.log('DATA FROM api/v1/spotthestation -->', data)
-                return res.send(data);
+                const parser = new XMLParser();
+                let jObj = parser.parse(data);
+                const cleanData = cleanTableData(jObj.rss.channel.item);
+                // console.log('parsed:', cleanData);
+                return res.send(cleanData);
             } catch (error) {
                 res.status(500).json({ type: 'error', message: error });
                 throw new Error(error);
@@ -94,6 +101,6 @@ export class Server {
     }
 
     public start(port: number): void {
-        this.app.listen(port, () => console.log(`Server listening on port ${port}!`));
+        this.app.listen(port, () => console.log(`Server listening on port ${port}`));
     }
 }

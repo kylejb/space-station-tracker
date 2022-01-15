@@ -20,9 +20,15 @@ const SightingCard = ({
             !header && selectSightingCard && selectSightingCard(); // TODO: refactor with appropriate type defs
         }}
     >
-        <div className={header ? 'sightingheader' : 'card_overview'}>
-            <span id={header ? 'headerdatespan' : 'datespan'}>
-                {header ? sightingData.date : sightingData.date.toDateString()}
+        <div
+            className={
+                header
+                    ? 'flex flex-row justify-between py-1 border-zinc-800 font-bold text-stone-50'
+                    : 'flex flex-row justify-between items-center cursor-pointer'
+            }
+        >
+            <span className={header ? 'flex justify-center pr-12 w-36' : 'w-32'}>
+                {header ? sightingData.date : sightingData.date}
             </span>
             <span id={header ? 'headertimespan' : 'timespan'}>{sightingData.time}</span>
             <span id={header ? 'headerdurationspan' : 'durationspan'}>{sightingData.duration}</span>
