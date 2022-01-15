@@ -1,7 +1,5 @@
-import { DateTime } from 'luxon';
 import { findNearest, getDistance, convertDistance } from 'geolib';
 import { useState, useEffect } from 'react';
-import XMLParser from 'react-xml-parser';
 
 import Error from 'components/notification';
 import SightingCardList from 'components/sightingcard';
@@ -21,32 +19,6 @@ import { useErrorContext, useSearchContext } from 'common/hooks';
 import './style.scss';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
-const FILTER_BY_DEGREES_GREATER_THAN = 20;
-const FILTER_BY_DURATION_GREATER_THAN = 1; // in minutes
-const LIMIT_BY_N_DAYS = 8;
-
-const bareDate = (dateObject) => {
-    const yearMonthDateArray = dateObject.toISOString().split('T')[0].split('-');
-    const [year, month, day] = yearMonthDateArray;
-    return DateTime.utc(parseInt(year), parseInt(month), parseInt(day));
-};
-
-// TODO: Refactor
-const shouldIncludeSightingCard = (sightingCardDate, limitByNumOfDays = LIMIT_BY_N_DAYS) => {
-    const fromDate = DateTime.now().toUTC();
-    const toDate = fromDate.plus({ day: limitByNumOfDays });
-
-    // bareDate scrubs time to simplify consistency when calculating range
-    const bareSightingDate = bareDate(sightingCardDate);
-    const bareFromDate = bareDate(fromDate.toJSDate());
-    const bareToDate = bareDate(toDate.toJSDate()).plus({ day: 1 });
-
-    const result =
-        bareFromDate.toMillis() <= bareSightingDate.toMillis() &&
-        bareSightingDate.toMillis() <= bareToDate.toMillis();
-
-    return result;
-};
 
 const SearchResultsContainer = ({ currentUser }) => {
     const [sightingChart, setSightingChart] = useState({ value: null, status: INITIAL_LOAD }),
@@ -57,37 +29,6 @@ const SearchResultsContainer = ({ currentUser }) => {
     const { searchResult } = useSearchContext();
 
     const { error, addError, removeError } = useErrorContext();
-
-    const cleanTableData = (rawData) => {
-        const arrayOfHTMLStrings = rawData.map((item) => item.children[2].value);
-        const cleanData = [];
-        for (const row of arrayOfHTMLStrings) {
-            // spacing around split removes unnecessary whitespace without needing trim()
-            const rowArray = row.split(' &lt;br/&gt; ');
-
-            const approachObj = rowArray[4].split(': ')[1].replace('&#176;', '°');
-            // 'Departure: 10&#176; above NE &lt;br/&gt;'
-            const departureObj = rowArray[5]
-                .split(': ')[1]
-                .replace('&lt;br/&gt;', '')
-                .trim()
-                .replace('&#176;', '°');
-
-            const rowObj = {
-                date: new Date(rowArray[0].split(': ')[1]), // 'Date: Monday Mar 29, 2021'
-                time: rowArray[1].split(': ')[1],
-                duration: rowArray[2].split(': ')[1].replace(/minute/, 'min'),
-                maxElevation: rowArray[3].split(': ')[1].split('&')[0],
-                approachDir: approachObj.split('above')[1].trim(),
-                approachDeg: approachObj.split(' ')[0].trim(),
-                // 'Departure: 10&#176; above NE &lt;br/&gt;'
-                departureDir: departureObj.split('above')[1].trim(),
-                departureDeg: departureObj.split(' ')[0].trim(),
-            };
-            cleanData.push(rowObj);
-        }
-        return cleanData;
-    };
 
     useEffect(() => {
         if (searchResult.status === FETCH_SUCCESS) {
@@ -125,15 +66,6 @@ const SearchResultsContainer = ({ currentUser }) => {
             }
         };
 
-        const filteredSightingCards = (data) => {
-            return data?.filter(
-                (rowObj) =>
-                    shouldIncludeSightingCard(rowObj.date) &&
-                    parseInt(rowObj.maxElevation) >= FILTER_BY_DEGREES_GREATER_THAN &&
-                    parseInt(rowObj.duration[0]) >= FILTER_BY_DURATION_GREATER_THAN,
-            );
-        };
-
         const fetchSightingData = async (city) => {
             const spotTheStationObj = { country, state, city };
             const fetchOptions = {
@@ -147,14 +79,10 @@ const SearchResultsContainer = ({ currentUser }) => {
 
             try {
                 const response = await fetch(DOMAIN + '/api/v1/spotthestation', fetchOptions);
-                const data = await response.text();
-                const xml = new XMLParser().parseFromString(data);
-                const itemData = xml.getElementsByTagName('item');
-                let cleanedData = cleanTableData(itemData);
-                cleanedData = filteredSightingCards(cleanedData);
+                const filteredData = await response.json();
 
-                if (cleanedData && cleanedData.length) {
-                    setSightingChart({ value: cleanedData, status: FETCH_SUCCESS });
+                if (filteredData && filteredData.length) {
+                    setSightingChart({ value: filteredData, status: FETCH_SUCCESS });
                 } else {
                     setSightingChart({ value: [], status: SIGHTINGRESULTS_NONE_MESSAGE });
                     addError(
