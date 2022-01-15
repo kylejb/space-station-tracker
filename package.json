@@ -23,8 +23,7 @@
     "scripts": {
         "start-client": "react-scripts start",
         "build": "react-scripts build && (cd server && npm install)",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
+        "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!space-station-tracker)/\"",
         "start": "cd server && npm start"
     },
     "eslintConfig": {

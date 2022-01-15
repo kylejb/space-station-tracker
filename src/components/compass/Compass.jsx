@@ -1,5 +1,3 @@
-import arc from 'svg-arc';
-
 import { drawViewingArea } from 'utils/drawViewingAreaOnCompass';
 
 import './style.scss';
@@ -109,7 +107,7 @@ const Compass = ({ entersSky, leavesSky }) => {
                 </text>
 
                 <path
-                    d={arc(drawViewingArea(entersSky, leavesSky))}
+                    d={drawViewingArea(entersSky, leavesSky)}
                     fill='transparent'
                     strokeWidth='6'
                     stroke='#4287f5'
