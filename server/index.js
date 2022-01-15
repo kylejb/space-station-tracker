@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const { json } = require('body-parser');
-const request = require('request');
 const path = require('path');
+const { default: axios } = require('axios');
 
 const buildPath = path.join(__dirname, '..', 'build'); // consider renaming
 const app = express();
@@ -28,40 +28,40 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-app.post('/api/v1/spotthestation', (req, res) => {
+app.post('/api/v1/spotthestation', async (req, res) => {
     const baseURL = 'https://spotthestation.nasa.gov/sightings/xml_files';
     const spotTheStationObj = {
         country: req.body.country,
         state: req.body.state,
         city: req.body.city,
     };
-    request(
-        {
-            url: `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`,
-        },
-        (error, response, body) => {
-            if (error || response.statusCode !== 200) {
-                return res.status(500).json({ type: 'error', message: error });
-            }
-            res.send(body);
-        },
-    );
+
+    try {
+        const response = await axios(`${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`)
+        const data = await response.data;
+        // TODO: Parse data here to offload client-side work
+        // console.log('DATA FROM api/v1/spotthestation -->', data)
+        return res.send(data);
+    } catch (error) {
+        res.status(500).json({ type: 'error', message: error });
+        throw new Error(error);
+    }
 });
 
 // find nearest city based on zip/postal code
-app.post('/api/v1/city', (req, res) => {
+app.post('/api/v1/city', async (req, res) => {
     const searchObject = {
         country: req.body.country,
         codes: req.body.codes,
     };
     const baseURL = 'https://app.zipcodebase.com/';
     const SEARCH_V1 = `api/v1/search?apikey=${process.env.ZIPCODEBASE_API_KEY}&country=${searchObject.country}&codes=${searchObject.codes}`;
-    request({ url: baseURL + SEARCH_V1 }, (error, response, body) => {
-        if (error || response.statusCode !== 200) {
-            return res.status(500).json({ type: 'error', message: error });
-        }
-        const parseZipcodeBaseResponseBody = JSON.parse(body);
-        const parsedResults = parseZipcodeBaseResponseBody.results;
+
+    try {
+        const response = await axios(baseURL + SEARCH_V1);
+        const data = await response.data;
+
+        const parsedResults = data.results;
 
         if (Array.isArray(parsedResults) && parsedResults.length === 0) {
             return res.status(500).json({ type: 'error', message: 'No results found.' });
@@ -72,7 +72,10 @@ app.post('/api/v1/city', (req, res) => {
             parsedResults[searchObject.codes][0]?.city;
 
         return res.json({ city: responseForClient });
-    });
+    } catch (error) {
+        res.status(500).json({ type: 'error', message: error });
+        throw new Error(error)
+    }
 });
 
 const port = process.env.PORT || 5000; // Heroku needs PORT var
