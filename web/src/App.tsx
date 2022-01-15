@@ -18,7 +18,7 @@ import {
     ZIPRESULTS_NONE_MESSAGE,
 } from 'utils/constants';
 
-const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
 const App = () => {
     const [currentUser, setCurrentUser] = useState({
@@ -80,6 +80,11 @@ const App = () => {
 
                     const nestedResponse = await fetch(DOMAIN + '/api/v1/city', fetchOptions);
                     let nestedData = await nestedResponse.json();
+
+                    if (nestedData.type === 'error') {
+                        removeSearchResult();
+                        addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
+                    }
                     const cityFromZip = nestedData.city;
 
                     if (cityFromZip) {

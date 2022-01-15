@@ -20,7 +20,7 @@ import { useErrorContext, useSearchContext } from 'common/hooks';
 
 import './style.scss';
 
-const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 const FILTER_BY_DEGREES_GREATER_THAN = 20;
 const FILTER_BY_DURATION_GREATER_THAN = 1; // in minutes
 const LIMIT_BY_N_DAYS = 8;
@@ -163,7 +163,6 @@ const SearchResultsContainer = ({ currentUser }) => {
                     );
                 }
             } catch (error) {
-                console.error(error);
                 setSightingChart({ value: [], status: FETCH_FAIL });
                 addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
             }
