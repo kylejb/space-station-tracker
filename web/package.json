@@ -30,7 +30,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build && mv ./build ../build/web",
-        "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!web)/\""
+        "test:ci": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!web)/\""
     },
     "eslintConfig": {
         "extends": [

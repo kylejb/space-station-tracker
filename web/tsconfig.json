@@ -1,43 +1,31 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "target": "ES2016",
-    "jsx": "react-jsx",
-    "types": [
-      "react"
-    ],
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "removeComments": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "outDir": "build",
-    "baseUrl": "src",
-    "strictNullChecks": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
-  },
-  "exclude": [
-    "build",
-    "public",
-    "node_modules"
-  ],
-  "include": [
-    "src"
-  ]
+    "compilerOptions": {
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "target": "ES2016",
+        "jsx": "react-jsx",
+        "types": ["react"],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "strict": true,
+        "outDir": "build",
+        "baseUrl": "src",
+        "strictNullChecks": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true
+    },
+    "exclude": ["build", "public", "node_modules"],
+    "include": ["src"]
 }

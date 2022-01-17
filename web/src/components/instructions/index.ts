@@ -1,3 +1,3 @@
-import Instructions from './Instructions'
+import Instructions from './Instructions';
 
-export default Instructions
+export default Instructions;

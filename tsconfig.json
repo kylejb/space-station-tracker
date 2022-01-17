@@ -1,20 +1,15 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "baseUrl": "./",
-    "outDir": "build",
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "lib": ["ESNext"],
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-  },
-  "exclude": [
-    "build",
-    "node_modules"
-  ],
-  "include": [
-    "**.ts"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "baseUrl": "./",
+        "outDir": "build",
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "lib": ["ESNext"],
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "exclude": ["build", "node_modules"],
+    "include": ["**.ts"]
 }

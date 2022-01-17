@@ -8,12 +8,12 @@ const useViewport = () => {
         const handleWindowResize = () => {
             setWidth(window.innerWidth);
             setHeight(window.innerHeight);
-        }
-        window.addEventListener("resize", handleWindowResize);
-        return () => window.removeEventListener("resize", handleWindowResize);
-    }, [])
+        };
+        window.addEventListener('resize', handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, []);
 
     return { width, height };
-}
+};
 
 export default useViewport;

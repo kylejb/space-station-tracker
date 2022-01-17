@@ -7,7 +7,6 @@ const initialState = {
     value: [],
 };
 
-
 const SearchProvider = ({ children }) => {
     const [searchResult, setSearchResult] = useState(initialState);
 
@@ -18,15 +17,10 @@ const SearchProvider = ({ children }) => {
     const contextValue = {
         searchResult,
         addSearchResult: useCallback((value, status) => addSearchResult(value, status), []),
-        removeSearchResult: useCallback(() => removeSearchResult(), [])
+        removeSearchResult: useCallback(() => removeSearchResult(), []),
     };
 
-    return (
-        <SearchContext.Provider value={contextValue}>
-            {children}
-        </SearchContext.Provider>
-    );
-}
-
+    return <SearchContext.Provider value={contextValue}>{children}</SearchContext.Provider>;
+};
 
 export default SearchProvider;
