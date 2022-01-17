@@ -32,6 +32,11 @@
     "isolatedModules": true,
     "noEmit": true
   },
+  "exclude": [
+    "build",
+    "public",
+    "node_modules"
+  ],
   "include": [
     "src"
   ]

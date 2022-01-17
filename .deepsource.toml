@@ -1,0 +1,20 @@
+version = 1
+
+test_patterns = [
+  "**/web/**/*.test.tsx",
+  "**/server/tests/**/*.test.ts",
+]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+[analyzers.meta]
+environment = [
+  "nodejs",
+  "jest",
+  "browser"
+]
+plugins = ["react"]
+style_guide = "standard"
+dialect = "typescript"

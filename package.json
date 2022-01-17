@@ -21,6 +21,9 @@
         "typescript": "^4.5.4"
     },
     "scripts": {
+        "deps:server": "npm ci",
+        "deps:web": "cd web && npm ci",
+        "installAll": "npm run deps:server && npm run deps:web",
         "start": "npx ts-node index.ts",
         "build": "npx tsc && (cd web && npm run build)",
         "test": "npm run test:server && npm run test:web",

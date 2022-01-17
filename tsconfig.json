@@ -10,11 +10,11 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "include": [
-    "**.ts"
-  ],
   "exclude": [
     "build",
     "node_modules"
+  ],
+  "include": [
+    "**.ts"
   ]
 }

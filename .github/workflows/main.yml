@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: github.event.pull_request.draft == false
 
     runs-on: ubuntu-latest
 
@@ -22,6 +23,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm run installAll
     - run: npm run build --if-present
     - run: npm test
