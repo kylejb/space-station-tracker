@@ -1,10 +1,10 @@
-const useFetch = (endpoint) => {
+const useFetch = (endpoint: string) => {
     const defaultHeader = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'User-Agent': 'ISS-Tracker-v0',
     };
-    const customFetch = (url, method = 'GET', body = false, headers = defaultHeader) => {
+    const customFetch = (url: string, method = 'GET', body = false, headers = defaultHeader) => {
         // TODO: Remove type casting
         const options: any = {
             method,
@@ -17,7 +17,7 @@ const useFetch = (endpoint) => {
                 throw new Error(err);
             });
     };
-    const get = (id) => {
+    const get = (id: string) => {
         const url = `${endpoint}${id ? `/${id}` : ''}`;
         return customFetch(url);
     };

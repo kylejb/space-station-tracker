@@ -1,11 +1,11 @@
 import Compass from 'components/compass';
 
-type SightingCardProps = {
+interface SightingCardProps {
     header?: boolean;
     isSelected?: boolean;
     selectSightingCard?: (sightingCardIndex?: number) => void;
     sightingData: any;
-};
+}
 
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({

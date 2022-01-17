@@ -25,70 +25,9 @@ const getArcPathObj = (entryDir, exitDir) => {
     const entryDeg = cardinalToDeg[entryDir];
     const exitDeg = cardinalToDeg[exitDir];
 
-    switch (entryDeg > exitDeg) {
-        case true:
-            const startEndDelta = entryDeg - exitDeg;
-            if (startEndDelta === 180) {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: entryDeg,
-                    end: exitDeg,
-                };
-            }
-            if (startEndDelta > 180) {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: entryDeg,
-                    end: exitDeg,
-                };
-            } else {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: exitDeg,
-                    end: entryDeg,
-                };
-            }
-
-        case false:
-            const endStartDelta = exitDeg - entryDeg;
-            if (endStartDelta === 0) {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: exitDeg - DEFAULT_RANGE_WHEN_ENTRY_EQUALS_EXIT,
-                    end: entryDeg + DEFAULT_RANGE_WHEN_ENTRY_EQUALS_EXIT,
-                };
-            } else if (endStartDelta > 180) {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: exitDeg,
-                    end: entryDeg,
-                };
-            } else {
-                return {
-                    x: 304,
-                    y: 304,
-                    R: 180,
-                    r: 180,
-                    start: entryDeg,
-                    end: exitDeg,
-                };
-            }
-        default:
+    if (entryDeg > exitDeg) {
+        const startEndDelta = entryDeg - exitDeg;
+        if (startEndDelta === 180) {
             return {
                 x: 304,
                 y: 304,
@@ -97,7 +36,53 @@ const getArcPathObj = (entryDir, exitDir) => {
                 start: entryDeg,
                 end: exitDeg,
             };
+        }
+        return startEndDelta > 180
+            ? {
+                  x: 304,
+                  y: 304,
+                  R: 180,
+                  r: 180,
+                  start: entryDeg,
+                  end: exitDeg,
+              }
+            : {
+                  x: 304,
+                  y: 304,
+                  R: 180,
+                  r: 180,
+                  start: exitDeg,
+                  end: entryDeg,
+              };
     }
+    const endStartDelta = exitDeg - entryDeg;
+    if (endStartDelta === 0) {
+        return {
+            x: 304,
+            y: 304,
+            R: 180,
+            r: 180,
+            start: exitDeg - DEFAULT_RANGE_WHEN_ENTRY_EQUALS_EXIT,
+            end: entryDeg + DEFAULT_RANGE_WHEN_ENTRY_EQUALS_EXIT,
+        };
+    }
+    return endStartDelta > 180
+        ? {
+              x: 304,
+              y: 304,
+              R: 180,
+              r: 180,
+              start: exitDeg,
+              end: entryDeg,
+          }
+        : {
+              x: 304,
+              y: 304,
+              R: 180,
+              r: 180,
+              start: entryDeg,
+              end: exitDeg,
+          };
 };
 
 export const drawViewingArea = (entryDir, exitDir) => {

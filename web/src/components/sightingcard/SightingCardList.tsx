@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { FETCH_SUCCESS } from 'utils/constants';
 
 import SightingCard from './SightingCard';
@@ -22,6 +21,7 @@ const SightingCardList = ({ tableData }) => {
     };
 
     const renderSightingCards = () => {
+        // TODO: revise key creation approach here and elsewhere
         if (tableData.value.length > LIMIT) {
             let count = -1;
             return tableData.value
@@ -34,17 +34,16 @@ const SightingCardList = ({ tableData }) => {
                         selectSightingCard={() => toggleSightingCard(index)}
                     />
                 ));
-        } else {
-            let count = -1;
-            return tableData.value.map((rowObj, index) => (
-                <SightingCard
-                    key={++count}
-                    sightingData={rowObj}
-                    isSelected={selectedSightingCardByIndex === index}
-                    selectSightingCard={() => toggleSightingCard(index)}
-                />
-            ));
         }
+        let count = -1;
+        return tableData.value.map((rowObj, index) => (
+            <SightingCard
+                key={++count}
+                sightingData={rowObj}
+                isSelected={selectedSightingCardByIndex === index}
+                selectSightingCard={() => toggleSightingCard(index)}
+            />
+        ));
     };
 
     const headerData = {
@@ -53,23 +52,22 @@ const SightingCardList = ({ tableData }) => {
         duration: 'DURATION',
     };
 
-    return (
-        <>
-            {tableData.status === FETCH_SUCCESS ? (
-                <div className='flex flex-col text-white bg-zinc-900 bg-opacity-75 rounded-md animate-fade-in'>
-                    <div>
-                        <h2 className='font-garet text-lg text-center text-white underline'>
-                            Sighting Opportunities
-                        </h2>
-                    </div>
-                    <div className='divide-zinc-700 divide-y-2 last:divide-0'>
-                        <SightingCard header sightingData={headerData} />
-                        {renderSightingCards()}
-                    </div>
+    const renderList =
+        tableData.status === FETCH_SUCCESS ? (
+            <div className='flex flex-col text-white bg-zinc-900 bg-opacity-75 rounded-md animate-fade-in'>
+                <div>
+                    <h2 className='font-garet text-lg text-center text-white underline'>
+                        Sighting Opportunities
+                    </h2>
                 </div>
-            ) : null}
-        </>
-    );
+                <div className='divide-zinc-700 divide-y-2 last:divide-0'>
+                    <SightingCard header sightingData={headerData} />
+                    {renderSightingCards()}
+                </div>
+            </div>
+        ) : null;
+
+    return renderList;
 };
 
 export default SightingCardList;

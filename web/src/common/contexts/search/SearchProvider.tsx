@@ -15,7 +15,8 @@ const SearchProvider = ({ children }) => {
     const addSearchResult = (value, status) => setSearchResult({ value, status });
 
     const contextValue = {
-        searchResult,
+        status: searchResult.status,
+        value: searchResult.value,
         addSearchResult: useCallback((value, status) => addSearchResult(value, status), []),
         removeSearchResult: useCallback(() => removeSearchResult(), []),
     };

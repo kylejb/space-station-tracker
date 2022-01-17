@@ -1,6 +1,7 @@
-import { Server } from './server';
 import dotenv from 'dotenv';
 import express from 'express';
+
+import { Server } from './server';
 
 dotenv.config();
 

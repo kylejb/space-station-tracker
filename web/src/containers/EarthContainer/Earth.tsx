@@ -1,20 +1,20 @@
+import { useSearchContext, useViewport } from 'common/hooks';
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
-
 import { FETCH_SUCCESS } from 'utils/constants';
-import { useViewport, useSearchContext } from 'common/hooks';
 
 const Earth = () => {
-    const globeEl = useRef();
-    const [satelliteCollection, setSatelliteCollection] = useState([]);
+    // TODO: Replace 'any's with type defs
+    const globeEl = useRef<any>(null); // should probably incorporate GlobeMethods
+    const [satelliteCollection, setSatelliteCollection] = useState<any>([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
-    const { searchResult } = useSearchContext();
+    const { value, status } = useSearchContext();
 
     // Camera follows ISS on state change
     useEffect(() => {
-        if (followISS && satelliteCollection.length) {
+        if (followISS && satelliteCollection.length && globeEl.current) {
             globeEl.current.controls().autoRotate = false;
 
             globeEl.current.pointOfView({
@@ -22,30 +22,30 @@ const Earth = () => {
                 lng: satelliteCollection[0].longitude,
                 altitude: 2,
             });
-        } else if (searchResult.status === FETCH_SUCCESS) {
+        } else if (status === FETCH_SUCCESS) {
             globeEl.current.controls().autoRotate = false;
         } else {
             globeEl.current.controls().autoRotate = true;
         }
-    }, [followISS, satelliteCollection, searchResult]);
+    }, [followISS, satelliteCollection, status]);
 
     useEffect(() => {
-        if (searchResult.status === FETCH_SUCCESS) {
+        if (status === FETCH_SUCCESS) {
             setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
             globeEl.current.pointOfView({
-                lat: searchResult.value[0].lat,
-                lng: searchResult.value[0].lon,
+                lat: value[0].lat,
+                lng: value[0].lon,
                 altitude: 1.9,
             });
         }
-    }, [searchResult]);
+    }, [status, value]);
 
     useEffect(() => {
         // ISS Satellite ID is 25544 at this endpoint
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
-            let data = await response.json();
+            const data = await response.json();
             data.name = 'ISS';
             setSatelliteCollection([data]);
             if (isFirstLoad) {
@@ -81,13 +81,18 @@ const Earth = () => {
             </h1>
             <span className='fixed bottom-6 left-2/4 z-10'>
                 <input
+                    id='follow-iss'
                     aria-label='Toggle to follow ISS'
                     type='checkbox'
-                    value={followISS}
+                    value={String(followISS)}
                     checked={followISS}
                     onChange={() => setFollowISS(!followISS)}
                 />
-                <label className='font-basier text-stone-50 text-sm ml-1' aria-label='Follow ISS'>
+                <label
+                    className='font-basier text-stone-50 text-sm ml-1'
+                    aria-label='Follow ISS'
+                    htmlFor='follow-iss'
+                >
                     Follow Station
                 </label>
             </span>
@@ -100,7 +105,7 @@ const Earth = () => {
                 backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
                 customLayerData={satelliteCollection}
                 // customLayerLabel='ISS' // -- Enabling this removes ISS hover label
-                customThreeObject={(d) =>
+                customThreeObject={() =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
                         new THREE.MeshLambertMaterial({
@@ -111,16 +116,16 @@ const Earth = () => {
                         }),
                     )
                 }
-                customThreeObjectUpdate={(obj, d) => {
+                customThreeObjectUpdate={(obj, d: any) => {
                     Object.assign(
                         obj.position,
                         globeEl.current.getCoords(d.latitude, d.longitude, 0.3),
                     );
                 }}
-                labelsData={searchResult.value}
-                labelLat={(d) => d.lat}
-                labelLng={(d) => d.lon}
-                labelText={(d) => ''} // optional label for searched sighting location
+                labelsData={value}
+                labelLat={(d: any) => d.lat}
+                labelLng={(d: any) => d.lon}
+                labelText={() => ''} // optional label for searched sighting location
                 labelSize={1000 * 4e-4}
                 labelDotRadius={1500 * 4e-4}
                 labelColor={() => '#c43335'}

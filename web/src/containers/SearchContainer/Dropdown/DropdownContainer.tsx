@@ -1,14 +1,13 @@
-import Select from 'react-select';
-import { useEffect, useState, useRef } from 'react';
-
 import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
+import { useEffect, useRef, useState } from 'react';
+import Select from 'react-select';
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
-    const [isDropdownOpen, setIsDropdownOpen] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emojiValue, setEmojiValue] = useState('🇺🇸   ');
-    const selectRef = useRef(null);
+    const selectRef = useRef<HTMLSelectElement>(null);
 
     const dropdownSelectHelper = (e) => {
         setUserInput({ country: e.value, countryCode: e.iso2Code });
@@ -20,7 +19,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     };
 
     useEffect(() => {
-        if (isDropdownOpen) {
+        if (isDropdownOpen && selectRef.current) {
             selectRef.current.focus();
         }
     }, [isDropdownOpen]);
@@ -41,11 +40,11 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     };
 
     const customStyles = {
-        container: (provided, state) => ({
+        container: (provided) => ({
             ...provided,
             display: isDropdownOpen ? 'block' : 'none',
         }),
-        control: (provided, state) => ({
+        control: (provided) => ({
             ...provided,
             width: 170,
             minHeight: 25,
@@ -54,14 +53,14 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             border: '1px solid rgba(198,198,197,0.84)',
             boxShadow: 'inset 0px 0px 3px 2px #4287f5',
         }),
-        valueContainer: (provided, state) => ({
+        valueContainer: (provided) => ({
             ...provided,
             width: 170,
             minHeight: 48,
             color: '#C6C6C5',
             opacity: '1',
         }),
-        singleValue: (provided, state) => ({
+        singleValue: (provided) => ({
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
@@ -70,7 +69,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             letterSpacing: '.05em',
             fontSize: '.8em',
         }),
-        input: (provided, state) => ({
+        input: (provided) => ({
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
@@ -79,7 +78,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             letterSpacing: '.05em',
             fontSize: '.8em',
         }),
-        menu: (provided, state) => ({
+        menu: (provided) => ({
             ...provided,
             width: 170,
             minHeight: 25,
@@ -88,7 +87,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             color: '#C6C6C5',
             border: '1px solid rgba(198,198,197,0.84)',
         }),
-        menuList: (provided, state) => ({
+        menuList: (provided) => ({
             ...provided,
             borderRadius: '5px 0px 0px 5px',
             background: 'rgba(27,29,33,0.75)',
@@ -96,7 +95,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             fontFamily: 'Basier Circular',
             fontSize: '.9em',
         }),
-        menuItem: (provided, state) => ({
+        menuItem: (provided) => ({
             ...provided,
             borderRadius: '5px 0px 0px 5px',
             background: 'rgba(27,29,33,0.75)',
@@ -131,7 +130,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         <div className='dropdown-container'>
             <Select
                 ref={selectRef}
-                className='react-select-component'
                 blurInputOnSelect
                 openMenuOnFocus
                 styles={customStyles}
@@ -146,7 +144,8 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                 }}
                 value={countryOptions.find(
                     (country) =>
-                        country.value === userInput || country.value === currentUser.country,
+                        country.iso2Code === userInput.countryCode ||
+                        country.value === currentUser.country,
                 )}
             />
             <span

@@ -1,9 +1,9 @@
-import { findNearest, getDistance, convertDistance } from 'geolib';
-import { useState, useEffect } from 'react';
-
+import geoMap from 'common/data/geoMap.json';
+import { useErrorContext, useSearchContext } from 'common/hooks';
 import Error from 'components/notification';
 import SightingCardList from 'components/sightingcard';
-
+import { convertDistance, findNearest, getDistance } from 'geolib';
+import { useEffect, useState } from 'react';
 import {
     FETCH_FAIL,
     FETCH_FAIL_MESSAGE,
@@ -13,24 +13,23 @@ import {
     SIGHTINGRESULTS_DISTANCE_MESSAGE,
     SIGHTINGRESULTS_NONE_MESSAGE,
 } from 'utils/constants';
-import geoMap from 'common/data/geoMap.json';
-import { useErrorContext, useSearchContext } from 'common/hooks';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
 const SearchResultsContainer = ({ currentUser }) => {
-    const [sightingChart, setSightingChart] = useState({ value: null, status: INITIAL_LOAD }),
-        [cityList, setCityList] = useState(null),
+    // TODO: Replace 'any' with type defs
+    const [sightingChart, setSightingChart] = useState<any>({ value: null, status: INITIAL_LOAD }),
+        [cityList, setCityList] = useState<any>(null),
         [country, setCountry] = useState(currentUser.country),
         [state, setState] = useState(null);
 
-    const { searchResult } = useSearchContext();
+    const { status, value } = useSearchContext();
 
-    const { error, addError, removeError } = useErrorContext();
+    const { type, addError, removeError } = useErrorContext();
 
     useEffect(() => {
-        if (searchResult.status === FETCH_SUCCESS) {
-            const searchResultObject = searchResult.value[0];
+        if (status === FETCH_SUCCESS) {
+            const searchResultObject = value[0];
             const countriesWithRegions = ['United_States', 'Great_Britian', 'Australia', 'Canada'];
             const searchResultDisplayNameArray = searchResultObject?.display_name.split(', ');
             const _country = currentUser.country;
@@ -45,25 +44,15 @@ const SearchResultsContainer = ({ currentUser }) => {
             if (searchResultObject) {
                 setCountry(_country);
                 setState(_state);
-                // Deep cloning geoMap only when user defines searchResult (country and state handles edge cases)
+                // Deep cloning geoMap only when user defines (country and state handles edge cases)
                 setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
             }
-        } else if (searchResult.status === INITIAL_LOAD || searchResult.status === SEARCH_RESET) {
+        } else if (status === INITIAL_LOAD || status === SEARCH_RESET) {
             setSightingChart({ value: [], status: SEARCH_RESET });
         }
-    }, [searchResult, currentUser]);
+    }, [status, value, currentUser]);
 
     useEffect(() => {
-        const getCityCoordsList = () => {
-            const _cityCoordsList = [...cityList];
-            if (country && state) {
-                _cityCoordsList.forEach((cityObj) => {
-                    delete { ...cityObj['city'] };
-                });
-                return _cityCoordsList;
-            }
-        };
-
         const fetchSightingData = async (city) => {
             const spotTheStationObj = { country, state, city };
             const fetchOptions = {
@@ -76,10 +65,10 @@ const SearchResultsContainer = ({ currentUser }) => {
             };
 
             try {
-                const response = await fetch(DOMAIN + '/api/v1/spotthestation', fetchOptions);
+                const response = await fetch(`${DOMAIN}/api/v1/spotthestation`, fetchOptions);
                 const filteredData = await response.json();
 
-                if (filteredData && filteredData.length) {
+                if (filteredData?.length) {
                     setSightingChart({ value: filteredData, status: FETCH_SUCCESS });
                 } else {
                     setSightingChart({ value: [], status: SIGHTINGRESULTS_NONE_MESSAGE });
@@ -88,36 +77,38 @@ const SearchResultsContainer = ({ currentUser }) => {
                         SIGHTINGRESULTS_NONE_MESSAGE.type,
                     );
                 }
-            } catch (error) {
+            } catch (responseError) {
                 setSightingChart({ value: [], status: FETCH_FAIL });
                 addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
             }
         };
-        if (searchResult.value[0] && country && state) {
-            let closestLatLon, cityName;
+        if (value[0] && country && state) {
+            let closestLatLon;
+            let cityName;
 
             if (cityList.length > 1) {
                 closestLatLon = findNearest(
                     {
-                        latitude: searchResult.value[0].lat,
-                        longitude: searchResult.value[0].lon,
+                        latitude: value[0].lat,
+                        longitude: value[0].lon,
                     },
-                    getCityCoordsList(),
+                    cityList,
                 );
                 cityName = cityList.find(
                     (city) =>
-                        city['latitude'] === closestLatLon.latitude &&
-                        city['longitude'] === closestLatLon.longitude,
+                        city.latitude === closestLatLon.latitude &&
+                        city.longitude === closestLatLon.longitude,
                 ).city;
             } else {
-                cityName = cityList[0].city;
+                // TODO: rework
+                cityName = cityList[0]?.city;
             }
 
             const distanceFromSpot = convertDistance(
                 getDistance(
                     {
-                        latitude: searchResult.value[0].lat,
-                        longitude: searchResult.value[0].lon,
+                        latitude: value[0].lat,
+                        longitude: value[0].lon,
                     },
                     closestLatLon,
                 ),
@@ -134,13 +125,13 @@ const SearchResultsContainer = ({ currentUser }) => {
                 fetchSightingData(cityName);
             }
         }
-    }, [searchResult, cityList, country, state, addError, removeError]);
+    }, [value, cityList, country, state, addError, removeError]);
 
     return (
         <>
             <Error />
             {(sightingChart.status !== INITIAL_LOAD || sightingChart.status !== SEARCH_RESET) &&
-                !error.type && <SightingCardList tableData={sightingChart} />}
+                !type && <SightingCardList tableData={sightingChart} />}
         </>
     );
 };
