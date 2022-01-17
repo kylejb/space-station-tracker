@@ -1,6 +1,6 @@
 import useErrorContext from './useErrorContext';
-import useSearchContext from './useSearchContext';
 import useFetch from './useFetch';
+import useSearchContext from './useSearchContext';
 import useViewport from './useViewport';
 
 export { useErrorContext, useSearchContext, useFetch, useViewport };

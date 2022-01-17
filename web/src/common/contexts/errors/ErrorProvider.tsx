@@ -1,20 +1,22 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
+
 import ErrorContext from './ErrorContext';
 
 const initialState = {
-    type: null,
-    message: null,
+    type: '',
+    message: '',
 };
 
-const ErrorProvider = ({ children }) => {
+const ErrorProvider: FC = ({ children }) => {
     const [error, setError] = useState(initialState);
 
-    const removeError = () => setError({ type: false, message: false });
+    const removeError = () => setError({ type: '', message: '' });
 
     const addError = (message, type) => setError({ message, type });
 
     const contextValue = {
-        error,
+        type: error.type,
+        message: error.message,
         addError: useCallback((message, type) => addError(message, type), []),
         removeError: useCallback(() => removeError(), []),
     };

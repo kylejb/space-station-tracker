@@ -1,16 +1,17 @@
-import express, { Express, Request, Response } from 'express';
-import { XMLParser } from 'fast-xml-parser';
 import axios from 'axios';
 import { json } from 'body-parser';
+import express, { Express, Request, Response } from 'express';
+import { XMLParser } from 'fast-xml-parser';
 import path from 'path';
 
 import { cleanTableData } from './cleanTableData';
 
 export class Server {
-    private app: Express;
+    private readonly app: Express;
 
     constructor(app: Express) {
         this.app = app;
+        this.app.disable('x-powered-by'); // security
 
         this.app.use(express.static(path.resolve('./') + '/build/web'));
 
@@ -29,7 +30,7 @@ export class Server {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            this.app.options('*', function (req: Request, res: Response) {
+            this.app.options('*', (req: Request, res: Response) => {
                 res.sendStatus(200);
             });
         }
@@ -51,12 +52,10 @@ export class Server {
                     `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`,
                 );
                 const data = await response.data;
-                // TODO: Parse data here to offload client-side work
-                // console.log('DATA FROM api/v1/spotthestation -->', data)
+
                 const parser = new XMLParser();
-                let jObj = parser.parse(data);
+                const jObj = parser.parse(data);
                 const cleanData = cleanTableData(jObj.rss.channel.item);
-                // console.log('parsed:', cleanData);
                 return res.send(cleanData);
             } catch (error) {
                 res.status(500).json({ type: 'error', message: error });

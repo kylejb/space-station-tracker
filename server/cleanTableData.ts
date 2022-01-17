@@ -8,7 +8,7 @@ const LIMIT_BY_N_DAYS = 8;
 const bareDate = (dateObject) => {
     const yearMonthDateArray = dateObject.toISOString().split('T')[0].split('-');
     const [year, month, day] = yearMonthDateArray;
-    return DateTime.utc(parseInt(year), parseInt(month), parseInt(day));
+    return DateTime.utc(parseInt(year, 10), parseInt(month, 10), parseInt(day, 10));
 };
 
 // TODO: Refactor
@@ -33,8 +33,8 @@ const filterTableData = (cleanData) => {
         ?.filter(
             (rowObj) =>
                 shouldIncludeSightingCard(rowObj.date) &&
-                parseInt(rowObj.maxElevation) >= FILTER_BY_DEGREES_GREATER_THAN &&
-                parseInt(rowObj.duration[0]) >= FILTER_BY_DURATION_GREATER_THAN,
+                parseInt(rowObj.maxElevation, 10) >= FILTER_BY_DEGREES_GREATER_THAN &&
+                parseInt(rowObj.duration[0], 10) >= FILTER_BY_DURATION_GREATER_THAN,
         )
         .map((sightingRecord) => ({
             ...sightingRecord,
@@ -43,14 +43,10 @@ const filterTableData = (cleanData) => {
 };
 
 export const cleanTableData = (rawData) => {
-    // console.log('RAW-DATA', rawData)
     const arrayOfHTMLStrings = rawData.map((issSighting) => issSighting.description.trim());
     const cleanData = [];
     for (const row of arrayOfHTMLStrings) {
-        // console.log('What is a row -->', row, typeof row);
         const rowArray = row.split('<br/>');
-        // console.log('split outcome -->', rowArray);
-
         const approachObj = rowArray[4].split(': ')[1].replace('&#176;', '°');
         // 'Departure: 10&#176; above NE &lt;br/&gt;'
         const departureObj = rowArray[5]

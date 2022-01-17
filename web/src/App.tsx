@@ -1,19 +1,16 @@
-import { useCallback, useState } from 'react';
-
-import SearchContainer from 'containers/SearchContainer';
-import Earth from 'containers/EarthContainer';
-
-import Instructions from 'components/instructions';
-import SplashPage from 'components/splashpage';
+import { useErrorContext, useSearchContext } from 'common/hooks';
 import Credits from 'components/credits';
 import Faq from 'components/faq';
-
-import { useSearchContext, useErrorContext } from 'common/hooks';
+import Instructions from 'components/instructions';
+import SplashPage from 'components/splashpage';
+import Earth from 'containers/EarthContainer';
+import SearchContainer from 'containers/SearchContainer';
+import { useCallback, useState } from 'react';
 import {
-    INITIAL_LOAD,
-    FETCH_SUCCESS,
-    ZIPLENGTH_ERROR_MESSAGE,
     FETCH_FAIL_MESSAGE,
+    FETCH_SUCCESS,
+    INITIAL_LOAD,
+    ZIPLENGTH_ERROR_MESSAGE,
     ZIPRESULTS_NONE_MESSAGE,
 } from 'utils/constants';
 
@@ -26,11 +23,11 @@ const App = () => {
         countryCode: 'us',
     });
     const [firstLoad, setFirstLoad] = useState(true);
-    const { searchResult, addSearchResult, removeSearchResult } = useSearchContext();
+    const { status, addSearchResult, removeSearchResult } = useSearchContext();
     const { addError } = useErrorContext();
 
     // TODO: refactor w/o second parameter and minimize duplicative code blocks (i.e., keep it DRY)
-    const fetchGeoDataFromZip = async (zip, setUserSearchingToFalse) => {
+    const fetchGeoDataFromZip = async (zip: string, setUserSearchingToFalse) => {
         const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
         const ENDPOINT = `search?`;
         const PARAMS = `country=${currentUser.country.replace(
@@ -46,14 +43,14 @@ const App = () => {
             },
         };
 
-        if (searchResult.status === FETCH_SUCCESS) {
+        if (status === FETCH_SUCCESS) {
             removeSearchResult();
         }
 
         if (zip !== '' && zip.length > 2) {
             try {
                 const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
-                let data = await response.json();
+                const data = await response.json();
                 // when nothing is found, data is an empty array
                 if (data[0].display_name.split(', ').length < 2) {
                     addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
@@ -77,14 +74,14 @@ const App = () => {
                         body: JSON.stringify(findCityByZipObj),
                     };
 
-                    const nestedResponse = await fetch(DOMAIN + '/api/v1/city', fetchOptions);
-                    let nestedData = await nestedResponse.json();
+                    const nestedResponse = await fetch(`${DOMAIN}/api/v1/city`, fetchOptions);
+                    const nestedData = await nestedResponse.json();
 
                     if (nestedData.type === 'error') {
                         removeSearchResult();
                         addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
                     }
-                    const cityFromZip = nestedData.city;
+                    const cityFromZip: string = nestedData.city;
 
                     if (cityFromZip) {
                         const _PARAMS = `country=${currentUser.country.replace(
@@ -92,7 +89,7 @@ const App = () => {
                             '%20',
                         )}&city=${cityFromZip}&format=json`;
                         const response = await fetch(BASE_API_URL + ENDPOINT + _PARAMS, options);
-                        let data = await response.json();
+                        const data = await response.json();
 
                         if (data[0].display_name.split(', ').length < 2) {
                             addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
