@@ -1,7 +1,6 @@
-import { Express, Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 import { XMLParser } from 'fast-xml-parser';
 import axios from 'axios';
-import express from 'express';
 import { json } from 'body-parser';
 import path from 'path';
 
@@ -17,7 +16,7 @@ export class Server {
 
         this.app.use(json());
 
-        app.use((req: Request, res: Response, next) => {
+        this.app.use((req: Request, res: Response, next) => {
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
             res.header(
                 'Access-Control-Allow-Headers',
@@ -30,13 +29,13 @@ export class Server {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            app.options('*', function (req: Request, res: Response) {
+            this.app.options('*', function (req: Request, res: Response) {
                 res.sendStatus(200);
             });
         }
 
         this.app.get('/api', (req: Request, res: Response): void => {
-            res.send('You have reached the API!');
+            res.json({ type: 'testing', message: 'You have reached the API!' });
         });
 
         this.app.post('/api/v1/spotthestation', async (req: Request, res: Response) => {
@@ -98,6 +97,11 @@ export class Server {
         this.app.get('*', (req: Request, res: Response): void => {
             res.sendFile(path.resolve('./') + '/build/web/index.html');
         });
+    }
+
+    // TODO: Revisit
+    public getExpressAppForInit(): Express {
+        return this.app;
     }
 
     public start(port: number): void {
