@@ -6,7 +6,6 @@ const initialState = {
     message: null,
 };
 
-
 const ErrorProvider = ({ children }) => {
     const [error, setError] = useState(initialState);
 
@@ -17,15 +16,10 @@ const ErrorProvider = ({ children }) => {
     const contextValue = {
         error,
         addError: useCallback((message, type) => addError(message, type), []),
-        removeError: useCallback(() => removeError(), [])
+        removeError: useCallback(() => removeError(), []),
     };
 
-    return (
-        <ErrorContext.Provider value={contextValue}>
-            {children}
-        </ErrorContext.Provider>
-    );
-}
-
+    return <ErrorContext.Provider value={contextValue}>{children}</ErrorContext.Provider>;
+};
 
 export default ErrorProvider;

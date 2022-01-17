@@ -33,7 +33,8 @@ export const ZIPRESULTS_NONE_MESSAGE = {
 
 export const SIGHTINGRESULTS_NONE_MESSAGE = {
     type: 'nosightingresults',
-    message: 'No sighting opportunities at your location at this time. The ISS might be passing over you during the day or at too low an angle in the sky to be visible. Check back in a few days!',
+    message:
+        'No sighting opportunities at your location at this time. The ISS might be passing over you during the day or at too low an angle in the sky to be visible. Check back in a few days!',
 };
 
 export const SIGHTINGRESULTS_DISTANCE_MESSAGE = {
