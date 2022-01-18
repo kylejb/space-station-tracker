@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 
-const Canvas = (props) => {
+function Canvas(props: any): JSX.Element {
     const canvasRef = useRef();
 
     return <canvas ref={canvasRef} {...props} />;
-};
+}
 
 export default Canvas;

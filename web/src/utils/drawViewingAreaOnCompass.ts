@@ -21,9 +21,18 @@ const cardinalToDeg = {
 
 const DEFAULT_RANGE_WHEN_ENTRY_EQUALS_EXIT = 5;
 
-const getArcPathObj = (entryDir, exitDir) => {
-    const entryDeg = cardinalToDeg[entryDir];
-    const exitDeg = cardinalToDeg[exitDir];
+interface IArcPath {
+    x: number;
+    y: number;
+    R: number;
+    r: number;
+    start: number;
+    end: number;
+}
+
+function getArcPathObj(entryDir: string, exitDir: string): IArcPath {
+    const entryDeg: number = cardinalToDeg[entryDir];
+    const exitDeg: number = cardinalToDeg[exitDir];
 
     if (entryDeg > exitDeg) {
         const startEndDelta = entryDeg - exitDeg;
@@ -83,12 +92,12 @@ const getArcPathObj = (entryDir, exitDir) => {
               start: entryDeg,
               end: exitDeg,
           };
-};
+}
 
-export const drawViewingArea = (entryDir, exitDir) => {
-    const spaceStationPath = arc(getArcPathObj(entryDir, exitDir));
+export function drawViewingArea(entryDir: string, exitDir: string): string {
+    const spaceStationPath: string = arc(getArcPathObj(entryDir, exitDir));
     if (Math.abs(cardinalToDeg[entryDir] - cardinalToDeg[exitDir]) === 180) {
         return spaceStationPath.replace(/A 180/g, 'A 0');
     }
     return spaceStationPath;
-};
+}

@@ -4,14 +4,24 @@ import { INITIAL_LOAD } from 'utils/constants';
 const defaultState = {
     status: INITIAL_LOAD,
     value: [],
-    addSearchResult: (value, status) => null,
+    addSearchResult: () => null,
     removeSearchResult: () => null,
 };
 
+interface ISearchValue {
+    class: string;
+    display_name: string; // '2nd District, Kabul, Kabul Province, 1001, Afghanistan';
+    importance: number;
+    lat: string;
+    licence: string;
+    lon: string;
+    place_id: number;
+    type: string;
+}
 interface ISearchContext {
     status: string;
-    value: any[];
-    addSearchResult: (value, status) => void;
+    value: ISearchValue[];
+    addSearchResult: (value: ISearchValue[], status: string) => void;
     removeSearchResult: () => void;
 }
 

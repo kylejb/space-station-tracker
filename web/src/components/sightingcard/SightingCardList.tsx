@@ -1,3 +1,4 @@
+import { SightingChart } from 'containers/SearchContainer/SearchResults/SearchResultsContainer';
 import { useState } from 'react';
 import { FETCH_SUCCESS } from 'utils/constants';
 
@@ -5,14 +6,20 @@ import SightingCard from './SightingCard';
 
 const LIMIT = 10;
 
-const SightingCardList = ({ tableData }) => {
-    const [selectedSightingCardByIndex, setSelectedSightingCardByIndex] = useState(null);
+interface SightingCardListProps {
+    tableData: SightingChart;
+}
 
-    const selectSightingCard = (sightingCardIndex) => {
+function SightingCardList({ tableData }: SightingCardListProps): JSX.Element | null {
+    const [selectedSightingCardByIndex, setSelectedSightingCardByIndex] = useState<number | null>(
+        null,
+    );
+
+    const selectSightingCard = (sightingCardIndex: number): void => {
         setSelectedSightingCardByIndex(sightingCardIndex);
     };
 
-    const toggleSightingCard = (sightingCardIndex) => {
+    const toggleSightingCard = (sightingCardIndex: number): void => {
         if (selectedSightingCardByIndex === sightingCardIndex) {
             setSelectedSightingCardByIndex(null);
         } else {
@@ -22,10 +29,10 @@ const SightingCardList = ({ tableData }) => {
 
     const renderSightingCards = () => {
         // TODO: revise key creation approach here and elsewhere
-        if (tableData.value.length > LIMIT) {
+        if (Number(tableData?.value?.length) > LIMIT) {
             let count = -1;
-            return tableData.value
-                .slice(0, LIMIT)
+            return tableData?.value
+                ?.slice(0, LIMIT)
                 .map((rowObj, index) => (
                     <SightingCard
                         key={++count}
@@ -36,7 +43,7 @@ const SightingCardList = ({ tableData }) => {
                 ));
         }
         let count = -1;
-        return tableData.value.map((rowObj, index) => (
+        return tableData?.value?.map((rowObj, index) => (
             <SightingCard
                 key={++count}
                 sightingData={rowObj}
@@ -60,6 +67,6 @@ const SightingCardList = ({ tableData }) => {
         ) : null; // TODO: consider adding default component for such situations instead of null
 
     return renderList;
-};
+}
 
 export default SightingCardList;

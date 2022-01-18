@@ -1,11 +1,33 @@
-import { useState } from 'react';
+import { TAB_INDEX } from 'common/constants';
+import { KeyboardEvent, useCallback, useState } from 'react';
 
-const Faq = () => {
+function Faq(): JSX.Element {
     const [faqVisible, setFaqVisible] = useState(false);
 
-    const faqHelper = () => {
+    const faqHelper = useCallback(() => {
         setFaqVisible(!faqVisible);
-    };
+    }, [faqVisible]);
+
+    const keyDownHandler = useCallback(
+        () =>
+            (e: KeyboardEvent): void => {
+                switch (e.key) {
+                    case 'ArrowDown':
+                        faqHelper();
+                        break;
+                    case 'Enter':
+                        faqHelper();
+                        break;
+                    case 'Escape':
+                        // hardcoded to guarantee exit
+                        faqHelper();
+                        break;
+                    default:
+                        break;
+                }
+            },
+        [faqHelper],
+    );
 
     const renderFaq = faqVisible ? (
         <div className='w-80 z-10 gap-2 fixed flex flex-col bottom-1/4 left-8 bg-zinc-900 opacity-75 text-stone-50 font-basier rounded-xl mb-1'>
@@ -46,7 +68,13 @@ const Faq = () => {
                         of your fist on the horizon. The height of one fist is about 10° above
                         horizon.
                     </p>
-                    <span className='flex justify-end cursor-pointer text-lg' onClick={faqHelper}>
+                    <span
+                        className='flex justify-end cursor-pointer text-lg'
+                        onClick={faqHelper}
+                        role='button'
+                        tabIndex={TAB_INDEX.faqClose}
+                        onKeyDown={keyDownHandler}
+                    >
                         «
                     </span>
                 </div>
@@ -56,12 +84,15 @@ const Faq = () => {
         <div
             className='z-10 fixed bottom-1/4 left-8 rounded-xl text-stone-50 bg-zinc-900 opacity-75 font-basier text-base cursor-pointer p-2.5 mb-1'
             onClick={faqHelper}
+            role='button'
+            onKeyDown={keyDownHandler}
+            tabIndex={TAB_INDEX.faqOpen}
         >
             <h2>FAQ &nbsp;»</h2>
         </div>
     );
 
     return renderFaq;
-};
+}
 
 export default Faq;

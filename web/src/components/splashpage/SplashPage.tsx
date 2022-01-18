@@ -1,6 +1,14 @@
-const SplashPage = ({ splashHider }) => {
+import { TAB_INDEX } from 'common/constants';
+
+function SplashPage({ splashHider }): JSX.Element {
     return (
-        <div className='w-full h-full overflow-hidden cursor-pointer' onClick={() => splashHider()}>
+        <div
+            className='w-full h-full overflow-hidden cursor-pointer'
+            onClick={splashHider}
+            onKeyDown={splashHider}
+            role='button'
+            tabIndex={TAB_INDEX.splashPage}
+        >
             <div
                 className='fixed w-full h-full left-0 top-0 bg-cover bg-center animate-fade-in'
                 style={{
@@ -24,6 +32,6 @@ const SplashPage = ({ splashHider }) => {
             </div>
         </div>
     );
-};
+}
 
 export default SplashPage;

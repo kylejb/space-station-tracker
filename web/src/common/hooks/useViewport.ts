@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const useViewport = () => {
+interface IViewport {
+    height: number;
+    width: number;
+}
+
+function useViewport(): IViewport {
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
 
@@ -14,6 +19,6 @@ const useViewport = () => {
     }, []);
 
     return { width, height };
-};
+}
 
 export default useViewport;

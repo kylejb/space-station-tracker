@@ -1,18 +1,23 @@
 import { DateTime } from 'luxon';
 
+import { IChannelItem, ICleanData } from './types';
+
 const FILTER_BY_DEGREES_GREATER_THAN = 20;
 const FILTER_BY_DURATION_GREATER_THAN = 1; // in minutes
 const LIMIT_BY_N_DAYS = 14;
 
 // TODO: Replace with .toISODate()
-const bareDate = (dateObject) => {
+const bareDate = (dateObject: Date): DateTime => {
     const yearMonthDateArray = dateObject.toISOString().split('T')[0].split('-');
     const [year, month, day] = yearMonthDateArray;
     return DateTime.utc(parseInt(year, 10), parseInt(month, 10), parseInt(day, 10));
 };
 
 // TODO: Refactor
-const shouldIncludeSightingCard = (bareSightingCardDate, limitByNumOfDays = LIMIT_BY_N_DAYS) => {
+const shouldIncludeSightingCard = (
+    bareSightingCardDate: DateTime,
+    limitByNumOfDays = LIMIT_BY_N_DAYS,
+): boolean => {
     const fromDate = DateTime.now().toUTC();
     const toDate = fromDate.plus({ day: limitByNumOfDays });
 
@@ -27,28 +32,28 @@ const shouldIncludeSightingCard = (bareSightingCardDate, limitByNumOfDays = LIMI
     return result;
 };
 
-const prepareDateForClient = (sightingRecordDate: DateTime) => {
+const prepareDateForClient = (sightingRecordDate: DateTime): string => {
     return sightingRecordDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY).replace(',', '');
 };
 
 // TODO: Refactor date handling for UI
-const filterTableData = (cleanData) => {
+const filterTableData = (cleanData: ICleanData[]): ICleanData[] => {
     return cleanData
         ?.filter(
-            (rowObj) =>
+            (rowObj: any) =>
                 shouldIncludeSightingCard(rowObj.date) &&
                 parseInt(rowObj.maxElevation, 10) >= FILTER_BY_DEGREES_GREATER_THAN &&
                 parseInt(rowObj.duration[0], 10) >= FILTER_BY_DURATION_GREATER_THAN,
         )
-        .map((sightingRecord) => ({
+        .map((sightingRecord: any) => ({
             ...sightingRecord,
             date: prepareDateForClient(sightingRecord.date),
         }));
 };
 
-export const cleanTableData = (rawData) => {
+export const cleanTableData = (rawData: IChannelItem | IChannelItem[] | null): ICleanData[] => {
     if (!rawData) {
-        return {};
+        return [] as ICleanData[];
     }
     //TODO Refactor - make if statement into reusable helper function
     if (!Array.isArray(rawData)) {
@@ -76,6 +81,7 @@ export const cleanTableData = (rawData) => {
             departureDir: departureObj.split('above')[1].trim(),
             departureDeg: departureObj.split(' ')[0].trim(),
         };
+
         return filterTableData([rowObj]);
     }
 
@@ -110,4 +116,5 @@ export const cleanTableData = (rawData) => {
         }
         return filterTableData(cleanData);
     }
+    return [] as ICleanData[];
 };

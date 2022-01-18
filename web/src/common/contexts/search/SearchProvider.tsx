@@ -1,4 +1,4 @@
-import { useState, useCallback, FC } from 'react';
+import { useState, useCallback, ReactNode } from 'react';
 import SearchContext from './SearchContext';
 import { SEARCH_RESET, INITIAL_LOAD } from 'utils/constants';
 
@@ -6,11 +6,11 @@ const initialState = {
     status: INITIAL_LOAD,
     value: [],
 };
-type Props = {
-    children: any;
-};
+interface Props {
+    children: ReactNode;
+}
 
-const SearchProvider: FC<Props> = ({ children }) => {
+function SearchProvider({ children }: Props): JSX.Element {
     const [searchResult, setSearchResult] = useState(initialState);
 
     const removeSearchResult = () => setSearchResult({ status: SEARCH_RESET, value: [] });
@@ -25,6 +25,6 @@ const SearchProvider: FC<Props> = ({ children }) => {
     };
 
     return <SearchContext.Provider value={contextValue}>{children}</SearchContext.Provider>;
-};
+}
 
 export default SearchProvider;

@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "baseUrl": "./",
-        "outDir": "build",
-        "target": "ESNext",
-        "moduleResolution": "node",
         "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
         "lib": ["ESNext"],
-        "allowJs": true,
-        "forceConsistentCasingInFileNames": true
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "build",
+        "strict": true,
+        "strictNullChecks": true,
+        "target": "ESNext",
     },
     "exclude": ["build", "node_modules"],
     "include": ["**.ts"]
