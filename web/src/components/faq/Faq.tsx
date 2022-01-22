@@ -8,9 +8,9 @@ const Faq = () => {
     };
 
     const renderFaq = faqVisible ? (
-        <div className='w-72 z-10 fixed flex flex-col bottom-1/4 left-8 bg-zinc-900 opacity-75 text-white text-sm font-basier rounded-md p-2'>
+        <div className='w-72 z-10 fixed flex flex-col bottom-1/4 left-8 bg-zinc-900 opacity-75 text-white text-sm font-basier rounded-md p-2 mb-1'>
             <div className='py-1.5 underline'>
-                <h2 className='text-center'>FAQ</h2>
+                <h2 className='text-center text-lg'>FAQ</h2>
             </div>
 
             <div className='py-1 text-sm font-bold leading-5'>
@@ -48,13 +48,13 @@ const Faq = () => {
                 </p>
             </div>
 
-            <span className='ml-64 cursor-pointer' onClick={faqHelper}>
+            <span className='ml-64 cursor-pointer text-lg' onClick={faqHelper}>
                 «
             </span>
         </div>
     ) : (
         <div
-            className='z-10 fixed bottom-1/4 left-6 rounded-md text-white bg-zinc-900 opacity-75 font-basier text-sm cursor-pointer p-2 m-2'
+            className='z-10 fixed bottom-1/4 left-6 rounded-md text-white bg-zinc-900 opacity-75 font-basier text-sm cursor-pointer p-2 m-1'
             onClick={faqHelper}
         >
             <h2>FAQ &nbsp;»</h2>

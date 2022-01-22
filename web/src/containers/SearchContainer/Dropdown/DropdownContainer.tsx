@@ -39,6 +39,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         }
     };
 
+    // TODO: Ensure customStyles matches with theme set via Tailwindcss (i.e., color, text size, font family).
     const customStyles = {
         container: (provided) => ({
             ...provided,
@@ -47,7 +48,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         control: (provided) => ({
             ...provided,
             width: 170,
-            minHeight: 25,
+            height: 48,
             borderRadius: '5px 0px 0px 5px',
             background: 'rgba(27,29,33,0.75)',
             border: '1px solid rgba(198,198,197,0.84)',
@@ -127,7 +128,7 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     }, [userInput, setCurrentUser]);
 
     return (
-        <div className='dropdown-container'>
+        <div className='h-full'>
             <Select
                 ref={selectRef}
                 blurInputOnSelect
@@ -149,17 +150,17 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
                 )}
             />
             <span
-                className='font-basier cursor-pointer pointer-events-none text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10'
+                className='font-basier cursor-pointer pointer-events-auto text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10'
                 onClick={emojiClickHandler}
             >
                 <input
                     type='button'
                     style={{ display: isDropdownOpen ? 'none' : 'block' }}
-                    className='h-11 w-20 text-5xl px-2 rounded-l-md border-none bg-inherit text-inherit pointer-events-auto'
+                    className='h-full w-20 text-3xl px-2 rounded-l-md border-none bg-inherit text-inherit cursor-pointer pointer-events-auto'
                     value={emojiValue}
                 />
                 <span
-                    className='h-0 w-20 text-base relative left-14 bottom-6 pointer-events-auto'
+                    className='h-0 w-20 text-xs relative left-14 bottom-8'
                     style={{ display: isDropdownOpen ? 'none' : 'block' }}
                 >
                     ▼

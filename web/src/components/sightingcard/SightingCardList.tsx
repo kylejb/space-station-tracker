@@ -56,7 +56,7 @@ const SightingCardList = ({ tableData }) => {
         tableData.status === FETCH_SUCCESS ? (
             <div className='flex flex-col text-white bg-zinc-900 bg-opacity-75 rounded-md animate-fade-in'>
                 <div>
-                    <h2 className='font-garet text-lg text-center text-white underline'>
+                    <h2 className='font-garet text-lg text-center text-white underline pt-4 tracking-wide'>
                         Sighting Opportunities
                     </h2>
                 </div>

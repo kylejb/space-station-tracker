@@ -13,7 +13,7 @@ const SpaceStation = () => {
         };
         const interval = setInterval(() => {
             findISS();
-        }, 10000);
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
 

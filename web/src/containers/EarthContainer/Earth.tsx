@@ -67,7 +67,7 @@ const Earth = () => {
 
         const interval = setInterval(() => {
             findISS();
-        }, 10000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [isFirstLoad]);
@@ -76,10 +76,10 @@ const Earth = () => {
 
     return (
         <div className='absolute cursor-grab active:cursor-grabbing'>
-            <h1 className='fixed z-10 top-12 left-12 font-garet text-stone-50 tracking-widest text-3xl'>
+            <h1 className='fixed z-10 top-12 left-12 font-garet text-stone-50 tracking-widest text-4xl'>
                 Space Station Tracker
             </h1>
-            <span className='fixed bottom-6 left-2/4 z-10'>
+            <span className='fixed bottom-6 left-[45%] z-10'>
                 <input
                     id='follow-iss'
                     aria-label='Toggle to follow ISS'
@@ -89,7 +89,7 @@ const Earth = () => {
                     onChange={() => setFollowISS(!followISS)}
                 />
                 <label
-                    className='font-basier text-stone-50 text-sm ml-1'
+                    className='font-basier text-stone-50 text-lg ml-2'
                     aria-label='Follow ISS'
                     htmlFor='follow-iss'
                 >

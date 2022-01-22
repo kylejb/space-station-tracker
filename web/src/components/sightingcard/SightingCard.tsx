@@ -23,7 +23,7 @@ const SightingCard = ({
         <div
             className={
                 header
-                    ? 'flex flex-row justify-between py-1 border-zinc-800 font-bold text-stone-50'
+                    ? 'flex flex-row justify-between py-1 border-zinc-800 font-normal text-stone-50 text-lg'
                     : 'flex flex-row justify-between items-center cursor-pointer'
             }
         >
