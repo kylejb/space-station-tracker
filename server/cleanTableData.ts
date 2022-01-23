@@ -27,6 +27,10 @@ const shouldIncludeSightingCard = (bareSightingCardDate, limitByNumOfDays = LIMI
     return result;
 };
 
+const prepareDateForClient = (sightingRecordDate: DateTime) => {
+    return sightingRecordDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY).replace(',', '');
+};
+
 // TODO: Refactor date handling for UI
 const filterTableData = (cleanData) => {
     return cleanData
@@ -38,7 +42,7 @@ const filterTableData = (cleanData) => {
         )
         .map((sightingRecord) => ({
             ...sightingRecord,
-            date: sightingRecord.date.toISODate(),
+            date: prepareDateForClient(sightingRecord.date),
         }));
 };
 
@@ -55,7 +59,6 @@ export const cleanTableData = (rawData) => {
             .trim()
             .replace('&#176;', '°');
 
-        // TODO: remove localization in Date
         const rowObj = {
             date: bareDate(new Date(rowArray[0].split(': ')[1])), // 'Date: Monday Mar 29, 2021'
             time: rowArray[1].split(': ')[1].trim(),

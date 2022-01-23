@@ -7,7 +7,7 @@ interface SightingCardProps {
     sightingData: any;
 }
 const baseStyle =
-    'grid grid-cols-4 grid-flow-row auto-rows-max gap-4 p-4 text-gray-300 text-sm hover:text-stone-50';
+    'grid grid-cols-4 grid-flow-row auto-rows-max gap-4 p-4 text-gray-300 text-base hover:text-stone-50';
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
     isSelected,
@@ -27,7 +27,7 @@ const SightingCard = ({
         >
             {sightingData.date}
         </div>
-        <div className={header ? 'flex flex-start w-10' : 'w-14'}>{sightingData.time}</div>
+        <div className={header ? 'flex flex-start' : ''}>{sightingData.time}</div>
         <div className='flex justify-between'>
             <div>{sightingData.duration}</div>
             {/* TODO: refactor and cleanup */}
