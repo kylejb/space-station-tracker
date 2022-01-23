@@ -6,7 +6,8 @@ interface SightingCardProps {
     selectSightingCard?: (sightingCardIndex?: number) => void;
     sightingData: any;
 }
-
+const baseStyle =
+    'grid grid-cols-4 grid-flow-row auto-rows-max gap-4 p-4 text-gray-300 text-sm hover:text-stone-50';
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
     isSelected,
@@ -15,53 +16,48 @@ const SightingCard = ({
     header = false,
 }: SightingCardProps) => (
     <div
-        className='flex flex-col justify-center content-center text-gray-300 p-4 text-sm hover:text-stone-50'
-        onClick={() => {
-            !header && selectSightingCard && selectSightingCard(); // TODO: refactor with appropriate type defs
-        }}
+        className={
+            header ? `${baseStyle} py-1 text-stone-50 text-lg` : `${baseStyle} cursor-pointer`
+        }
+        onClick={() => !header && selectSightingCard && selectSightingCard()} // TODO: refactor with appropriate type defs
     >
         <div
-            className={
-                header
-                    ? 'flex flex-row justify-between py-1 border-zinc-800 font-normal text-stone-50 text-lg'
-                    : 'flex flex-row justify-between items-center cursor-pointer'
-            }
+            // className={header ? 'flex justify-center pr-12 w-36' : 'w-32'}
+            className='col-span-2 hover:text-stone-50'
         >
-            <span className={header ? 'flex justify-center pr-12 w-36' : 'w-32'}>
-                {header ? sightingData.date : sightingData.date}
-            </span>
-            <span className={header ? 'flex flex-start w-10' : 'w-14'}>{sightingData.time}</span>
-            <span className={header ? 'flex flex-start' : 'w-14'}>{sightingData.duration}</span>
+            {sightingData.date}
+        </div>
+        <div className={header ? 'flex flex-start w-10' : 'w-14'}>{sightingData.time}</div>
+        <div className='flex justify-between'>
+            <div>{sightingData.duration}</div>
+            {/* TODO: refactor and cleanup */}
             {isSelected ? (
                 !header ? (
-                    <span className='text-xs w-3 mt-1'>▲</span>
-                ) : (
-                    <span></span>
-                )
+                    <div className='text-xs w-3 mt-2'>▲</div>
+                ) : null
             ) : !header ? (
-                <span className='text-xs w-3 mt-1'>▼</span>
-            ) : (
-                <span></span>
-            )}
+                <div className='text-xs w-3 mt-1'>▼</div>
+            ) : null}
         </div>
-
         {isSelected ? (
-            <div className='flex flex-row justify-evenly text-xs cursor-pointer mt-2'>
-                <div className='flex flex-col justify-center w-54'>
-                    <span className='mb-1 underline decoration-1 decoration-solid'>Enters Sky</span>
-                    <span className='mb-3'>
+            // className='grid grid-cols-2 col-span-3 justify-evenly text-xs cursor-pointer mt-2 w-72'
+            // className='flex flex-col justify-center w-54'
+            <div className='grid grid-cols-4 place-self-start place-content-center text-xs cursor-pointer mt-2 w-72'>
+                <div className='col-span-2 mt-4'>
+                    <div className='mb-1 underline decoration-1 decoration-solid'>Enters Sky</div>
+                    <div className='mb-3'>
                         {sightingData.approachDir}: {sightingData.approachDeg} above horizon
-                    </span>
-                    <span className='mb-1 underline decoration-1 decoration-solid'>
+                    </div>
+                    <div className='mb-1 underline decoration-1 decoration-solid'>
                         Max Elevation
-                    </span>
-                    <span className='mb-3'>{sightingData.maxElevation}° above horizon</span>
-                    <span className='mb-1 underline decoration-1 decoration-solid'>Leaves Sky</span>
-                    <span className='mb-3'>
+                    </div>
+                    <div className='mb-3'>{sightingData.maxElevation}° above horizon</div>
+                    <div className='mb-1 underline decoration-1 decoration-solid'>Leaves Sky</div>
+                    <div className='mb-3'>
                         {sightingData.departureDir}: {sightingData.departureDeg} above horizon
-                    </span>
+                    </div>
                 </div>
-                <div>
+                <div className='col-span-2'>
                     <Compass
                         entersSky={sightingData.approachDir}
                         leavesSky={sightingData.departureDir}
@@ -71,5 +67,13 @@ const SightingCard = ({
         ) : null}
     </div>
 );
+
+SightingCard.defaultProps = {
+    sightingData: {
+        date: 'DATE',
+        time: 'TIME',
+        duration: 'DURATION',
+    },
+};
 
 export default SightingCard;
