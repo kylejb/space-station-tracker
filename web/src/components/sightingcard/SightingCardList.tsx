@@ -46,26 +46,18 @@ const SightingCardList = ({ tableData }) => {
         ));
     };
 
-    const headerData = {
-        date: 'DATE',
-        time: 'TIME',
-        duration: 'DURATION',
-    };
-
     const renderList =
         tableData.status === FETCH_SUCCESS ? (
-            <div className='flex flex-col text-white bg-zinc-900 bg-opacity-75 rounded-md animate-fade-in'>
-                <div>
-                    <h2 className='font-garet text-lg text-center text-white underline pt-4 tracking-wide'>
-                        Sighting Opportunities
-                    </h2>
-                </div>
-                <div className='divide-zinc-700 divide-y-2 last:divide-0'>
-                    <SightingCard header sightingData={headerData} />
+            <div className='text-white bg-zinc-900 bg-opacity-75 rounded-lg animate-fade-in'>
+                <h2 className='font-garet text-lg text-center text-white underline pt-4 tracking-wide'>
+                    Sighting Opportunities
+                </h2>
+                <div className='text-gray-300 text-sm divide-zinc-700 divide-y-2 last:divide-0'>
+                    <SightingCard header />
                     {renderSightingCards()}
                 </div>
             </div>
-        ) : null;
+        ) : null; // TODO: consider adding default component for such situations instead of null
 
     return renderList;
 };
