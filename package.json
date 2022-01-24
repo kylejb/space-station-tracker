@@ -25,6 +25,7 @@
     },
     "scripts": {
         "prepare": "node ./.husky/prepare.js",
+        "heroku-prebuild": "CI=true npm run installAll",
         "build": "npx tsc && (cd web && npm run build)",
         "deps:server": "npm ci",
         "deps:web": "cd web && npm ci",

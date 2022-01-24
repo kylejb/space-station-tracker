@@ -3,6 +3,9 @@
     "version": "1.1.0",
     "private": true,
     "dependencies": {
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
         "geolib": "^3.3.3",
         "luxon": "^2.3.0",
         "react": "^17.0.2",
@@ -14,9 +17,6 @@
         "three": "0.133.0"
     },
     "devDependencies": {
-        "@testing-library/jest-dom": "^5.16.1",
-        "@testing-library/react": "^12.1.2",
-        "@testing-library/user-event": "^13.5.0",
         "@types/react": "^17.0.38",
         "@types/react-dom": "^17.0.11",
         "autoprefixer": "^10.4.2",
