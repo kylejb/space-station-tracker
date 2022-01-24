@@ -4,7 +4,7 @@ import DropdownContainer from './Dropdown';
 import SearchResultsContainer from './SearchResults';
 
 const SearchContainer = ({ fetchGeoDataFromZip, currentUser, setCurrentUser }) => (
-    <div className='fixed right-12 top-14 z-10 h-12 w-96'>
+    <div className='fixed right-12 top-14 z-10 h-12 w-[410px]'>
         <Search fetchGeoDataFromZip={fetchGeoDataFromZip} currentUser={currentUser}>
             <DropdownContainer currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Search>

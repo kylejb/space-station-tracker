@@ -1,7 +1,7 @@
 import SearchBar from './search-bar.component';
 
 const Search = ({ children, currentUser, fetchGeoDataFromZip }) => (
-    <div className='flex h-full'>
+    <div className='flex h-full w-full'>
         {children}
         <SearchBar fetchGeoDataFromZip={fetchGeoDataFromZip} currentUser={currentUser} />
     </div>

@@ -7,7 +7,7 @@ interface SightingCardProps {
     sightingData: any;
 }
 const baseStyle =
-    'grid grid-cols-4 grid-flow-row auto-rows-max gap-4 p-4 text-gray-300 text-base hover:text-stone-50';
+    'grid grid-cols-8 grid-flow-row auto-rows-max gap-4 py-4 mx-4 text-gray-300 text-base hover:text-stone-50';
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
     isSelected,
@@ -22,23 +22,33 @@ const SightingCard = ({
         onClick={() => !header && selectSightingCard && selectSightingCard()} // TODO: refactor with appropriate type defs
     >
         <div
-            // className={header ? 'flex justify-center pr-12 w-36' : 'w-32'}
-            className='col-span-2 hover:text-stone-50'
+            // className={header ? 'w-36' : 'w-32'}
+            // className='hover:text-stone-50'
+            className={header ? 'ml-8 col-span-3' : 'col-span-3'}
         >
             {sightingData.date}
         </div>
-        <div className={header ? 'flex flex-start' : ''}>{sightingData.time}</div>
-        <div className='flex justify-between'>
+        <div className='col-span-2'>{sightingData.time}</div>
+        <div className='col-span-2'>
+            {/* <div className={header ? 'flex justify-center' : 'flex justify-between'}> */}
             <div>{sightingData.duration}</div>
             {/* TODO: refactor and cleanup */}
-            {isSelected ? (
-                !header ? (
-                    <div className='text-xs w-3 mt-2'>▲</div>
-                ) : null
-            ) : !header ? (
-                <div className='text-xs w-3 mt-1'>▼</div>
-            ) : null}
+            {/* {isSelected ? (
+                    !header ? (
+                        <div className='text-xs w-3 mt-2'>▲</div>
+                        ) : null
+                        ) : !header ? (
+                            <div className='text-xs w-3 mt-1'>▼</div>
+                            ) : null} */}
+            {/* </div> */}
         </div>
+        {isSelected ? (
+            !header ? (
+                <div className='col-span-1 text-xs mt-1'>▲</div>
+            ) : null
+        ) : !header ? (
+            <div className='col-span-1 text-xs mt-1'>▼</div>
+        ) : null}
         {isSelected ? (
             // className='grid grid-cols-2 col-span-3 justify-evenly text-xs cursor-pointer mt-2 w-72'
             // className='flex flex-col justify-center w-54'

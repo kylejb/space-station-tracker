@@ -49,10 +49,10 @@ const SightingCardList = ({ tableData }) => {
     const renderList =
         tableData.status === FETCH_SUCCESS ? (
             <div className='text-white bg-zinc-900 bg-opacity-75 rounded-lg animate-fade-in'>
-                <h2 className='font-garet text-lg text-center text-white underline pt-4 tracking-wide'>
+                <h2 className='font-garet text-lg text-center text-white underline pt-4 pb tracking-wide'>
                     Sighting Opportunities
                 </h2>
-                <div className='text-gray-300 text-sm divide-zinc-700 divide-y-2 last:divide-0'>
+                <div className='text-gray-300 text-sm divide-zinc-700 divide-y last:divide-0'>
                     <SightingCard header />
                     {renderSightingCards()}
                 </div>
