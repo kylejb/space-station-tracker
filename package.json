@@ -32,7 +32,8 @@
         "installAll": "npm run deps:server && npm run deps:web",
         "lint": "prettier --check .",
         "format": "prettier --write .",
-        "start": "npx ts-node index.ts",
+        "dev": "npx ts-node index.ts",
+        "start": "node build/index.js",
         "test": "npm run test:server && npm run test:web",
         "test:server": "jest",
         "test:web": "cd web && npm run test:ci"

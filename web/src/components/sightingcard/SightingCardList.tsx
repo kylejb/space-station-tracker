@@ -53,7 +53,7 @@ const SightingCardList = ({ tableData }) => {
                     Sighting Opportunities
                 </h2>
                 <div className='text-gray-300 text-sm divide-zinc-700 divide-y last:divide-0'>
-                    <SightingCard header />
+                    <SightingCard header={true} />
                     {renderSightingCards()}
                 </div>
             </div>

@@ -1,18 +1,28 @@
 import Compass from 'components/compass';
 
-interface SightingCardProps {
+type SightingCardProps = {
+    key?: number;
     header?: boolean;
     isSelected?: boolean;
     selectSightingCard?: (sightingCardIndex?: number) => void;
-    sightingData: any;
-}
+    sightingData?: any;
+};
+
+// default
+const defaultProp = {
+    date: 'DATE',
+    time: 'TIME',
+    duration: 'DURATION',
+};
+
 const baseStyle =
     'grid grid-cols-8 grid-flow-row auto-rows-max gap-4 py-4 mx-4 text-gray-300 text-base hover:text-stone-50';
+
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
     isSelected,
     selectSightingCard,
-    sightingData,
+    sightingData = defaultProp,
     header = false,
 }: SightingCardProps) => (
     <div
@@ -77,13 +87,5 @@ const SightingCard = ({
         ) : null}
     </div>
 );
-
-SightingCard.defaultProps = {
-    sightingData: {
-        date: 'DATE',
-        time: 'TIME',
-        duration: 'DURATION',
-    },
-};
 
 export default SightingCard;
