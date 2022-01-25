@@ -8,7 +8,6 @@ type SightingCardProps = {
     sightingData?: any;
 };
 
-// default
 const defaultProp = {
     date: 'DATE',
     time: 'TIME',
@@ -16,7 +15,7 @@ const defaultProp = {
 };
 
 const baseStyle =
-    'grid grid-cols-8 grid-flow-row auto-rows-max gap-4 py-4 mx-4 text-gray-300 text-base hover:text-stone-50';
+    'grid grid-cols-7 grid-flow-row auto-rows-max items-center gap-4 py-4 mx-4 font-basier text-gray-300 text-base hover:text-stone-50';
 
 // TODO: Refactor SightingCard JSX with reusable components
 const SightingCard = ({
@@ -31,39 +30,23 @@ const SightingCard = ({
         }
         onClick={() => !header && selectSightingCard && selectSightingCard()} // TODO: refactor with appropriate type defs
     >
-        <div
-            // className={header ? 'w-36' : 'w-32'}
-            // className='hover:text-stone-50'
-            className={header ? 'ml-8 col-span-3' : 'col-span-3'}
-        >
-            {sightingData.date}
-        </div>
+        <div className={header ? 'indent-4 col-span-3' : 'col-span-3'}>{sightingData.date}</div>
         <div className='col-span-2'>{sightingData.time}</div>
         <div className='col-span-2'>
-            {/* <div className={header ? 'flex justify-center' : 'flex justify-between'}> */}
-            <div>{sightingData.duration}</div>
-            {/* TODO: refactor and cleanup */}
-            {/* {isSelected ? (
+            <span className='flex justify-between'>
+                {sightingData.duration}
+                {isSelected ? (
                     !header ? (
-                        <div className='text-xs w-3 mt-2'>▲</div>
-                        ) : null
-                        ) : !header ? (
-                            <div className='text-xs w-3 mt-1'>▼</div>
-                            ) : null} */}
-            {/* </div> */}
+                        <span className='text-xs mt-1'>▲</span>
+                    ) : null
+                ) : !header ? (
+                    <span className='text-xs mt-1'>▼</span>
+                ) : null}
+            </span>
         </div>
         {isSelected ? (
-            !header ? (
-                <div className='col-span-1 text-xs mt-1'>▲</div>
-            ) : null
-        ) : !header ? (
-            <div className='col-span-1 text-xs mt-1'>▼</div>
-        ) : null}
-        {isSelected ? (
-            // className='grid grid-cols-2 col-span-3 justify-evenly text-xs cursor-pointer mt-2 w-72'
-            // className='flex flex-col justify-center w-54'
-            <div className='grid grid-cols-4 place-self-start place-content-center text-xs cursor-pointer mt-2 w-72'>
-                <div className='col-span-2 mt-4'>
+            <>
+                <div className='col-span-3 text-sm'>
                     <div className='mb-1 underline decoration-1 decoration-solid'>Enters Sky</div>
                     <div className='mb-3'>
                         {sightingData.approachDir}: {sightingData.approachDeg} above horizon
@@ -77,13 +60,13 @@ const SightingCard = ({
                         {sightingData.departureDir}: {sightingData.departureDeg} above horizon
                     </div>
                 </div>
-                <div className='col-span-2'>
+                <div className='col-span-4'>
                     <Compass
                         entersSky={sightingData.approachDir}
                         leavesSky={sightingData.departureDir}
                     />
                 </div>
-            </div>
+            </>
         ) : null}
     </div>
 );

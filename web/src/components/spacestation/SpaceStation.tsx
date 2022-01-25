@@ -5,7 +5,6 @@ const SpaceStation = () => {
     const [, setStationObj] = useState([] as any); // TODO: Remove type casting
 
     useEffect(() => {
-        // ISS Satellite ID is 25544 at this endpoint
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             const data = await response.json();

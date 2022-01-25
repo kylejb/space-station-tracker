@@ -22,9 +22,6 @@ module.exports = {
                 basier: ['"Basier Circular"', 'sans-serif'],
                 garet: ['"Garet Heavy"', 'sans-serif'],
             },
-            letterSpacing: {
-                search: '.20em',
-            },
         },
     },
     plugins: [],

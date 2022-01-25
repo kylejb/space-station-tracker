@@ -22,7 +22,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
     return (
         <>
             <input
-                className='h-full p-4 font-basier text-gray-300 bg-stone-800 bg-opacity-50 border-neutral-400 outline-none border placeholder:text-gray-400 placeholder:text-xs focus:shadow-input tracking-search'
+                className='h-full w-full p-4 font-basier text-gray-300 bg-stone-800 bg-opacity-50 border-neutral-400 outline-none border placeholder:text-center placeholder:text-gray-400 placeholder:text-xs focus:shadow-input tracking-widest'
                 name='searchZipCode'
                 type='search'
                 placeholder='Enter ZIP Code'
@@ -33,8 +33,8 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
             <input
                 ref={submitRef}
                 type='submit'
-                className='h-full w-32 font-basier text-sm bg-neutral-400 border-none rounded-r-md cursor-pointer hover:bg-stone-600 disabled:bg-stone-600 disabled:pointer-events-none tracking-search'
-                value='Search'
+                className='h-full w-full font-basier text-sm bg-neutral-400 border-none rounded-r-md cursor-pointer hover:bg-stone-600 disabled:bg-stone-600 disabled:pointer-events-none tracking-wider'
+                value='Find Sightings'
                 disabled={isUserSearching}
                 aria-disabled={isUserSearching}
                 onClick={() => {

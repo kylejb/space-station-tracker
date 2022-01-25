@@ -12,7 +12,6 @@ const Earth = () => {
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const { value, status } = useSearchContext();
 
-    // Camera follows ISS on state change
     useEffect(() => {
         if (followISS && satelliteCollection.length && globeEl.current) {
             globeEl.current.controls().autoRotate = false;
@@ -42,7 +41,6 @@ const Earth = () => {
     }, [status, value]);
 
     useEffect(() => {
-        // ISS Satellite ID is 25544 at this endpoint
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
             const data = await response.json();
@@ -100,11 +98,10 @@ const Earth = () => {
                 ref={globeEl}
                 width={width}
                 height={height}
-                globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-                backgroundImageUrl='//unpkg.com/three-globe/example/img/night-sky.png'
+                globeImageUrl='/earth-blue-marble.jpg'
+                bumpImageUrl='/earth-topology.png'
+                backgroundImageUrl='/night-sky.png'
                 customLayerData={satelliteCollection}
-                // customLayerLabel='ISS' // -- Enabling this removes ISS hover label
                 customThreeObject={() =>
                     new THREE.Mesh(
                         new THREE.SphereBufferGeometry(8000 * 4e-4),
@@ -125,7 +122,7 @@ const Earth = () => {
                 labelsData={value}
                 labelLat={(d: any) => d.lat}
                 labelLng={(d: any) => d.lon}
-                labelText={() => ''} // optional label for searched sighting location
+                labelText={() => ''}
                 labelSize={1000 * 4e-4}
                 labelDotRadius={1500 * 4e-4}
                 labelColor={() => '#c43335'}

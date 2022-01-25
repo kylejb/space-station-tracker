@@ -2,7 +2,7 @@ import { drawViewingArea } from 'utils/drawViewingAreaOnCompass';
 
 const Compass = ({ entersSky, leavesSky }) => {
     return (
-        <svg width='200px' viewBox='0 0 608 608'>
+        <svg viewBox='0 0 608 608'>
             <g>
                 <line
                     x1='304'

@@ -1,18 +1,12 @@
-import { useViewport } from 'common/hooks';
-
 const SplashPage = ({ splashHider }) => {
-    const { width, height } = useViewport();
     return (
         <div className='w-full h-full overflow-hidden cursor-pointer' onClick={() => splashHider()}>
-            <img
-                alt='ISS orbiting Earth'
-                className='fixed left-0 top-0 bg-cover bg-center delay-300 animate-fade-in'
+            <div
+                className='fixed w-full h-full left-0 top-0 bg-cover bg-center delay-300 animate-fade-in'
                 style={{
                     backgroundImage: `url(splash.jpeg)`,
-                    height,
-                    width,
                 }}
-            ></img>
+            ></div>
             <div className='z-40 flex flex-col text-stone-50 delay-50 animate-fade-in'>
                 <h1 className='z-20 font-garet text-4xl ml-5 mt-5 md:text-left md:ml-20 md:mt-20'>
                     Where is the ISS?
@@ -33,4 +27,3 @@ const SplashPage = ({ splashHider }) => {
 };
 
 export default SplashPage;
-// transition duration-150 ease-in-out
