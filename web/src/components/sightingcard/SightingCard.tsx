@@ -48,15 +48,17 @@ const SightingCard = ({
             <>
                 <div className='col-span-3 text-sm'>
                     <div className='mb-1 underline decoration-1 decoration-solid'>Enters Sky</div>
-                    <div className='mb-3'>
+                    <div className='mb-3 whitespace-nowrap'>
                         {sightingData.approachDir}: {sightingData.approachDeg} above horizon
                     </div>
                     <div className='mb-1 underline decoration-1 decoration-solid'>
                         Max Elevation
                     </div>
-                    <div className='mb-3'>{sightingData.maxElevation}° above horizon</div>
+                    <div className='mb-3 whitespace-nowrap'>
+                        {sightingData.maxElevation}° above horizon
+                    </div>
                     <div className='mb-1 underline decoration-1 decoration-solid'>Leaves Sky</div>
-                    <div className='mb-3'>
+                    <div className='mb-3 whitespace-nowrap'>
                         {sightingData.departureDir}: {sightingData.departureDeg} above horizon
                     </div>
                 </div>

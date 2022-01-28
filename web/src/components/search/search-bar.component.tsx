@@ -22,7 +22,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
     return (
         <>
             <input
-                className='h-full w-full p-4 font-basier text-gray-300 bg-stone-800 bg-opacity-50 border-neutral-400 outline-none border placeholder:text-center placeholder:text-gray-400 placeholder:text-xs focus:shadow-input tracking-widest'
+                className='h-full w-full p-4 font-basier text-gray-300 bg-stone-800 bg-opacity-50 border-neutral-400 outline-none border placeholder:text-center placeholder:text-gray-400 placeholder:text-sm focus:shadow-input tracking-widest'
                 name='searchZipCode'
                 type='search'
                 placeholder='Enter ZIP Code'
