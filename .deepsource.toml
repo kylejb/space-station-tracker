@@ -1,19 +1,20 @@
 version = 1
 
-exclude_patterns = [
-    "bin/**",
-    "**/node_modules/",
-    "js/*/*.min.js"
+test_patterns = [
+  "**/web/**/*.test.tsx",
+  "**/server/tests/**/*.test.ts",
 ]
 
 [[analyzers]]
 name = "javascript"
 enabled = true
 
-  [analyzers.meta]
-  environment = [
-    "browser",
-    "nodejs"
-  ]
-  plugins = ["react"]
-  style_guide = "airbnb"
+[analyzers.meta]
+environment = [
+  "nodejs",
+  "jest",
+  "browser"
+]
+plugins = ["react"]
+style_guide = "standard"
+dialect = "typescript"

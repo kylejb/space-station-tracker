@@ -4,4 +4,5 @@
 **/yarn.lock
 **/package-lock.json
 **/jsconfig.json
+**/.deepsource.toml
 **/.github

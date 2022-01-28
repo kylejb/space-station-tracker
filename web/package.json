@@ -1,0 +1,50 @@
+{
+    "name": "web",
+    "version": "1.1.0",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.16.1",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "geolib": "^3.3.3",
+        "luxon": "^2.3.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-globe.gl": "^2.19.0",
+        "react-scripts": "5.0.0",
+        "react-select": "^4.3.1",
+        "svg-arc": "^1.0.2",
+        "three": "0.133.0"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.38",
+        "@types/react-dom": "^17.0.11",
+        "autoprefixer": "^10.4.2",
+        "postcss": "^8.4.5",
+        "tailwindcss": "^3.0.13",
+        "typescript": "^4.5.4"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build && mv ./build ../build/web",
+        "test:ci": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!web)/\""
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
