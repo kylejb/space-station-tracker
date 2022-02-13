@@ -7,7 +7,7 @@ const Error = () => {
         <>
             {message && (
                 <div className='text-right mt-5'>
-                    <span className='z-20 text-emerald-600 border-emerald-600 border-2 text-center font-basier rounded-md py-2 px-4'>
+                    <span className='z-20 flex justify-center text-emerald-600 border-emerald-600 border-2 font-basier rounded-md py-2 px-4'>
                         {message}
                     </span>
                 </div>
