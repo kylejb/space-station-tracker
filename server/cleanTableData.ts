@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 
 const FILTER_BY_DEGREES_GREATER_THAN = 20;
 const FILTER_BY_DURATION_GREATER_THAN = 1; // in minutes
-const LIMIT_BY_N_DAYS = 8;
+const LIMIT_BY_N_DAYS = 14;
 
 // TODO: Replace with .toISODate()
 const bareDate = (dateObject) => {
@@ -47,10 +47,13 @@ const filterTableData = (cleanData) => {
 };
 
 export const cleanTableData = (rawData) => {
-    const arrayOfHTMLStrings = rawData.map((issSighting) => issSighting.description.trim());
-    const cleanData = [];
-    for (const row of arrayOfHTMLStrings) {
-        const rowArray = row.split('<br/>');
+    if (!rawData) {
+        return {};
+    }
+    //TODO Refactor - make if statement into reusable helper function
+    if (!Array.isArray(rawData)) {
+        const htmlString = rawData.description.trim();
+        const rowArray = htmlString.split('<br/>');
         const approachObj = rowArray[4].split(': ')[1].replace('&#176;', '°');
         // 'Departure: 10&#176; above NE &lt;br/&gt;'
         const departureObj = rowArray[5]
@@ -73,7 +76,38 @@ export const cleanTableData = (rawData) => {
             departureDir: departureObj.split('above')[1].trim(),
             departureDeg: departureObj.split(' ')[0].trim(),
         };
-        cleanData.push(rowObj);
+        return filterTableData([rowObj]);
     }
-    return filterTableData(cleanData);
+
+    if (Array.isArray(rawData)) {
+        const arrayOfHTMLStrings = rawData.map((issSighting) => issSighting.description.trim());
+        const cleanData = [];
+        for (const row of arrayOfHTMLStrings) {
+            const rowArray = row.split('<br/>');
+            const approachObj = rowArray[4].split(': ')[1].replace('&#176;', '°');
+            // 'Departure: 10&#176; above NE &lt;br/&gt;'
+            const departureObj = rowArray[5]
+                .split(': ')[1]
+                .replace('&lt;br/&gt;', '')
+                .trim()
+                .replace('&#176;', '°');
+
+            const rowObj = {
+                date: bareDate(new Date(rowArray[0].split(': ')[1])), // 'Date: Monday Mar 29, 2021'
+                time: rowArray[1].split(': ')[1].trim(),
+                duration: rowArray[2]
+                    .split(': ')[1]
+                    .replace(/minute/, 'min')
+                    .trim(),
+                maxElevation: rowArray[3].split(': ')[1].split('&')[0],
+                approachDir: approachObj.split('above')[1].trim(),
+                approachDeg: approachObj.split(' ')[0].trim(),
+                // 'Departure: 10&#176; above NE &lt;br/&gt;'
+                departureDir: departureObj.split('above')[1].trim(),
+                departureDeg: departureObj.split(' ')[0].trim(),
+            };
+            cleanData.push(rowObj);
+        }
+        return filterTableData(cleanData);
+    }
 };

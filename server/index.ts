@@ -52,7 +52,6 @@ export class Server {
                     `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`,
                 );
                 const data = await response.data;
-
                 const parser = new XMLParser();
                 const jObj = parser.parse(data);
                 const cleanData = cleanTableData(jObj.rss.channel.item);
