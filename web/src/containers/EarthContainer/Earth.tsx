@@ -98,9 +98,9 @@ const Earth = () => {
                 ref={globeEl}
                 width={width}
                 height={height}
-                globeImageUrl='/earth-blue-marble.jpg'
-                bumpImageUrl='/earth-topology.png'
-                backgroundImageUrl='/night-sky.png'
+                globeImageUrl='/images/earth-blue-marble.jpg'
+                bumpImageUrl='/images/earth-topology.png'
+                backgroundImageUrl='/images/night-sky.png'
                 customLayerData={satelliteCollection}
                 customThreeObject={() =>
                     new THREE.Mesh(
