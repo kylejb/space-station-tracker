@@ -4,7 +4,7 @@ const SplashPage = ({ splashHider }) => {
             <div
                 className='fixed w-full h-full left-0 top-0 bg-cover bg-center animate-fade-in'
                 style={{
-                    backgroundImage: `url(splash.jpeg)`,
+                    backgroundImage: `url(images/splash-16x10.jpeg)`,
                 }}
             ></div>
             <div className='z-40 flex flex-col text-stone-50 animate-fade-in'>
