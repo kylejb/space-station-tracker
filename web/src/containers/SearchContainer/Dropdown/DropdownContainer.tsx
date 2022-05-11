@@ -1,13 +1,14 @@
+import { useEffect, useRef, useState } from 'react';
+import Select, { SelectInstance } from 'react-select';
+
 import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
-import { useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
 
 const DropdownContainer = ({ currentUser, setCurrentUser }) => {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emojiValue, setEmojiValue] = useState('🇺🇸   ');
-    const selectRef = useRef<HTMLSelectElement>(null);
+    const selectRef = useRef<SelectInstance>(null);
 
     const dropdownSelectHelper = (e) => {
         setUserInput({ country: e.value, countryCode: e.iso2Code });
