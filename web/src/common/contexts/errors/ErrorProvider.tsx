@@ -7,7 +7,11 @@ const initialState = {
     message: '',
 };
 
-const ErrorProvider: FC = ({ children }) => {
+type Props = {
+    children: any;
+};
+
+const ErrorProvider: FC<Props> = ({ children }) => {
     const [error, setError] = useState(initialState);
 
     const removeError = () => setError({ type: '', message: '' });
