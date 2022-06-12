@@ -1,9 +1,14 @@
-import { useSearchContext, useViewport } from '@common/hooks';
+import { useSearchContext } from '@common/hooks';
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
 import { FETCH_SUCCESS } from '@common/constants';
 
+import useViewport from 'features/earth/hooks/useViewport';
+
+/**
+ * @deprecated
+ */
 function Earth(): JSX.Element {
     // TODO: Replace 'any's with type defs
     const globeEl = useRef<any>(null); // should probably incorporate GlobeMethods

@@ -1,3 +1,5 @@
+export const DEVELOPMENT = 'development';
+export const PRODUCTION = 'production';
 export const TAB_INDEX = {
     dropdownContainer: 1,
     searchInput: 2,

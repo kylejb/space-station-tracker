@@ -1,3 +1,10 @@
+import {
+    FETCH_FAIL_MESSAGE,
+    FETCH_SUCCESS,
+    INITIAL_LOAD,
+    ZIPLENGTH_ERROR_MESSAGE,
+    ZIPRESULTS_NONE_MESSAGE,
+} from '@common/constants';
 import { useErrorContext, useSearchContext } from '@common/hooks';
 import Credits from '@components/credits';
 import Faq from '@components/faq';
@@ -6,13 +13,6 @@ import SplashPage from '@components/splashpage';
 import Earth from '@containers/EarthContainer';
 import SearchContainer from '@containers/SearchContainer';
 import { useCallback, useState } from 'react';
-import {
-    FETCH_FAIL_MESSAGE,
-    FETCH_SUCCESS,
-    INITIAL_LOAD,
-    ZIPLENGTH_ERROR_MESSAGE,
-    ZIPRESULTS_NONE_MESSAGE,
-} from '@common/constants';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
