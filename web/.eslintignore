@@ -1,0 +1,28 @@
+# configs
+jest.config.ts
+tsconfig.json
+tsconfig.*.json
+vite.config.ts
+
+# dependencies
+node_modules
+
+# logs
+logs
+npm-debug.log*
+*.log
+
+# testing
+coverage
+
+# production
+build
+dist
+dist-ssr
+public
+
+# misc
+*.css
+*.scss
+.github
+.vscode

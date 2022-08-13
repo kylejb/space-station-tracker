@@ -18,6 +18,7 @@ function ErrorProvider({ children }: Props): JSX.Element {
 
     const addError = (message, type) => setError({ message, type });
 
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     const contextValue = {
         type: error.type,
         message: error.message,

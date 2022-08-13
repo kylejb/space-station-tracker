@@ -1,8 +1,8 @@
-import { useSearchContext, useViewport } from 'common/hooks';
+import { useSearchContext, useViewport } from '@common/hooks';
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
-import { FETCH_SUCCESS } from 'utils/constants';
+import { FETCH_SUCCESS } from '@common/constants';
 
 function Earth(): JSX.Element {
     // TODO: Replace 'any's with type defs
@@ -73,24 +73,24 @@ function Earth(): JSX.Element {
     const { width, height } = useViewport();
 
     return (
-        <div className='absolute cursor-grab active:cursor-grabbing'>
-            <h1 className='fixed z-10 top-12 left-12 font-garet text-stone-50 tracking-widest text-4xl'>
+        <div className="absolute cursor-grab active:cursor-grabbing">
+            <h1 className="fixed z-10 top-12 left-12 font-garet text-stone-50 tracking-widest text-4xl">
                 Space Station Tracker
             </h1>
-            <span className='fixed bottom-6 left-[45%] z-10'>
-                <input
-                    id='follow-iss'
-                    aria-label='Toggle to follow ISS'
-                    type='checkbox'
-                    value={String(followISS)}
-                    checked={followISS}
-                    onChange={() => setFollowISS(!followISS)}
-                />
+            <span className="fixed bottom-6 left-[45%] z-10">
                 <label
-                    className='font-basier text-stone-50 text-lg ml-2'
-                    aria-label='Follow ISS'
-                    htmlFor='follow-iss'
+                    className="font-basier text-stone-50 text-lg ml-2"
+                    aria-label="Follow ISS"
+                    htmlFor="follow-iss"
                 >
+                    <input
+                        id="follow-iss"
+                        aria-label="Toggle to follow ISS"
+                        type="checkbox"
+                        value={String(followISS)}
+                        checked={followISS}
+                        onChange={() => setFollowISS(!followISS)}
+                    />
                     Follow Station
                 </label>
             </span>
@@ -98,9 +98,9 @@ function Earth(): JSX.Element {
                 ref={globeEl}
                 width={width}
                 height={height}
-                globeImageUrl='/images/earth-blue-marble.jpg'
-                bumpImageUrl='/images/earth-topology.png'
-                backgroundImageUrl='/images/night-sky.png'
+                globeImageUrl="/images/earth-blue-marble.jpg"
+                bumpImageUrl="/images/earth-topology.png"
+                backgroundImageUrl="/images/night-sky.png"
                 customLayerData={satelliteCollection}
                 customThreeObject={() =>
                     new THREE.Mesh(

@@ -1,16 +1,18 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": ".",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
+        "jsx": "react-jsx",
         "lib": ["ESNext"],
         "module": "commonjs",
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "outDir": "build",
         "strict": true,
         "strictNullChecks": true,
         "target": "ESNext",
+        "types": ["jest"]
     },
-    "exclude": ["build", "node_modules"],
-    "include": ["**.ts"]
+    "include": ["server/*"],
+    "exclude": ["build", "node_modules", "web/*"]
 }

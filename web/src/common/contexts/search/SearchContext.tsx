@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-import { INITIAL_LOAD } from 'utils/constants';
+
+import { INITIAL_LOAD } from '@common/constants';
 
 const defaultState = {
     status: INITIAL_LOAD,

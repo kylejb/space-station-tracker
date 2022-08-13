@@ -3,7 +3,7 @@ import { createContext } from 'react';
 const defaultState = {
     type: '',
     message: '',
-    addError: (message, type) => null,
+    addError: () => null,
     removeError: () => null,
 };
 

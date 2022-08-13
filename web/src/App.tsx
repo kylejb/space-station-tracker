@@ -1,10 +1,10 @@
-import { useErrorContext, useSearchContext } from 'common/hooks';
-import Credits from 'components/credits';
-import Faq from 'components/faq';
-import Instructions from 'components/instructions';
-import SplashPage from 'components/splashpage';
-import Earth from 'containers/EarthContainer';
-import SearchContainer from 'containers/SearchContainer';
+import { useErrorContext, useSearchContext } from '@common/hooks';
+import Credits from '@components/credits';
+import Faq from '@components/faq';
+import Instructions from '@components/instructions';
+import SplashPage from '@components/splashpage';
+import Earth from '@containers/EarthContainer';
+import SearchContainer from '@containers/SearchContainer';
 import { useCallback, useState } from 'react';
 import {
     FETCH_FAIL_MESSAGE,
@@ -12,7 +12,7 @@ import {
     INITIAL_LOAD,
     ZIPLENGTH_ERROR_MESSAGE,
     ZIPRESULTS_NONE_MESSAGE,
-} from 'utils/constants';
+} from '@common/constants';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
@@ -30,7 +30,7 @@ function App(): JSX.Element {
     const fetchGeoDataFromZip = async (zip: string, setUserSearchingToFalse) => {
         const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
         const ENDPOINT = `search?`;
-        const PARAMS = `country=${currentUser.country.replace(
+        const GEO_PARAMS = `country=${currentUser.country.replace(
             '_',
             '%20',
         )}&postalcode=${zip}&format=json`;
@@ -49,7 +49,7 @@ function App(): JSX.Element {
 
         if (zip !== '' && zip.length > 2) {
             try {
-                const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
+                const response = await fetch(BASE_API_URL + ENDPOINT + GEO_PARAMS, options);
                 const data = await response.json();
                 // when nothing is found, data is an empty array
                 if (data[0].display_name.split(', ').length < 2) {
@@ -84,11 +84,11 @@ function App(): JSX.Element {
                     const cityFromZip: string = nestedData.city;
 
                     if (cityFromZip) {
-                        const _PARAMS = `country=${currentUser.country.replace(
+                        const PARAMS = `country=${currentUser.country.replace(
                             '_',
                             '%20',
                         )}&city=${cityFromZip}&format=json`;
-                        const response = await fetch(BASE_API_URL + ENDPOINT + _PARAMS, options);
+                        const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
                         const data = await response.json();
 
                         if (data[0].display_name.split(', ').length < 2) {
@@ -126,7 +126,7 @@ function App(): JSX.Element {
     };
 
     return (
-        <div className='flex flex-1 justify-center'>
+        <div className="flex flex-1 justify-center">
             {firstLoad ? (
                 <SplashPage splashHider={splashHider} />
             ) : (
