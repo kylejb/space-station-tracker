@@ -4,7 +4,7 @@ import Globe from 'react-globe.gl';
 import * as THREE from 'three';
 import { FETCH_SUCCESS } from 'utils/constants';
 
-const Earth = () => {
+function Earth(): JSX.Element {
     // TODO: Replace 'any's with type defs
     const globeEl = useRef<any>(null); // should probably incorporate GlobeMethods
     const [satelliteCollection, setSatelliteCollection] = useState<any>([]);
@@ -130,6 +130,6 @@ const Earth = () => {
             />
         </div>
     );
-};
+}
 
 export default Earth;

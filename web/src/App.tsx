@@ -16,7 +16,7 @@ import {
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
-const App = () => {
+function App(): JSX.Element {
     const [currentUser, setCurrentUser] = useState({
         country: 'United_States',
         status: INITIAL_LOAD,
@@ -144,6 +144,6 @@ const App = () => {
             )}
         </div>
     );
-};
+}
 
 export default App;

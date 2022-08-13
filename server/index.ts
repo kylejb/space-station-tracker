@@ -5,7 +5,9 @@ import { XMLParser } from 'fast-xml-parser';
 import path from 'path';
 
 import { cleanTableData } from './cleanTableData';
+import { SpotTheStationResponse } from './types';
 
+// TODO: Replace type 'any' with proper types/interface
 export class Server {
     private readonly app: Express;
 
@@ -53,10 +55,10 @@ export class Server {
                 );
                 const data = await response.data;
                 const parser = new XMLParser();
-                const jObj = parser.parse(data);
+                const jObj: SpotTheStationResponse = parser.parse(data);
                 const cleanData = cleanTableData(jObj.rss.channel.item);
                 return res.send(cleanData);
-            } catch (error) {
+            } catch (error: any) {
                 res.status(500).json({ type: 'error', message: error });
                 throw new Error(error);
             }
@@ -86,7 +88,7 @@ export class Server {
                     parsedResults[searchObject.codes][0]?.city;
 
                 return res.json({ city: responseForClient });
-            } catch (error) {
+            } catch (error: any) {
                 res.status(500).json({ type: 'error', message: error });
                 throw new Error(error);
             }

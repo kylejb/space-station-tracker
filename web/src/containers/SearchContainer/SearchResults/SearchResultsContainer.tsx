@@ -16,12 +16,30 @@ import {
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
-const SearchResultsContainer = ({ currentUser }) => {
-    // TODO: Replace 'any' with type defs
-    const [sightingChart, setSightingChart] = useState<any>({ value: null, status: INITIAL_LOAD }),
-        [cityList, setCityList] = useState<any>(null),
-        [country, setCountry] = useState(currentUser.country),
-        [state, setState] = useState(null);
+// TODO: refactor with enums
+export interface SightingChart {
+    status:
+        | typeof INITIAL_LOAD
+        | typeof SEARCH_RESET
+        | typeof FETCH_FAIL
+        | typeof FETCH_SUCCESS
+        | typeof SIGHTINGRESULTS_NONE_MESSAGE.type;
+    value: any[] | null;
+}
+interface CityList {
+    city: string;
+    latitude: number;
+    longitude: number;
+}
+
+function SearchResultsContainer({ currentUser }): JSX.Element {
+    const [sightingChart, setSightingChart] = useState<SightingChart>({
+            value: null,
+            status: INITIAL_LOAD,
+        }),
+        [cityList, setCityList] = useState<CityList[] | null>(null),
+        [country, setCountry] = useState<string>(currentUser.country),
+        [state, setState] = useState<string | null>(null);
 
     const { status, value } = useSearchContext();
 
@@ -71,7 +89,7 @@ const SearchResultsContainer = ({ currentUser }) => {
                 if (filteredData?.length) {
                     setSightingChart({ value: filteredData, status: FETCH_SUCCESS });
                 } else {
-                    setSightingChart({ value: [], status: SIGHTINGRESULTS_NONE_MESSAGE });
+                    setSightingChart({ value: [], status: SIGHTINGRESULTS_NONE_MESSAGE.type });
                     addError(
                         SIGHTINGRESULTS_NONE_MESSAGE.message,
                         SIGHTINGRESULTS_NONE_MESSAGE.type,
@@ -82,27 +100,17 @@ const SearchResultsContainer = ({ currentUser }) => {
                 addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
             }
         };
-        if (value[0] && country && state) {
-            let closestLatLon;
-            let cityName;
-
-            if (cityList.length > 1) {
-                closestLatLon = findNearest(
-                    {
-                        latitude: value[0].lat,
-                        longitude: value[0].lon,
-                    },
-                    cityList,
-                );
-                cityName = cityList.find(
-                    (city) =>
-                        city.latitude === closestLatLon.latitude &&
-                        city.longitude === closestLatLon.longitude,
-                ).city;
-            } else {
-                // TODO: rework
-                cityName = cityList[0]?.city;
-            }
+        // TODO: consolidate logic and abstract
+        // skipcq: JS-0382
+        if (cityList?.length && value?.length && country && state) {
+            const closestLatLon = findNearest(
+                {
+                    latitude: value[0].lat,
+                    longitude: value[0].lon,
+                },
+                cityList,
+            ) as CityList;
+            const { city: cityName } = closestLatLon;
 
             const distanceFromSpot = convertDistance(
                 getDistance(
@@ -120,6 +128,8 @@ const SearchResultsContainer = ({ currentUser }) => {
                     SIGHTINGRESULTS_DISTANCE_MESSAGE.message,
                     SIGHTINGRESULTS_DISTANCE_MESSAGE.type,
                 );
+            } else if (cityName === undefined) {
+                // TODO: handle error
             } else {
                 removeError();
                 fetchSightingData(cityName);
@@ -130,10 +140,12 @@ const SearchResultsContainer = ({ currentUser }) => {
     return (
         <>
             <Error />
-            {(sightingChart.status !== INITIAL_LOAD || sightingChart.status !== SEARCH_RESET) &&
-                !type && <SightingCardList tableData={sightingChart} />}
+            {sightingChart.status !== INITIAL_LOAD &&
+                sightingChart.status !== SEARCH_RESET &&
+                // skipcq: JS-0382
+                !(type ?? '') && <SightingCardList tableData={sightingChart} />}
         </>
     );
-};
+}
 
 export default SearchResultsContainer;

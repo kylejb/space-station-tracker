@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { TAB_INDEX } from 'common/constants';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
-const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
+function SearchBar({ fetchGeoDataFromZip, currentUser }): JSX.Element {
     const [isUserSearching, setIsUserSearching] = useState(false);
     const [userInput, setUserInput] = useState('');
     const submitRef = useRef(null) as any; // TODO: Remove type casting
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setUserInput(event.target.value);
     };
 
@@ -13,8 +14,8 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
         setUserInput('');
     }, [currentUser]);
 
-    const handleKeyPress = (e) => {
-        if (e.keyCode === 13 || e.charCode === 13) {
+    const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
+        if (e.code === 'Enter') {
             submitRef.current.click();
         }
     };
@@ -29,6 +30,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
                 value={userInput}
                 onKeyPress={handleKeyPress}
                 onChange={handleChange}
+                tabIndex={TAB_INDEX.searchInput}
             />
             <input
                 ref={submitRef}
@@ -37,6 +39,7 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
                 value='Find Sightings'
                 disabled={isUserSearching}
                 aria-disabled={isUserSearching}
+                tabIndex={TAB_INDEX.searchSubmit}
                 onClick={() => {
                     setIsUserSearching(true);
                     fetchGeoDataFromZip(userInput, setIsUserSearching); // TODO: refactor w/o second parameter
@@ -44,6 +47,6 @@ const SearchBar = ({ fetchGeoDataFromZip, currentUser }) => {
             />
         </>
     );
-};
+}
 
 export default SearchBar;

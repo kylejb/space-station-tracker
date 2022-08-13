@@ -1,6 +1,11 @@
 import { drawViewingArea } from 'utils/drawViewingAreaOnCompass';
 
-const Compass = ({ entersSky, leavesSky }) => {
+interface ICompassProps {
+    entersSky: string;
+    leavesSky: string;
+}
+
+function Compass({ entersSky, leavesSky }: ICompassProps): JSX.Element {
     return (
         <svg viewBox='0 0 608 608'>
             <g>
@@ -114,6 +119,6 @@ const Compass = ({ entersSky, leavesSky }) => {
             </g>
         </svg>
     );
-};
+}
 
 export default Compass;

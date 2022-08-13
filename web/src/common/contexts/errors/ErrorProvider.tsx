@@ -1,4 +1,4 @@
-import { useState, useCallback, FC } from 'react';
+import { useState, useCallback, ReactNode } from 'react';
 
 import ErrorContext from './ErrorContext';
 
@@ -8,10 +8,10 @@ const initialState = {
 };
 
 type Props = {
-    children: any;
+    children: ReactNode;
 };
 
-const ErrorProvider: FC<Props> = ({ children }) => {
+function ErrorProvider({ children }: Props): JSX.Element {
     const [error, setError] = useState(initialState);
 
     const removeError = () => setError({ type: '', message: '' });
@@ -26,6 +26,6 @@ const ErrorProvider: FC<Props> = ({ children }) => {
     };
 
     return <ErrorContext.Provider value={contextValue}>{children}</ErrorContext.Provider>;
-};
+}
 
 export default ErrorProvider;

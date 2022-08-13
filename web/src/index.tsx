@@ -1,12 +1,13 @@
-import './index.css';
-
 import { ErrorProvider, SearchProvider } from 'common/contexts';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
+import './index.css';
 
-ReactDOM.render(
+const rootDiv = document.getElementById('root');
+const root = createRoot(rootDiv!);
+root.render(
     <React.StrictMode>
         <SearchProvider>
             <ErrorProvider>
@@ -14,5 +15,4 @@ ReactDOM.render(
             </ErrorProvider>
         </SearchProvider>
     </React.StrictMode>,
-    document.getElementById('root'),
 );

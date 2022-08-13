@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Select, { SelectInstance } from 'react-select';
 
+import { TAB_INDEX } from 'common/constants';
 import { countryEmojis } from 'common/data/countryEmojis';
 import { countryOptions } from 'common/data/countryOptions';
 
-const DropdownContainer = ({ currentUser, setCurrentUser }) => {
+function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emojiValue, setEmojiValue] = useState('🇺🇸   ');
@@ -25,20 +26,26 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
         }
     }, [isDropdownOpen]);
 
-    /**
-     *
-     * @{param} SyntheticKeyboardEvent
-     */
-    const keyDownHandler = (e) => {
-        switch (e.key) {
-            case 'Escape':
-                // hardcoded to guarantee exit
-                setIsDropdownOpen(false);
-                break;
-            default:
-                break;
-        }
-    };
+    const keyDownHandler = useCallback(
+        () =>
+            (e: KeyboardEvent): void => {
+                switch (e.key) {
+                    case 'ArrowDown':
+                        setIsDropdownOpen(true);
+                        break;
+                    case 'Enter':
+                        setIsDropdownOpen(true);
+                        break;
+                    case 'Escape':
+                        // hardcoded to guarantee exit
+                        setIsDropdownOpen(false);
+                        break;
+                    default:
+                        break;
+                }
+            },
+        [],
+    );
 
     // TODO: Ensure customStyles matches with theme set via Tailwindcss (i.e., color, text size, font family).
     const customStyles = {
@@ -153,6 +160,9 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             <span
                 className='font-basier cursor-pointer pointer-events-auto text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10'
                 onClick={emojiClickHandler}
+                role='listbox'
+                onKeyDown={keyDownHandler}
+                tabIndex={TAB_INDEX.dropdownContainer}
             >
                 <input
                     type='button'
@@ -169,6 +179,6 @@ const DropdownContainer = ({ currentUser, setCurrentUser }) => {
             </span>
         </div>
     );
-};
+}
 
 export default DropdownContainer;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SpaceStation = () => {
+function SpaceStation(): JSX.Element {
     // react-globe expects stationObj to be iterable
     const [, setStationObj] = useState([] as any); // TODO: Remove type casting
 
@@ -17,6 +17,6 @@ const SpaceStation = () => {
     }, []);
 
     return <h1>SpaceStation Component</h1>;
-};
+}
 
 export default SpaceStation;
