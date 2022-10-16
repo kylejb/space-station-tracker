@@ -44,7 +44,7 @@ function Earth(): JSX.Element {
                 customLayerData={satellites}
                 customThreeObject={() =>
                     new THREE.Mesh(
-                        new THREE.SphereBufferGeometry(8000 * 4e-4),
+                        new THREE.SphereGeometry(8000 * 4e-4),
                         new THREE.MeshLambertMaterial({
                             wireframe: true,
                             combine: THREE.MultiplyOperation,
