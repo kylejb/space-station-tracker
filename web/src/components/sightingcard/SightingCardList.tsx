@@ -1,6 +1,7 @@
-import { SightingChart } from 'containers/SearchContainer/SearchResults/SearchResultsContainer';
+/* eslint-disable no-plusplus */
+import { FETCH_SUCCESS } from '@common/constants';
+import { SightingChart } from '@containers/SearchContainer/SearchResults/SearchResultsContainer';
 import { useState } from 'react';
-import { FETCH_SUCCESS } from 'utils/constants';
 
 import SightingCard from './SightingCard';
 
@@ -55,12 +56,12 @@ function SightingCardList({ tableData }: SightingCardListProps): JSX.Element | n
 
     const renderList =
         tableData.status === FETCH_SUCCESS ? (
-            <div className='text-stone-50 bg-zinc-900 bg-opacity-75 rounded-lg animate-fade-in'>
-                <h2 className='font-garet text-lg text-center text-stone-50 pt-4 pb tracking-wide'>
+            <div className="text-stone-50 bg-zinc-900 bg-opacity-75 rounded-lg animate-fade-in">
+                <h2 className="font-garet text-lg text-center text-stone-50 pt-4 pb tracking-wide">
                     Sighting Opportunities
                 </h2>
-                <div className='text-gray-300 text-sm divide-zinc-700 divide-y last:divide-0'>
-                    <SightingCard header={true} />
+                <div className="text-gray-300 text-sm divide-zinc-700 divide-y last:divide-0">
+                    <SightingCard header />
                     {renderSightingCards()}
                 </div>
             </div>

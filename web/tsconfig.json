@@ -1,30 +1,37 @@
 {
     "compilerOptions": {
+        "allowJs": false,
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "src",
-        "esModuleInterop": true,
+        "baseUrl": ".",
+        "esModuleInterop": false,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
         "jsx": "react-jsx",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "module": "ESNext",
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": false,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "outDir": "build",
+        "paths": {
+            "@common/*": ["src/common/*"],
+            "@components/*": ["src/components/*"],
+            "@containers/*": ["src/containers/*"],
+            "@utils/*": ["src/utils/*"]
+        },
         "removeComments": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
-        "sourceMap": true,
         "strict": true,
         "strictNullChecks": true,
-        "target": "ES2016",
-        "types": ["react"],
+        "target": "ESNext",
+        "types": ["jest", "node", "vite/client", "@testing-library/jest-dom"],
+        "useDefineForClassFields": true
     },
     "exclude": ["build", "public", "node_modules"],
-    "include": ["src"]
+    "include": ["src/*", "jest.setup.ts"]
 }

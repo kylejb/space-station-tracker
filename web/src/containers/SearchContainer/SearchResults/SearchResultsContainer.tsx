@@ -1,7 +1,7 @@
-import geoMap from 'common/data/geoMap.json';
-import { useErrorContext, useSearchContext } from 'common/hooks';
-import Error from 'components/notification';
-import SightingCardList from 'components/sightingcard';
+import geoMap from '@common/data/geoMap.json';
+import { useErrorContext, useSearchContext } from '@common/hooks';
+import Error from '@components/notification';
+import SightingCardList from '@components/sightingcard';
 import { convertDistance, findNearest, getDistance } from 'geolib';
 import { useEffect, useState } from 'react';
 import {
@@ -12,7 +12,7 @@ import {
     SEARCH_RESET,
     SIGHTINGRESULTS_DISTANCE_MESSAGE,
     SIGHTINGRESULTS_NONE_MESSAGE,
-} from 'utils/constants';
+} from '@common/constants';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
@@ -32,14 +32,17 @@ interface CityList {
     longitude: number;
 }
 
+// TODO: add interface for props
+// eslint-disable-next-line react/prop-types
 function SearchResultsContainer({ currentUser }): JSX.Element {
     const [sightingChart, setSightingChart] = useState<SightingChart>({
-            value: null,
-            status: INITIAL_LOAD,
-        }),
-        [cityList, setCityList] = useState<CityList[] | null>(null),
-        [country, setCountry] = useState<string>(currentUser.country),
-        [state, setState] = useState<string | null>(null);
+        value: null,
+        status: INITIAL_LOAD,
+    });
+    const [cityList, setCityList] = useState<CityList[] | null>(null);
+    // eslint-disable-next-line react/prop-types
+    const [country, setCountry] = useState<string>(currentUser.country);
+    const [state, setState] = useState<string | null>(null);
 
     const { status, value } = useSearchContext();
 
@@ -50,20 +53,21 @@ function SearchResultsContainer({ currentUser }): JSX.Element {
             const searchResultObject = value[0];
             const countriesWithRegions = ['United_States', 'Great_Britian', 'Australia', 'Canada'];
             const searchResultDisplayNameArray = searchResultObject?.display_name.split(', ');
-            const _country = currentUser.country;
+            // eslint-disable-next-line react/prop-types
+            const findCountry = currentUser.country;
             // Regions - the key after countries - are "None" for all countries except the below
-            const _state =
-                searchResultDisplayNameArray && countriesWithRegions.includes(_country)
+            const findState =
+                searchResultDisplayNameArray && countriesWithRegions.includes(findCountry)
                     ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(
                           ' ',
                           '_',
                       )
                     : 'None';
             if (searchResultObject) {
-                setCountry(_country);
-                setState(_state);
+                setCountry(findCountry);
+                setState(findState);
                 // Deep cloning geoMap only when user defines (country and state handles edge cases)
-                setCityList(JSON.parse(JSON.stringify(geoMap[_country][_state])));
+                setCityList(JSON.parse(JSON.stringify(geoMap[findCountry][findState])));
             }
         } else if (status === INITIAL_LOAD || status === SEARCH_RESET) {
             setSightingChart({ value: [], status: SEARCH_RESET });

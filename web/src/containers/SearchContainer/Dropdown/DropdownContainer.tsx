@@ -1,10 +1,11 @@
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Select, { SelectInstance } from 'react-select';
 
-import { TAB_INDEX } from 'common/constants';
-import { countryEmojis } from 'common/data/countryEmojis';
-import { countryOptions } from 'common/data/countryOptions';
+import { TAB_INDEX } from '@common/constants';
+import { countryEmojis } from '@common/data/countryEmojis';
+import { countryOptions } from '@common/data/countryOptions';
 
+// eslint-disable-next-line react/prop-types
 function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -119,9 +120,11 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react/prop-types
         if (currentUser.country === '') {
             setEmojiValue('🇺🇸  ');
         } else {
+            // eslint-disable-next-line react/prop-types
             setEmojiValue(`${countryEmojis[currentUser.country]}  `);
         }
     }, [currentUser]);
@@ -136,7 +139,7 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     }, [userInput, setCurrentUser]);
 
     return (
-        <div className='h-full'>
+        <div className="h-full">
             <Select
                 ref={selectRef}
                 blurInputOnSelect
@@ -154,24 +157,25 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
                 value={countryOptions.find(
                     (country) =>
                         country.iso2Code === userInput.countryCode ||
+                        // eslint-disable-next-line react/prop-types
                         country.value === currentUser.country,
                 )}
             />
             <span
-                className='font-basier cursor-pointer pointer-events-auto text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10'
+                className="font-basier cursor-pointer pointer-events-auto text-gray-900 bg-neutral-400 hover:bg-stone-600 z-10"
                 onClick={emojiClickHandler}
-                role='listbox'
+                role="listbox"
                 onKeyDown={keyDownHandler}
                 tabIndex={TAB_INDEX.dropdownContainer}
             >
                 <input
-                    type='button'
+                    type="button"
                     style={{ display: isDropdownOpen ? 'none' : 'block' }}
-                    className='h-full w-20 text-3xl px-2 rounded-l-md border-none bg-inherit text-inherit cursor-pointer pointer-events-auto'
+                    className="h-full w-20 text-3xl px-2 rounded-l-md border-none bg-inherit text-inherit cursor-pointer pointer-events-auto"
                     value={emojiValue}
                 />
                 <span
-                    className='h-0 w-20 text-xs relative left-14 bottom-8'
+                    className="h-0 w-20 text-xs relative left-14 bottom-8"
                     style={{ display: isDropdownOpen ? 'none' : 'block' }}
                 >
                     ▼

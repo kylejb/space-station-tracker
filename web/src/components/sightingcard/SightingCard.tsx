@@ -1,4 +1,4 @@
-import Compass from 'components/compass';
+import Compass from '@components/compass';
 
 interface SightingCardProps {
     header?: boolean;
@@ -25,6 +25,9 @@ function SightingCard({
 }: SightingCardProps): JSX.Element {
     const expandCard = () => !header && selectSightingCard && selectSightingCard(); // skipcq: JS-0304, JS-0417
 
+    const showArrowUp = isSelected && !header ? <span className="text-xs mt-1">▲</span> : null;
+    const showArrowDown = !isSelected && !header ? <span className="text-xs mt-1">▼</span> : null;
+
     return (
         <div
             aria-hidden
@@ -32,45 +35,40 @@ function SightingCard({
                 header ? `${baseStyle} py-1 text-stone-50 text-lg` : `${baseStyle} cursor-pointer`
             }
             onClick={expandCard}
-            role='button'
+            role="button"
         >
             <div className={header ? 'indent-4 col-span-3' : 'col-span-3'}>{sightingData.date}</div>
-            <div className='col-span-2'>{sightingData.time}</div>
-            <div className='col-span-2'>
-                <span className='flex justify-between'>
+            <div className="col-span-2">{sightingData.time}</div>
+            <div className="col-span-2">
+                <span className="flex justify-between">
                     {sightingData.duration}
-                    {isSelected ? (
-                        !header ? (
-                            <span className='text-xs mt-1'>▲</span>
-                        ) : null
-                    ) : !header ? (
-                        <span className='text-xs mt-1'>▼</span>
-                    ) : null}
+                    {showArrowUp}
+                    {showArrowDown}
                 </span>
             </div>
             {isSelected ? (
                 <>
-                    <div className='col-span-3 text-sm'>
-                        <div className='mb-1 underline decoration-1 decoration-solid'>
+                    <div className="col-span-3 text-sm">
+                        <div className="mb-1 underline decoration-1 decoration-solid">
                             Enters Sky
                         </div>
-                        <div className='mb-3 whitespace-nowrap'>
+                        <div className="mb-3 whitespace-nowrap">
                             {sightingData.approachDir}: {sightingData.approachDeg} above horizon
                         </div>
-                        <div className='mb-1 underline decoration-1 decoration-solid'>
+                        <div className="mb-1 underline decoration-1 decoration-solid">
                             Max Elevation
                         </div>
-                        <div className='mb-3 whitespace-nowrap'>
+                        <div className="mb-3 whitespace-nowrap">
                             {sightingData.maxElevation}° above horizon
                         </div>
-                        <div className='mb-1 underline decoration-1 decoration-solid'>
+                        <div className="mb-1 underline decoration-1 decoration-solid">
                             Leaves Sky
                         </div>
-                        <div className='mb-3 whitespace-nowrap'>
+                        <div className="mb-3 whitespace-nowrap">
                             {sightingData.departureDir}: {sightingData.departureDeg} above horizon
                         </div>
                     </div>
-                    <div className='col-span-4'>
+                    <div className="col-span-4">
                         <Compass
                             entersSky={sightingData.approachDir}
                             leavesSky={sightingData.departureDir}
