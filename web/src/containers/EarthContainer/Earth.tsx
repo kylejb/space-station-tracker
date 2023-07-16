@@ -4,7 +4,7 @@ import Globe from 'react-globe.gl';
 import * as THREE from 'three';
 import { FETCH_SUCCESS } from '@common/constants';
 
-import useViewport from 'features/earth/hooks/useViewport';
+import useViewport from '../../features/earth/hooks/useViewport';
 
 /**
  * @deprecated
