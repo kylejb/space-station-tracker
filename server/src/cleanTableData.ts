@@ -40,14 +40,14 @@ const prepareDateForClient = (sightingRecordDate: DateTime): string => {
 const filterTableData = (cleanData: ICleanData[]): ICleanData[] => {
     return cleanData
         ?.filter(
-            (rowObj: any) =>
-                shouldIncludeSightingCard(rowObj.date) &&
+            (rowObj) =>
+                shouldIncludeSightingCard(rowObj.date as DateTime) &&
                 parseInt(rowObj.maxElevation, 10) >= FILTER_BY_DEGREES_GREATER_THAN &&
                 parseInt(rowObj.duration[0], 10) >= FILTER_BY_DURATION_GREATER_THAN,
         )
-        .map((sightingRecord: any) => ({
+        .map((sightingRecord) => ({
             ...sightingRecord,
-            date: prepareDateForClient(sightingRecord.date),
+            date: prepareDateForClient(sightingRecord.date as DateTime),
         }));
 };
 

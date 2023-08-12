@@ -27,7 +27,7 @@ export interface SpotTheStationResponse {
 export interface ICleanData {
     approachDeg: string;
     approachDir: string;
-    date: DateTime;
+    date: DateTime | string; // TODO: rework
     departureDeg: string;
     departureDir: string;
     duration: string;

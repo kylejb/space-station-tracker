@@ -8,21 +8,15 @@ The following commands should be executed from the project's **root** folder.
 
 ### Requirements
 
--   NodeJS >= 18.x
+-   NodeJS >= 20.x
 -   npm >= 9.x
 
 ### Local development
 
-1. Install dependencies for server and web:
+1. Install dependencies for server and web: `npm install`
 
-    - Command to do so: `npm run installAll`
+2. Start all services locally: `npm run dev` (dev) or `npm start` (prod)
 
-2. Start services locally:
+    - API: will be available on [localhost:9000](http://localhost:9000/).
 
-    * API: will be available on [localhost:9000](http://localhost:9000/).
-        * dev:  `npm run dev`
-        * prod: `npm start`
-
-    * WEB: will be available on [localhost:3000](http://localhost:3000/).
-        * dev:  `cd web && npm run dev`
-        * prod: `cd web && npm run preview`
+    - WEB: will be available on [localhost:3000](http://localhost:3000/).

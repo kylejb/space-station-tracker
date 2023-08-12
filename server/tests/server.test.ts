@@ -1,7 +1,7 @@
 import express from 'express';
 import supertest from 'supertest';
 
-import { Server } from '../index';
+import { Server } from '../src/server';
 
 const app = express();
 const server = new Server(app);
