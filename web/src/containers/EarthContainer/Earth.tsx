@@ -1,8 +1,9 @@
-import { useSearchContext, useViewport } from '@common/hooks';
 import { useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
-import * as THREE from 'three';
+import { Mesh, MeshLambertMaterial, MultiplyOperation, SphereGeometry } from 'three';
+
 import { FETCH_SUCCESS } from '@common/constants';
+import { useSearchContext, useViewport } from '@common/hooks';
 
 function Earth(): JSX.Element {
     // TODO: Replace 'any's with type defs
@@ -103,11 +104,11 @@ function Earth(): JSX.Element {
                 backgroundImageUrl="/images/night-sky.png"
                 customLayerData={satelliteCollection}
                 customThreeObject={() =>
-                    new THREE.Mesh(
-                        new THREE.SphereBufferGeometry(8000 * 4e-4),
-                        new THREE.MeshLambertMaterial({
+                    new Mesh(
+                        new SphereGeometry(8000 * 4e-4),
+                        new MeshLambertMaterial({
                             wireframe: true,
-                            combine: THREE.MultiplyOperation,
+                            combine: MultiplyOperation,
                             reflectivity: 0.3,
                             color: '#c43335',
                         }),

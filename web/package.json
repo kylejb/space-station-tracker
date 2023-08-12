@@ -10,7 +10,7 @@
         "react-globe.gl": "^2.24.3",
         "react-select": "^5.7.4",
         "svg-arc": "^1.0.2",
-        "three": "0.140.2"
+        "three": "0.155.0"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.22.10",
@@ -22,6 +22,7 @@
         "@types/jest": "^29.5.3",
         "@types/react-dom": "^18.2.7",
         "@types/react": "^18.2.20",
+        "@types/three": "^0.155.0",
         "@typescript-eslint/eslint-plugin": "^6.3.0",
         "@typescript-eslint/parser": "^6.3.0",
         "@vitejs/plugin-react": "^4.0.4",
