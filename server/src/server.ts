@@ -15,7 +15,7 @@ export class Server {
         this.app = app;
         this.app.disable('x-powered-by'); // security
 
-        this.app.use(express.static(path.resolve('./') + '/build/web'));
+        this.app.use(express.static(path.resolve('../dist/web')));
 
         this.app.use(json());
 
@@ -58,9 +58,9 @@ export class Server {
                 const jObj: SpotTheStationResponse = parser.parse(data);
                 const cleanData = cleanTableData(jObj.rss.channel.item);
                 return res.send(cleanData);
-            } catch (error: any) {
+            } catch (error) {
                 res.status(500).json({ type: 'error', message: error });
-                throw new Error(error);
+                throw new Error(error as string); // TODO: remove type casting
             }
         });
 
@@ -88,14 +88,14 @@ export class Server {
                     parsedResults[searchObject.codes][0]?.city;
 
                 return res.json({ city: responseForClient });
-            } catch (error: any) {
+            } catch (error) {
                 res.status(500).json({ type: 'error', message: error });
-                throw new Error(error);
+                throw new Error(error as string); // TODO: remove type casting
             }
         });
 
         this.app.get('*', (req: Request, res: Response): void => {
-            res.sendFile(path.resolve('./') + '/build/web/index.html');
+            res.sendFile(path.resolve('../dist/web/index.html'));
         });
     }
 

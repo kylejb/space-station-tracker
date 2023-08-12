@@ -1,18 +1,23 @@
 {
     "compilerOptions": {
+        "allowJs": false,
         "baseUrl": ".",
         "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "jsx": "react-jsx",
         "lib": ["ESNext"],
-        "module": "commonjs",
+        "module": "CommonJS",
         "moduleResolution": "Node",
-        "outDir": "build",
+        "outDir": "dist",
         "strict": true,
         "strictNullChecks": true,
-        "target": "ESNext",
-        "types": ["jest"]
+        "target": "ESNext"
     },
-    "include": ["server/*"],
-    "exclude": ["build", "node_modules", "web/*"]
+    "exclude": [
+        "dist",
+        "e2e",
+        "node_modules",
+        "public",
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx",
+        "tests"
+    ]
 }

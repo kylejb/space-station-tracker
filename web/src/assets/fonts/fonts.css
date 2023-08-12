@@ -3,8 +3,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    src: local('Basier Circular Regular'),
-        url('./basier-circle/basiercircle-regular-webfont.woff') format('woff');
+    src: local('Basier Circular Regular'), url('./basier-circle/basiercircle-regular-webfont.woff') format('woff');
 }
 
 @font-face {
