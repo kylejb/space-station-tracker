@@ -15,8 +15,6 @@
         "dev:server": "npm run dev --workspace=server",
         "dev:web": "npm run dev --workspace=web",
         "format": "prettier --write .",
-        "heroku-prebuild": "npm ci",
-        "heroku-postbuild": "npm ci --omit=dev",
         "lint": "prettier --check .",
         "prepare": "node ./.husky/prepare.js",
         "start": "npm run start --workspace=server",
