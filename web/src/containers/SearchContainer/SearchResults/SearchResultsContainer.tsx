@@ -50,25 +50,21 @@ function SearchResultsContainer({ currentUser }): JSX.Element {
 
     useEffect(() => {
         if (status === FETCH_SUCCESS) {
-            const searchResultObject = value[0];
-            const countriesWithRegions = ['United_States', 'Great_Britian', 'Australia', 'Canada'];
-            const searchResultDisplayNameArray = searchResultObject?.display_name.split(', ');
+            const [searchResultObject] = value;
+            const countriesWithRegions = ['United_States', 'United_Kingdom', 'Australia', 'Canada'];
             // eslint-disable-next-line react/prop-types
             const findCountry = currentUser.country;
             // Regions - the key after countries - are "None" for all countries except the below
             const findState =
-                searchResultDisplayNameArray && countriesWithRegions.includes(findCountry)
-                    ? // TODO: rework this to ensure accuracy and flexibility with error handling
-                      searchResultDisplayNameArray[searchResultDisplayNameArray.length - 2].replace(
-                          ' ',
-                          '_',
-                      )
+                searchResultObject && countriesWithRegions.includes(findCountry)
+                    ? searchResultObject.address.state.replace(' ', '_')
                     : 'None';
-            if (searchResultObject) {
+            const geoMapCityList = geoMap[findCountry][findState];
+            if (searchResultObject && geoMapCityList) {
                 setCountry(findCountry);
                 setState(findState);
                 // Deep cloning geoMap only when user defines (country and state handles edge cases)
-                setCityList(JSON.parse(JSON.stringify(geoMap[findCountry][findState])));
+                setCityList(JSON.parse(JSON.stringify(geoMapCityList)));
             }
         } else if (status === INITIAL_LOAD || status === SEARCH_RESET) {
             setSightingChart({ value: [], status: SEARCH_RESET });

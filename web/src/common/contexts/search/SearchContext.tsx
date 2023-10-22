@@ -9,7 +9,20 @@ const defaultState = {
     removeSearchResult: () => null,
 };
 
+interface IAddress {
+    'ISO3166-2-lvl4': string;
+    'ISO3166-2-lvl6'?: string;
+    city: string;
+    country_code: string;
+    country: string;
+    county: string;
+    postcode: number;
+    state: string;
+    suburb: string;
+}
+
 interface ISearchValue {
+    address: IAddress;
     class: string;
     display_name: string; // '2nd District, Kabul, Kabul Province, 1001, Afghanistan';
     importance: number;

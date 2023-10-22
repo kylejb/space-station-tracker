@@ -33,7 +33,7 @@ function App(): JSX.Element {
         const GEO_PARAMS = `country=${currentUser.country.replace(
             '_',
             '%20',
-        )}&postalcode=${zip}&format=json`;
+        )}&postalcode=${zip}&format=json&addressdetails=1&limit=1`;
 
         const options = {
             method: 'GET',
@@ -56,8 +56,7 @@ function App(): JSX.Element {
                     addError(FETCH_FAIL_MESSAGE.message, FETCH_FAIL_MESSAGE.type);
                     removeSearchResult();
                 } else if (data[0]) {
-                    // Globe's dependencies expects searchResults to be iterable
-                    addSearchResult([data[0]], FETCH_SUCCESS);
+                    addSearchResult(data, FETCH_SUCCESS);
                 } else {
                     removeSearchResult();
                     addError(ZIPLENGTH_ERROR_MESSAGE.message, ZIPLENGTH_ERROR_MESSAGE.type);
