@@ -58,7 +58,8 @@ function SearchResultsContainer({ currentUser }): JSX.Element {
             // Regions - the key after countries - are "None" for all countries except the below
             const findState =
                 searchResultDisplayNameArray && countriesWithRegions.includes(findCountry)
-                    ? searchResultDisplayNameArray[searchResultDisplayNameArray.length - 3].replace(
+                    ? // TODO: rework this to ensure accuracy and flexibility with error handling
+                      searchResultDisplayNameArray[searchResultDisplayNameArray.length - 2].replace(
                           ' ',
                           '_',
                       )
