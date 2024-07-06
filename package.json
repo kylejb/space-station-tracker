@@ -1,12 +1,12 @@
 {
     "name": "space-station-tracker",
-    "version": "1.2.0",
+    "version": "1.2.2",
     "main": "dist/server/index.js",
     "private": true,
     "devDependencies": {
-        "concurrently": "^8.2.0",
+        "concurrently": "^8.2.2",
         "husky": "^8.0.3",
-        "lint-staged": "^13.2.3",
+        "lint-staged": "^15.2.7",
         "typescript": "^5.1.6"
     },
     "scripts": {
