@@ -4,10 +4,10 @@
     "main": "dist/server/index.js",
     "private": true,
     "devDependencies": {
-        "concurrently": "^8.2.2",
-        "husky": "^8.0.3",
-        "lint-staged": "^15.2.7",
-        "typescript": "^5.1.6"
+        "concurrently": "^9.0.1",
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10",
+        "typescript": "^5.2.2"
     },
     "scripts": {
         "build": "npm run compile --workspace=server && npm run build --workspace=web",
@@ -16,12 +16,12 @@
         "dev:web": "npm run dev --workspace=web",
         "format": "prettier --write .",
         "lint": "prettier --check .",
-        "prepare": "node ./.husky/prepare.js",
+        "prepare": "node ./.husky/install.mjs",
         "start": "npm run start --workspace=server",
         "test": "npm run test:ci --workspace=server && npm run test:ci --workspace=web"
     },
     "engines": {
-        "node": "20.x"
+        "node": ">=22.x"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx,css,md}": "prettier --write"

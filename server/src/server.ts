@@ -32,7 +32,7 @@ export class Server {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            this.app.options('*', (req: Request, res: Response) => {
+            this.app.options('/', (req: Request, res: Response) => {
                 res.sendStatus(200);
             });
         }
@@ -41,31 +41,34 @@ export class Server {
             res.json({ type: 'testing', message: 'You have reached the API!' });
         });
 
-        this.app.post('/api/v1/spotthestation', async (req: Request, res: Response) => {
-            const baseURL = 'https://spotthestation.nasa.gov/sightings/xml_files';
-            const spotTheStationObj = {
-                country: req.body.country,
-                state: req.body.state,
-                city: req.body.city,
-            };
+        this.app.post(
+            '/api/v1/spotthestation',
+            async (req: Request, res: Response): Promise<any> => {
+                const baseURL = 'https://spotthestation.nasa.gov/sightings/xml_files';
+                const spotTheStationObj = {
+                    country: req.body.country,
+                    state: req.body.state,
+                    city: req.body.city,
+                };
 
-            try {
-                const response = await axios(
-                    `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`,
-                );
-                const data = await response.data;
-                const parser = new XMLParser();
-                const jObj: SpotTheStationResponse = parser.parse(data);
-                const cleanData = cleanTableData(jObj.rss.channel.item);
-                return res.send(cleanData);
-            } catch (error) {
-                res.status(500).json({ type: 'error', message: error });
-                throw new Error(error as string); // TODO: remove type casting
-            }
-        });
+                try {
+                    const response = await axios(
+                        `${baseURL}/${spotTheStationObj.country}_${spotTheStationObj.state}_${spotTheStationObj.city}.xml`,
+                    );
+                    const data = await response.data;
+                    const parser = new XMLParser();
+                    const jObj: SpotTheStationResponse = parser.parse(data);
+                    const cleanData = cleanTableData(jObj.rss.channel.item);
+                    return res.send(cleanData);
+                } catch (error) {
+                    res.sendStatus(500).json({ type: 'error', message: error });
+                    throw new Error(error as string); // TODO: remove type casting
+                }
+            },
+        );
 
         // find nearest city based on zip/postal code
-        this.app.post('/api/v1/city', async (req: Request, res: Response) => {
+        this.app.post('/api/v1/city', async (req: Request, res: Response): Promise<any> => {
             const searchObject = {
                 country: req.body.country,
                 codes: req.body.codes,
@@ -80,7 +83,9 @@ export class Server {
                 const parsedResults = data.results;
 
                 if (Array.isArray(parsedResults) && parsedResults.length === 0) {
-                    return res.status(500).json({ type: 'error', message: 'No results found.' });
+                    return res
+                        .sendStatus(500)
+                        .json({ type: 'error', message: 'No results found.' });
                 }
 
                 const responseForClient =
@@ -89,12 +94,12 @@ export class Server {
 
                 return res.json({ city: responseForClient });
             } catch (error) {
-                res.status(500).json({ type: 'error', message: error });
+                res.sendStatus(500).json({ type: 'error', message: error });
                 throw new Error(error as string); // TODO: remove type casting
             }
         });
 
-        this.app.get('*', (req: Request, res: Response): void => {
+        this.app.get('/', (req: Request, res: Response): void => {
             res.sendFile(path.resolve('../dist/web/index.html'));
         });
     }
