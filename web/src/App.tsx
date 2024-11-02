@@ -84,7 +84,7 @@ function App(): JSX.Element {
 
                     if (cityFromZip) {
                         const PARAMS = `country=${currentUser.country.replace(
-                            '_',
+                            /_/g,
                             '%20',
                         )}&city=${cityFromZip}&format=json`;
                         const response = await fetch(BASE_API_URL + ENDPOINT + PARAMS, options);
