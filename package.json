@@ -21,7 +21,8 @@
         "test": "npm run test:ci --workspace=server && npm run test:ci --workspace=web"
     },
     "engines": {
-        "node": ">=22.x"
+        "node": ">=22.10.0",
+        "npm": ">=10.9.0"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
