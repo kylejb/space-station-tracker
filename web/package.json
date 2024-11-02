@@ -46,6 +46,10 @@
         "vite": "^5.4.8",
         "vite-plugin-eslint": "^1.8.1"
     },
+    "engines": {
+        "node": ">=22.10.0",
+        "npm": ">=10.9.0"
+    },
     "scripts": {
         "build": "tsc && vite build",
         "dev": "vite",

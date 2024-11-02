@@ -23,6 +23,10 @@
         "tsc-watch": "^6.2.0",
         "typescript": "^5.2.2"
     },
+    "engines": {
+        "node": ">=22.10.0",
+        "npm": ">=10.9.0"
+    },
     "scripts": {
         "compile": "tsc",
         "dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node ../dist/server/index.js\"",
