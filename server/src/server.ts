@@ -3,6 +3,7 @@ import { json } from 'body-parser';
 import express, { Express, Request, Response } from 'express';
 import { XMLParser } from 'fast-xml-parser';
 import path from 'path';
+import rateLimit from 'express-rate-limit';
 
 import { cleanTableData } from './cleanTableData';
 import { SpotTheStationResponse } from './types';
@@ -14,6 +15,13 @@ export class Server {
     constructor(app: Express) {
         this.app = app;
         this.app.disable('x-powered-by'); // security
+
+        const limiter = rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100, // limit each IP to 100 requests per windowMs
+        });
+
+        this.app.use(limiter);
 
         this.app.use(express.static(path.resolve('../dist/web')));
 
