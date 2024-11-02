@@ -31,7 +31,7 @@ function App(): JSX.Element {
         const BASE_API_URL = `https://nominatim.openstreetmap.org/`;
         const ENDPOINT = `search?`;
         const GEO_PARAMS = `country=${currentUser.country.replace(
-            '_',
+            /_/g,
             '%20',
         )}&postalcode=${zip}&format=json&addressdetails=1&limit=1`;
 
