@@ -3,6 +3,7 @@ import { json } from 'body-parser';
 import express, { Express, Request, Response } from 'express';
 import { XMLParser } from 'fast-xml-parser';
 import path from 'path';
+import rateLimit from 'express-rate-limit';
 
 import { cleanTableData } from './cleanTableData';
 import { SpotTheStationResponse } from './types';
@@ -15,11 +16,18 @@ export class Server {
         this.app = app;
         this.app.disable('x-powered-by'); // security
 
+        const limiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            limit: 100,
+        });
+
+        this.app.use(limiter);
+
         this.app.use(express.static(path.resolve('../dist/web')));
 
         this.app.use(json());
 
-        this.app.use((req: Request, res: Response, next) => {
+        this.app.use((_: Request, res: Response, next) => {
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
             res.header(
                 'Access-Control-Allow-Headers',
@@ -32,12 +40,12 @@ export class Server {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            this.app.options('/', (req: Request, res: Response) => {
+            this.app.options('/', (_: Request, res: Response) => {
                 res.sendStatus(200);
             });
         }
 
-        this.app.get('/api', (req: Request, res: Response): void => {
+        this.app.get('/api', (_: Request, res: Response): void => {
             res.json({ type: 'testing', message: 'You have reached the API!' });
         });
 
@@ -99,7 +107,7 @@ export class Server {
             }
         });
 
-        this.app.get('/', (req: Request, res: Response): void => {
+        this.app.get('/', (_: Request, res: Response): void => {
             res.sendFile(path.resolve('../dist/web/index.html'));
         });
     }
