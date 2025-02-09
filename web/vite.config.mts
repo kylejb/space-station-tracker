@@ -1,12 +1,13 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { resolve } from 'path';
+// @ts-ignore
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import eslintPlugin from 'vite-plugin-eslint';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
     build: { outDir: '../dist/web' },
-    plugins: [react(), process.env.BUILD_MODE ? false : eslintPlugin()],
+    plugins: [react(), tailwindcss(), tsconfigPaths()],
     resolve: {
         alias: {
             '@common': resolve(__dirname, 'src/common'),

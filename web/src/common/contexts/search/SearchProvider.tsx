@@ -1,5 +1,7 @@
+import { type JSX, useState, useCallback, ReactNode } from 'react';
+
 import { SEARCH_RESET, INITIAL_LOAD } from '@common/constants';
-import { useState, useCallback, ReactNode } from 'react';
+
 import SearchContext from './SearchContext';
 
 const initialState = {
@@ -17,7 +19,6 @@ function SearchProvider({ children }: Props): JSX.Element {
 
     const addSearchResult = (value, status) => setSearchResult({ value, status });
 
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
     const contextValue = {
         status: searchResult.status,
         value: searchResult.value,

@@ -1,3 +1,4 @@
+/* eslint-disable id-length */
 import arc from 'svg-arc';
 
 const cardinalToDeg = {

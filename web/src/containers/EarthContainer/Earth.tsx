@@ -1,20 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
-import Globe from 'react-globe.gl';
+import { type JSX, useEffect, useRef, useState } from 'react';
+import Globe, { type GlobeMethods } from 'react-globe.gl';
 import { Mesh, MeshLambertMaterial, MultiplyOperation, SphereGeometry } from 'three';
 
 import { FETCH_SUCCESS } from '@common/constants';
 import { useSearchContext, useViewport } from '@common/hooks';
 
+interface ISSData {
+    name: string;
+    id: number;
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    velocity: number;
+    visibility: string;
+    footprint: number;
+    timestamp: number;
+    daynum: number;
+    solar_lat: number;
+    solar_lon: number;
+    units: string;
+}
+
+interface GlobeISSLabel {
+    lat: number;
+    lon: number;
+}
+
 function Earth(): JSX.Element {
     // TODO: Replace 'any's with type defs
-    const globeEl = useRef<any>(null); // should probably incorporate GlobeMethods
-    const [satelliteCollection, setSatelliteCollection] = useState<any>([]);
+    const globeEl = useRef<GlobeMethods | undefined>(undefined);
+    const [satelliteCollection, setSatelliteCollection] = useState<ISSData[]>([]);
     const [followISS, setFollowISS] = useState(false);
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const { value, status } = useSearchContext();
 
     useEffect(() => {
-        if (followISS && satelliteCollection.length && globeEl.current) {
+        if (globeEl.current && followISS && satelliteCollection.length) {
             globeEl.current.controls().autoRotate = false;
 
             globeEl.current.pointOfView({
@@ -22,20 +43,20 @@ function Earth(): JSX.Element {
                 lng: satelliteCollection[0].longitude,
                 altitude: 2,
             });
-        } else if (status === FETCH_SUCCESS) {
+        } else if (status === FETCH_SUCCESS && globeEl.current) {
             globeEl.current.controls().autoRotate = false;
-        } else {
+        } else if (globeEl.current) {
             globeEl.current.controls().autoRotate = true;
         }
     }, [followISS, satelliteCollection, status]);
 
     useEffect(() => {
-        if (status === FETCH_SUCCESS) {
+        if (globeEl.current && status === FETCH_SUCCESS) {
             setFollowISS(false);
             globeEl.current.controls().autoRotate = false;
             globeEl.current.pointOfView({
-                lat: value[0].lat,
-                lng: value[0].lon,
+                lat: Number(value[0].lat),
+                lng: Number(value[0].lon),
                 altitude: 1.9,
             });
         }
@@ -44,10 +65,10 @@ function Earth(): JSX.Element {
     useEffect(() => {
         const findISS = async () => {
             const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
-            const data = await response.json();
+            const data = (await response.json()) as ISSData;
             data.name = 'ISS';
             setSatelliteCollection([data]);
-            if (isFirstLoad) {
+            if (globeEl.current && isFirstLoad) {
                 globeEl.current.pointOfView({
                     lat: data.latitude,
                     lng: data.longitude,
@@ -56,16 +77,23 @@ function Earth(): JSX.Element {
                 setIsFirstLoad(false);
             }
         };
-
-        globeEl.current.controls().autoRotate = true;
-        globeEl.current.controls().autoRotateSpeed = 0.1;
+        if (globeEl.current) {
+            globeEl.current.controls().autoRotate = true;
+            globeEl.current.controls().autoRotateSpeed = 0.1;
+        }
 
         if (isFirstLoad) {
-            findISS();
+            findISS().catch((error) => {
+                // eslint-disable-next-line no-console
+                console.error('Error fetching ISS data:', error);
+            });
         }
 
         const interval = setInterval(() => {
-            findISS();
+            findISS().catch((error) => {
+                // eslint-disable-next-line no-console
+                console.error('Error fetching ISS data:', error);
+            });
         }, 5000);
 
         return () => clearInterval(interval);
@@ -114,19 +142,25 @@ function Earth(): JSX.Element {
                         }),
                     )
                 }
-                customThreeObjectUpdate={(obj, d: any) => {
+                customThreeObjectUpdate={(obj, coords) => {
                     Object.assign(
                         obj.position,
-                        globeEl.current.getCoords(d.latitude, d.longitude, 0.3),
+                        globeEl.current
+                            ? globeEl.current.getCoords(
+                                  (coords as ISSData).latitude,
+                                  (coords as ISSData).longitude,
+                                  0.3,
+                              )
+                            : undefined,
                     );
                 }}
                 labelsData={value}
-                labelLat={(d: any) => d.lat}
-                labelLng={(d: any) => d.lon}
-                labelText={() => ''}
+                labelLat={(coords) => (coords as GlobeISSLabel).lat}
+                labelLng={(coords) => (coords as GlobeISSLabel).lon}
+                labelText=""
                 labelSize={1000 * 4e-4}
                 labelDotRadius={1500 * 4e-4}
-                labelColor={() => '#c43335'}
+                labelColor="#c43335"
                 labelResolution={3}
             />
         </div>
