@@ -1,5 +1,6 @@
+import { type JSX, KeyboardEvent, useCallback, useState } from 'react';
+
 import { TAB_INDEX } from '@common/constants';
-import { KeyboardEvent, useCallback, useState } from 'react';
 
 function Faq(): JSX.Element {
     const [faqVisible, setFaqVisible] = useState(false);

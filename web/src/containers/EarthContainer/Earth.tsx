@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { type JSX, useEffect, useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 import { Mesh, MeshLambertMaterial, MultiplyOperation, SphereGeometry } from 'three';
 

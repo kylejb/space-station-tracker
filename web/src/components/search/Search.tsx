@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+
 import SearchBar from './search-bar.component';
 
 interface SearchProps {

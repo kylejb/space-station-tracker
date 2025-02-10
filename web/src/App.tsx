@@ -1,11 +1,5 @@
-import { useErrorContext, useSearchContext } from '@common/hooks';
-import Credits from '@components/credits';
-import Faq from '@components/faq';
-import Instructions from '@components/instructions';
-import SplashPage from '@components/splashpage';
-import Earth from '@containers/EarthContainer';
-import SearchContainer from '@containers/SearchContainer';
-import { useCallback, useState } from 'react';
+import { type JSX, useCallback, useState } from 'react';
+
 import {
     FETCH_FAIL_MESSAGE,
     FETCH_SUCCESS,
@@ -13,6 +7,13 @@ import {
     ZIPLENGTH_ERROR_MESSAGE,
     ZIPRESULTS_NONE_MESSAGE,
 } from '@common/constants';
+import { useErrorContext, useSearchContext } from '@common/hooks';
+import Credits from '@components/credits';
+import Faq from '@components/faq';
+import Instructions from '@components/instructions';
+import SplashPage from '@components/splashpage';
+import Earth from '@containers/EarthContainer';
+import SearchContainer from '@containers/SearchContainer';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 

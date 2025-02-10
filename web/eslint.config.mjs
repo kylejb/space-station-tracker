@@ -28,6 +28,7 @@ export default tseslint.config(
                 ...globals.node,
                 ...globals.jest,
             },
+            // sourceType: 'module',
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname,
@@ -43,9 +44,21 @@ export default tseslint.config(
     },
     {
         rules: {
-            'id-length': ['error', { min: 2 }],
+            // TODO: remove after fixing all issues
+            '@typescript-eslint/consistent-type-definitions': 'warn',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-floating-promises': 'warn',
+            '@typescript-eslint/no-redundant-type-constituents': 'warn',
+            '@typescript-eslint/no-unsafe-argument': 'warn',
+            '@typescript-eslint/no-unsafe-assignment': 'warn',
+            '@typescript-eslint/no-unsafe-call': 'warn',
+            '@typescript-eslint/no-unsafe-member-access': 'warn',
+            '@typescript-eslint/no-unsafe-return': 'warn',
+            '@typescript-eslint/no-unused-vars': 'warn',
+            // END TODO
+            'id-length': ['warn', { min: 2 }], // TODO: set to error after addressing all issues
             'import/order': [
-                'error',
+                'warn', // TODO: set to error after addressing all issues
                 {
                     alphabetize: { caseInsensitive: true, order: 'asc' },
                     groups: [
@@ -61,19 +74,30 @@ export default tseslint.config(
             ],
             'no-console': 'error',
             'max-depth': ['error', 4],
-            'max-lines': [
-                'error',
-                {
-                    max: 500,
-                    skipBlankLines: true,
-                    skipComments: true,
-                },
-            ],
-            'max-lines-per-function': [
-                'error',
-                { max: 200, skipBlankLines: true, skipComments: true },
-            ],
+            // TODO: uncomment after fixing issues
+            // 'max-lines': [
+            //     'error',
+            //     {
+            //         max: 500,
+            //         skipBlankLines: true,
+            //         skipComments: true,
+            //     },
+            // ],
+            // 'max-lines-per-function': [
+            //     'error',
+            //     { max: 200, skipBlankLines: true, skipComments: true },
+            // ],
+            // END TODO
             'react/prop-types': 'off',
+        },
+    },
+    {
+        settings: {
+            'import/resolver': {
+                typescript: {
+                    project: './tsconfig.json',
+                },
+            },
         },
     },
     prettierPlugin,

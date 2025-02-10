@@ -1,4 +1,4 @@
-import { useState, useCallback, ReactNode } from 'react';
+import { type JSX, useState, useCallback, ReactNode } from 'react';
 
 import ErrorContext from './ErrorContext';
 
@@ -7,9 +7,9 @@ const initialState = {
     message: '',
 };
 
-type Props = {
+interface Props {
     children: ReactNode;
-};
+}
 
 function ErrorProvider({ children }: Props): JSX.Element {
     const [error, setError] = useState(initialState);
@@ -18,7 +18,6 @@ function ErrorProvider({ children }: Props): JSX.Element {
 
     const addError = (message, type) => setError({ message, type });
 
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
     const contextValue = {
         type: error.type,
         message: error.message,

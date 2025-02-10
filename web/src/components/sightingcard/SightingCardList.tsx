@@ -1,7 +1,7 @@
-/* eslint-disable no-plusplus */
+import { type JSX, useState } from 'react';
+
 import { FETCH_SUCCESS } from '@common/constants';
 import { SightingChart } from '@containers/SearchContainer/SearchResults/SearchResultsContainer';
-import { useState } from 'react';
 
 import SightingCard from './SightingCard';
 

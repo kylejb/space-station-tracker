@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+
 function Credits(): JSX.Element {
     return (
         <div className="fixed bottom-6 right-8 z-10 font-basier text-stone-50 text-sm opacity-25">
