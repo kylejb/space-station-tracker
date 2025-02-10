@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type JSX } from 'react';
 
 function SpaceStation(): JSX.Element {
     // react-globe expects stationObj to be iterable

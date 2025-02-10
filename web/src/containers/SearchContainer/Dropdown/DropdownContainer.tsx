@@ -1,11 +1,10 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { type JSX, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Select, { SelectInstance } from 'react-select';
 
 import { TAB_INDEX } from '@common/constants';
 import { countryEmojis } from '@common/data/countryEmojis';
 import { countryOptions } from '@common/data/countryOptions';
 
-// eslint-disable-next-line react/prop-types
 function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -120,11 +119,9 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react/prop-types
         if (currentUser.country === '') {
             setEmojiValue('🇺🇸  ');
         } else {
-            // eslint-disable-next-line react/prop-types
             setEmojiValue(`${countryEmojis[currentUser.country]}  `);
         }
     }, [currentUser]);
@@ -157,7 +154,6 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
                 value={countryOptions.find(
                     (country) =>
                         country.iso2Code === userInput.countryCode ||
-                        // eslint-disable-next-line react/prop-types
                         country.value === currentUser.country,
                 )}
             />
