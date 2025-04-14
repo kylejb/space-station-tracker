@@ -1,5 +1,6 @@
+import { type JSX, KeyboardEvent, useCallback, useState } from 'react';
+
 import { TAB_INDEX } from '@common/constants';
-import { KeyboardEvent, useCallback, useState } from 'react';
 
 function Instructions(): JSX.Element {
     const [instructionsVisible, setInstructionsVisible] = useState(true);

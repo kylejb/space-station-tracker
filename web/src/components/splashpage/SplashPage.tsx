@@ -1,6 +1,7 @@
+import { type JSX } from 'react';
+
 import { TAB_INDEX } from '@common/constants';
 
-// eslint-disable-next-line react/prop-types
 function SplashPage({ splashHider }): JSX.Element {
     return (
         <div

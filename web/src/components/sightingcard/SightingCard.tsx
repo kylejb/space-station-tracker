@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+
 import Compass from '@components/compass';
 
 interface SightingCardProps {

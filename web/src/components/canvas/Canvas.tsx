@@ -1,7 +1,7 @@
-import { useRef } from 'react';
+import { type JSX, useRef } from 'react';
 
-function Canvas(props: any): JSX.Element {
-    const canvasRef = useRef();
+function Canvas(props: Record<string, unknown>): JSX.Element {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     return <canvas ref={canvasRef} {...props} />;
 }

@@ -1,9 +1,6 @@
-import geoMap from '@common/data/geoMap.json';
-import { useErrorContext, useSearchContext } from '@common/hooks';
-import Error from '@components/notification';
-import SightingCardList from '@components/sightingcard';
 import { convertDistance, findNearest, getDistance } from 'geolib';
-import { useEffect, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
+
 import {
     FETCH_FAIL,
     FETCH_FAIL_MESSAGE,
@@ -13,6 +10,10 @@ import {
     SIGHTINGRESULTS_DISTANCE_MESSAGE,
     SIGHTINGRESULTS_NONE_MESSAGE,
 } from '@common/constants';
+import geoMap from '@common/data/geoMap.json';
+import { useErrorContext, useSearchContext } from '@common/hooks';
+import Error from '@components/notification';
+import SightingCardList from '@components/sightingcard';
 
 const DOMAIN = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9000';
 
@@ -33,14 +34,12 @@ interface CityList {
 }
 
 // TODO: add interface for props
-// eslint-disable-next-line react/prop-types
 function SearchResultsContainer({ currentUser }): JSX.Element {
     const [sightingChart, setSightingChart] = useState<SightingChart>({
         value: null,
         status: INITIAL_LOAD,
     });
     const [cityList, setCityList] = useState<CityList[] | null>(null);
-    // eslint-disable-next-line react/prop-types
     const [country, setCountry] = useState<string>(currentUser.country);
     const [state, setState] = useState<string | null>(null);
 
@@ -52,7 +51,6 @@ function SearchResultsContainer({ currentUser }): JSX.Element {
         if (status === FETCH_SUCCESS) {
             const [searchResultObject] = value;
             const countriesWithRegions = ['United_States', 'United_Kingdom', 'Australia', 'Canada'];
-            // eslint-disable-next-line react/prop-types
             const findCountry = currentUser.country;
             // Regions - the key after countries - are "None" for all countries except the below
             const findState =

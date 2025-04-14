@@ -1,24 +1,36 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
-import Select, { SelectInstance } from 'react-select';
+import { type JSX, type KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import Select, { type SelectInstance, type SingleValue } from 'react-select';
 
 import { TAB_INDEX } from '@common/constants';
 import { countryEmojis } from '@common/data/countryEmojis';
 import { countryOptions } from '@common/data/countryOptions';
 
-// eslint-disable-next-line react/prop-types
-function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
-    const [userInput, setUserInput] = useState({ country: 'United_States', countryCode: 'us' });
+interface DropdownContainerProps {
+    currentUser: {
+        country: string;
+        countryCode: string;
+    };
+    setCurrentUser: (user: { country: string; status: string; countryCode: string }) => void;
+}
+
+function DropdownContainer({ currentUser, setCurrentUser }: DropdownContainerProps): JSX.Element {
+    const [userInput, setUserInput] = useState({
+        country: 'United_States',
+        countryCode: 'us',
+    });
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [emojiValue, setEmojiValue] = useState('🇺🇸   ');
-    const selectRef = useRef<SelectInstance>(null);
+    const selectRef = useRef<SelectInstance<(typeof countryOptions)[number]>>(null);
 
-    const dropdownSelectHelper = (e) => {
-        setUserInput({ country: e.value, countryCode: e.iso2Code });
-        setEmojiValue(`${countryEmojis[e.value]}   `);
+    const dropdownSelectHelper = (evt: SingleValue<(typeof countryOptions)[number]>): void => {
+        if (evt) {
+            setUserInput({ country: evt.value, countryCode: evt.iso2Code });
+            setEmojiValue(`${countryEmojis[evt.value]}   `);
+        }
     };
 
-    const emojiClickHandler = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    const emojiClickHandler = (): void => {
+        setIsDropdownOpen((prevState) => !prevState);
     };
 
     useEffect(() => {
@@ -27,34 +39,28 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
         }
     }, [isDropdownOpen]);
 
-    const keyDownHandler = useCallback(
-        () =>
-            (e: KeyboardEvent): void => {
-                switch (e.key) {
-                    case 'ArrowDown':
-                        setIsDropdownOpen(true);
-                        break;
-                    case 'Enter':
-                        setIsDropdownOpen(true);
-                        break;
-                    case 'Escape':
-                        // hardcoded to guarantee exit
-                        setIsDropdownOpen(false);
-                        break;
-                    default:
-                        break;
-                }
-            },
-        [],
-    );
+    const keyDownHandler = useCallback((evt: KeyboardEvent): void => {
+        switch (evt.key) {
+            case 'ArrowDown':
+            case 'Enter':
+                setIsDropdownOpen(true);
+                break;
+            case 'Escape':
+                // hardcoded to guarantee exit
+                setIsDropdownOpen(false);
+                break;
+            default:
+                break;
+        }
+    }, []);
 
     // TODO: Ensure customStyles matches with theme set via Tailwindcss (i.e., color, text size, font family).
     const customStyles = {
-        container: (provided) => ({
+        container: (provided: Record<string, unknown>) => ({
             ...provided,
             display: isDropdownOpen ? 'block' : 'none',
         }),
-        control: (provided) => ({
+        control: (provided: Record<string, unknown>) => ({
             ...provided,
             width: 170,
             height: 48,
@@ -63,14 +69,14 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
             border: '1px solid rgba(198,198,197,0.84)',
             boxShadow: 'inset 0px 0px 3px 2px #4287f5',
         }),
-        valueContainer: (provided) => ({
+        valueContainer: (provided: Record<string, unknown>) => ({
             ...provided,
             width: 170,
             minHeight: 48,
             color: '#C6C6C5',
             opacity: '1',
         }),
-        singleValue: (provided) => ({
+        singleValue: (provided: Record<string, unknown>) => ({
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
@@ -79,7 +85,7 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
             letterSpacing: '.05em',
             fontSize: '.8em',
         }),
-        input: (provided) => ({
+        input: (provided: Record<string, unknown>) => ({
             ...provided,
             color: '#C6C6C5',
             opacity: '1',
@@ -88,7 +94,7 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
             letterSpacing: '.05em',
             fontSize: '.8em',
         }),
-        menu: (provided) => ({
+        menu: (provided: Record<string, unknown>) => ({
             ...provided,
             width: 170,
             minHeight: 25,
@@ -97,7 +103,7 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
             color: '#C6C6C5',
             border: '1px solid rgba(198,198,197,0.84)',
         }),
-        menuList: (provided) => ({
+        menuList: (provided: Record<string, unknown>) => ({
             ...provided,
             borderRadius: '5px 0px 0px 5px',
             background: 'rgba(27,29,33,0.75)',
@@ -105,13 +111,7 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
             fontFamily: 'Basier Circular',
             fontSize: '.9em',
         }),
-        menuItem: (provided) => ({
-            ...provided,
-            borderRadius: '5px 0px 0px 5px',
-            background: 'rgba(27,29,33,0.75)',
-            color: '#C6C6C5',
-        }),
-        option: (provided, state) => ({
+        option: (provided: Record<string, unknown>, state: { isFocused: boolean }) => ({
             ...provided,
             borderRadius: '0px 0px 0px 0px',
             color: '#C6C6C5',
@@ -120,11 +120,9 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react/prop-types
         if (currentUser.country === '') {
             setEmojiValue('🇺🇸  ');
         } else {
-            // eslint-disable-next-line react/prop-types
             setEmojiValue(`${countryEmojis[currentUser.country]}  `);
         }
     }, [currentUser]);
@@ -157,7 +155,6 @@ function DropdownContainer({ currentUser, setCurrentUser }): JSX.Element {
                 value={countryOptions.find(
                     (country) =>
                         country.iso2Code === userInput.countryCode ||
-                        // eslint-disable-next-line react/prop-types
                         country.value === currentUser.country,
                 )}
             />

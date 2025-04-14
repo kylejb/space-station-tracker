@@ -1,8 +1,8 @@
+import { ChangeEvent, type JSX, KeyboardEvent, useEffect, useRef, useState } from 'react';
+
 import { TAB_INDEX } from '@common/constants';
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 // TODO: add interface for props
-// eslint-disable-next-line react/prop-types
 function SearchBar({ fetchGeoDataFromZip, currentUser }): JSX.Element {
     const [isUserSearching, setIsUserSearching] = useState(false);
     const [userInput, setUserInput] = useState('');
