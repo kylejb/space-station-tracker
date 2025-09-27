@@ -8,8 +8,8 @@ The following commands should be executed from the project's **root** folder.
 
 ### Requirements
 
--   NodeJS >= 22.x
--   npm >= 10.x
+- NodeJS >= 22.20
+- npm >= 11.6
 
 ### Local development
 

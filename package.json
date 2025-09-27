@@ -4,10 +4,10 @@
     "main": "dist/server/index.js",
     "private": true,
     "devDependencies": {
-        "concurrently": "^9.1.2",
+        "concurrently": "^9.2.1",
         "husky": "^9.1.7",
-        "lint-staged": "^15.5.1",
-        "typescript": "^5.7.3"
+        "lint-staged": "^16.2.1",
+        "typescript": "^5.9.2"
     },
     "scripts": {
         "build": "npm run compile --workspace=server && npm run build --workspace=web",
@@ -21,8 +21,8 @@
         "test": "npm run test:ci --workspace=server && npm run test:ci --workspace=web"
     },
     "engines": {
-        "node": ">=22.10.0",
-        "npm": ">=10.9.0"
+        "node": ">=22.20.0",
+        "npm": ">=11.6.0"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
