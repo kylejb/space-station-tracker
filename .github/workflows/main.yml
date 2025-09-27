@@ -1,4 +1,6 @@
 name: CI before CD to Heroku
+permissions:
+  contents: read
 
 on:
   push:
