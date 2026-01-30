@@ -7,7 +7,7 @@
         "axios": "^1.12.2",
         "dotenv": "^17.2.2",
         "express": "^5.1.0",
-        "fast-xml-parser": "^5.2.5",
+        "fast-xml-parser": "^5.3.4",
         "luxon": "^3.7.2",
         "express-rate-limit": "^8.1.0"
     },
