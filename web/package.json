@@ -80,6 +80,8 @@
         ],
         "verbose": true,
         "moduleNameMapper": {
+            "^three$": "<rootDir>/__mocks__/three.js",
+            "^react-globe.gl$": "<rootDir>/__mocks__/react-globe.gl.js",
             "@common/(.*)": "<rootDir>/src/common/$1",
             "@components/(.*)": "<rootDir>/src/components/$1",
             "@containers/(.*)": "<rootDir>/src/containers/$1",
@@ -100,8 +102,7 @@
             ]
         },
         "transformIgnorePatterns": [
-            "node_modules/(?!(d3-geo|react-globe.gl))$",
-            "node_modules/(?!three/examples/jsm)$"
+            "node_modules/(?!(d3-geo|react-globe.gl|three))/"
         ]
     }
 }
