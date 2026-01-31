@@ -6,8 +6,8 @@
     "devDependencies": {
         "concurrently": "^9.2.1",
         "husky": "^9.1.7",
-        "lint-staged": "^16.2.1",
-        "typescript": "^5.9.2"
+        "lint-staged": "^16.2.7",
+        "typescript": "^5.9.3"
     },
     "scripts": {
         "build": "npm run compile --workspace=server && npm run build --workspace=web",
