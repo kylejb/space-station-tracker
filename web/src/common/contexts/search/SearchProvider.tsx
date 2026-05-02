@@ -1,4 +1,4 @@
-import { type JSX, useState, useCallback, ReactNode } from 'react';
+import { type JSX, useState, useCallback, type ReactNode } from 'react';
 
 import { SEARCH_RESET, INITIAL_LOAD } from '@common/constants';
 

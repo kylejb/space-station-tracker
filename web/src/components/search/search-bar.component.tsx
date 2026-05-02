@@ -1,4 +1,4 @@
-import { ChangeEvent, type JSX, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { type ChangeEvent, type JSX, type KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import { TAB_INDEX } from '@common/constants';
 

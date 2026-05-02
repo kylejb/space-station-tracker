@@ -1,28 +1,30 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "allowImportingTsExtensions": true,
         "allowJs": false,
         "allowSyntheticDefaultImports": true,
-        "baseUrl": ".",
-        "esModuleInterop": false,
+        "erasableSyntaxOnly": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
         "jsx": "react-jsx",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "module": "ESNext",
-        "moduleResolution": "Node",
+        "module": "esnext",
+        "moduleDetection": "force",
+        "moduleResolution": "bundler",
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": false,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "outDir": "../dist",
         "paths": {
-            "@common/*": ["src/common/*"],
-            "@components/*": ["src/components/*"],
-            "@containers/*": ["src/containers/*"],
-            "@utils/*": ["src/utils/*"]
+            "@common/*": ["./src/common/*"],
+            "@components/*": ["./src/components/*"],
+            "@containers/*": ["./src/containers/*"],
+            "@utils/*": ["./src/utils/*"]
         },
         "removeComments": true,
         "resolveJsonModule": true,
@@ -30,9 +32,11 @@
         "strict": true,
         "strictNullChecks": true,
         "target": "ESNext",
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
         "types": ["jest", "node", "vite/client", "@testing-library/jest-dom"],
-        "useDefineForClassFields": true
+        "useDefineForClassFields": true,
+        "verbatimModuleSyntax": true
     },
     "exclude": ["dist", "public", "node_modules"],
-    "include": ["src", "jest.setup.ts"]
+    "include": ["src", "jest.setup.ts", "vite.config.ts"]
 }

@@ -16,7 +16,6 @@ The following commands should be executed from the project's **root** folder.
 1. Install dependencies for server and web: `npm install`
 
 2. Start all services locally: `npm run dev` (dev) or `npm start` (prod)
-
     - API: will be available on [localhost:9000](http://localhost:9000/).
 
     - WEB: will be available on [localhost:3000](http://localhost:3000/).

@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "baseUrl": ".",
         "esModuleInterop": true,
         "lib": ["ESNext"],
-        "module": "CommonJS",
-        "moduleResolution": "Node",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "outDir": "dist",
         "strict": true,
         "strictNullChecks": true,

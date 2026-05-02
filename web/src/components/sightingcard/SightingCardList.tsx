@@ -1,7 +1,7 @@
 import { type JSX, useState } from 'react';
 
 import { FETCH_SUCCESS } from '@common/constants';
-import { SightingChart } from '@containers/SearchContainer/SearchResults/SearchResultsContainer';
+import type { SightingChart } from '@containers/SearchContainer/SearchResults/SearchResultsContainer';
 
 import SightingCard from './SightingCard';
 

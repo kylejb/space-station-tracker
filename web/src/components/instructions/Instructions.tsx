@@ -1,4 +1,4 @@
-import { type JSX, KeyboardEvent, useCallback, useState } from 'react';
+import { type JSX, type KeyboardEvent, useCallback, useState } from 'react';
 
 import { TAB_INDEX } from '@common/constants';
 
