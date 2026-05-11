@@ -9,7 +9,7 @@
         "express": "^5.2.1",
         "fast-xml-parser": "^5.7.2",
         "luxon": "^3.7.2",
-        "express-rate-limit": "^8.4.1"
+        "express-rate-limit": "^8.5.1"
     },
     "devDependencies": {
         "@types/express": "^5.0.6",
